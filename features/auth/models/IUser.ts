@@ -1,7 +1,7 @@
 export interface IUser {
   name: string
   height: number
-  weight : number
+  weight: number
   isDefault: boolean
 }
 

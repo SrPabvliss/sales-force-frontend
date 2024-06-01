@@ -119,7 +119,7 @@ export interface Sprites {
 export interface Other {
   dream_world: DreamWorld
   home: Home
-  "official-artwork": OfficialArtwork
+  'official-artwork': OfficialArtwork
   showdown: Showdown
 }
 
@@ -152,18 +152,18 @@ export interface Showdown {
 }
 
 export interface Versions {
-  "generation-i": GenerationI
-  "generation-ii": GenerationIi
-  "generation-iii": GenerationIii
-  "generation-iv": GenerationIv
-  "generation-v": GenerationV
-  "generation-vi": GenerationVi
-  "generation-vii": GenerationVii
-  "generation-viii": GenerationViii
+  'generation-i': GenerationI
+  'generation-ii': GenerationIi
+  'generation-iii': GenerationIii
+  'generation-iv': GenerationIv
+  'generation-v': GenerationV
+  'generation-vi': GenerationVi
+  'generation-vii': GenerationVii
+  'generation-viii': GenerationViii
 }
 
 export interface GenerationI {
-  "red-blue": RedBlue
+  'red-blue': RedBlue
   yellow: Yellow
 }
 
@@ -220,8 +220,8 @@ export interface Silver {
 
 export interface GenerationIii {
   emerald: Emerald
-  "firered-leafgreen": FireredLeafgreen
-  "ruby-sapphire": RubySapphire
+  'firered-leafgreen': FireredLeafgreen
+  'ruby-sapphire': RubySapphire
 }
 
 export interface Emerald {
@@ -244,8 +244,8 @@ export interface RubySapphire {
 }
 
 export interface GenerationIv {
-  "diamond-pearl": DiamondPearl
-  "heartgold-soulsilver": HeartgoldSoulsilver
+  'diamond-pearl': DiamondPearl
+  'heartgold-soulsilver': HeartgoldSoulsilver
   platinum: Platinum
 }
 
@@ -283,7 +283,7 @@ export interface Platinum {
 }
 
 export interface GenerationV {
-  "black-white": BlackWhite
+  'black-white': BlackWhite
 }
 
 export interface BlackWhite {
@@ -310,8 +310,8 @@ export interface Animated {
 }
 
 export interface GenerationVi {
-  "omegaruby-alphasapphire": OmegarubyAlphasapphire
-  "x-y": XY
+  'omegaruby-alphasapphire': OmegarubyAlphasapphire
+  'x-y': XY
 }
 
 export interface OmegarubyAlphasapphire {
@@ -330,7 +330,7 @@ export interface XY {
 
 export interface GenerationVii {
   icons: Icons
-  "ultra-sun-ultra-moon": UltraSunUltraMoon
+  'ultra-sun-ultra-moon': UltraSunUltraMoon
 }
 
 export interface Icons {

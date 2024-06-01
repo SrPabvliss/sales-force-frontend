@@ -11,7 +11,7 @@ interface FMKInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
 }
 
-export const FMKInput: React.FC<FMKInputProps> = ({ label, ...props }) => {
+export const FMKSelect: React.FC<FMKInputProps> = ({ label, ...props }) => {
   const [field, meta] = useField(props as FieldHookConfig<any>)
   return (
     <div>
