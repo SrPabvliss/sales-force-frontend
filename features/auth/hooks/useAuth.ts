@@ -6,6 +6,10 @@ interface IUseAuth extends IAuth {
   role: string
   remember: boolean
   date: Date
+  dateRange: {
+    from: Date
+    to: Date
+  }
 }
 
 export function useAuth() {
@@ -15,6 +19,10 @@ export function useAuth() {
     role: '',
     remember: false,
     date: new Date(),
+    dateRange: {
+      from: new Date(),
+      to: new Date(),
+    },
   }
 
   const validationSchema = yup.object().shape({

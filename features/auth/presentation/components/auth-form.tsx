@@ -1,6 +1,7 @@
 'use client'
 import { FMKCheckbox } from '@/shared/components/FormikCheckbox'
 import { FMKDatePicker } from '@/shared/components/FormikDatePicker'
+import { FMKDateRangePicker } from '@/shared/components/FormikDateRangePicker'
 import { FMKInput } from '@/shared/components/FormikInput'
 import { FMKSelect } from '@/shared/components/FormikSelect'
 import { FMKTextarea } from '@/shared/components/FormikTextArea'
@@ -33,6 +34,7 @@ export const AuthForm = () => {
             minDate={new Date()}
             maxDate={new Date(new Date().setDate(new Date().getDate() + 30))}
           />
+          <FMKDateRangePicker name="dateRange" label="Date" />
           <Button type="submit">Submit</Button>
         </Form>
       )}
