@@ -10,6 +10,7 @@ interface IUseAuth extends IAuth {
     from: Date
     to: Date
   }
+  radio: string
 }
 
 export function useAuth() {
@@ -23,6 +24,7 @@ export function useAuth() {
       from: new Date(),
       to: new Date(),
     },
+    radio: '',
   }
 
   const validationSchema = yup.object().shape({
@@ -31,6 +33,11 @@ export function useAuth() {
     role: yup.string().required(),
     remember: yup.boolean(),
     date: yup.date().required(),
+    dateRange: yup.object().shape({
+      from: yup.date().required(),
+      to: yup.date().required(),
+    }),
+    radio: yup.string().required(),
   })
 
   const handleSubmit = (data: any) => {

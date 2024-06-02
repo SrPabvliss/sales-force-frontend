@@ -1,17 +1,32 @@
+'use client'
+
 import { useField, FieldHookConfig } from 'formik'
-import React, { ReactNode, SelectHTMLAttributes } from 'react'
+import React, { SelectHTMLAttributes } from 'react'
 
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectGroup, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
+interface Option {
+  label: string
+  value: string
+}
 
 interface FMKSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string
   name: string
   placeholder?: string
-  children: ReactNode
+  options: Option[]
 }
 
-export const FMKSelect: React.FC<FMKSelectProps> = ({ label, children, ...props }) => {
+export const FMKSelect: React.FC<FMKSelectProps> = ({ label, options, ...props }) => {
   const [field, meta, helpers] = useField(props as FieldHookConfig<string>)
   return (
     <div className="form-group">
@@ -20,10 +35,14 @@ export const FMKSelect: React.FC<FMKSelectProps> = ({ label, children, ...props 
         <SelectTrigger className="w-full max-w-xs">
           <SelectValue placeholder={props.placeholder || 'Select an option'} />
         </SelectTrigger>
-        <SelectContent className="z-50">
+        <SelectContent>
           <SelectGroup>
             <SelectLabel>{label}</SelectLabel>
-            {children}
+            {options.map((option, index) => (
+              <SelectItem key={index} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
           </SelectGroup>
         </SelectContent>
       </Select>

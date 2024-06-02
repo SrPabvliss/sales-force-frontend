@@ -46,7 +46,7 @@ export const FMKDateRangePicker: React.FC<FMKDateRangePickerProps> = ({ label, m
   }
 
   return (
-    <div className="flex flex-col gap-2 p-1">
+    <div className="flex flex-col gap-1 p-1">
       <Label htmlFor={props.name}>{label}</Label>
       <Popover>
         <PopoverTrigger asChild>
