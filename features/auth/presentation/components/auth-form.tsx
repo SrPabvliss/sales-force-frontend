@@ -1,8 +1,12 @@
 'use client'
+import { FMKInput } from '@/shared/components/FormikInput'
+import { FMKSelect } from '@/shared/components/FormikSelect'
 import { Form, Formik } from 'formik'
 import React from 'react'
+
+import { SelectItem } from '@/components/ui/select'
+
 import { useAuth } from '../../hooks/useAuth'
-import { FMKInput } from '@/shared/components/FormikInput'
 
 export const AuthForm = () => {
   const { handleSubmit, initialValues, validationSchema } = useAuth()
@@ -12,6 +16,13 @@ export const AuthForm = () => {
         <Form>
           <FMKInput name="email" label="Email" type="email" />
           <FMKInput name="password" label="Password" type="password" />
+          <FMKSelect name="role" label="Role">
+            <SelectItem value={'1'}>Apple</SelectItem>
+            <SelectItem value={'2'}>Banana</SelectItem>
+            <SelectItem value={'3'}>Blueberry</SelectItem>
+            <SelectItem value={'4'}>Grapes</SelectItem>
+            <SelectItem value={'5'}>Pineapple</SelectItem>
+          </FMKSelect>
           <button type="submit">Submit</button>
         </Form>
       )}
