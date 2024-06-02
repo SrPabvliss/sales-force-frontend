@@ -1,8 +1,9 @@
 'use client'
+import { FMKInput } from '@/shared/components/FormikInput'
 import { Form, Formik } from 'formik'
 import React from 'react'
+
 import { useAuth } from '../../hooks/useAuth'
-import { FMKInput } from '@/shared/components/FormikInput'
 
 export const AuthForm = () => {
   const { handleSubmit, initialValues, validationSchema } = useAuth()

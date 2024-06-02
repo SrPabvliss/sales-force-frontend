@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin'
 
 const config = {
   darkMode: ['class'],
@@ -77,7 +78,24 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwindcss-debug-screens')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwindcss-debug-screens'),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          /* IE and Edge */
+          '-ms-overflow-style': 'none',
+          /* Firefox */
+          'scrollbar-width': 'none',
+        },
+        '.scrollbar-hide::-webkit-scrollbar': {
+          /* Chrome, Safari, Opera */
+          display: 'none',
+        },
+      })
+    }),
+  ],
 } satisfies Config
 
 export default config
