@@ -1,9 +1,8 @@
 'use client'
+import { FMKCheckbox } from '@/shared/components/FormikCheckbox'
 import { FMKInput } from '@/shared/components/FormikInput'
 import { FMKSelect } from '@/shared/components/FormikSelect'
-import { FMKSwitch } from '@/shared/components/FormikSwitch'
 import { Form, Formik } from 'formik'
-import React from 'react'
 
 import { SelectItem } from '@/components/ui/select'
 
@@ -24,7 +23,7 @@ export const AuthForm = () => {
             <SelectItem value={'4'}>Grapes</SelectItem>
             <SelectItem value={'5'}>Pineapple</SelectItem>
           </FMKSelect>
-          <FMKSwitch name="remember" label="Remember me" />
+          <FMKCheckbox name="remember" label="Remember me" />
           <button type="submit">Submit</button>
         </Form>
       )}
