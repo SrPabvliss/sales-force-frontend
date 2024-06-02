@@ -48,6 +48,7 @@ export const AuthForm = () => {
               { label: 'Option 3', value: '3' },
             ]}
           />
+
           <Button type="submit">Submit</Button>
         </Form>
       )}
