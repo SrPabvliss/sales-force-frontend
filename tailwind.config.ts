@@ -84,13 +84,10 @@ const config = {
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {
-          /* IE and Edge */
           '-ms-overflow-style': 'none',
-          /* Firefox */
           'scrollbar-width': 'none',
         },
         '.scrollbar-hide::-webkit-scrollbar': {
-          /* Chrome, Safari, Opera */
           display: 'none',
         },
       })

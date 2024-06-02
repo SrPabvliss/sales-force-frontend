@@ -2,8 +2,10 @@
 import { FMKCheckbox } from '@/shared/components/FormikCheckbox'
 import { FMKInput } from '@/shared/components/FormikInput'
 import { FMKSelect } from '@/shared/components/FormikSelect'
+import { FMKTextarea } from '@/shared/components/FormikTextArea'
 import { Form, Formik } from 'formik'
 
+import { Button } from '@/components/ui/button'
 import { SelectItem } from '@/components/ui/select'
 
 import { useAuth } from '../../hooks/useAuth'
@@ -15,7 +17,7 @@ export const AuthForm = () => {
       {() => (
         <Form>
           <FMKInput name="email" label="Email" type="email" />
-          <FMKInput name="password" label="Password" type="password" />
+          <FMKTextarea name="password" label="Password" />
           <FMKSelect name="role" label="Role">
             <SelectItem value={'1'}>Apple</SelectItem>
             <SelectItem value={'2'}>Banana</SelectItem>
@@ -24,7 +26,7 @@ export const AuthForm = () => {
             <SelectItem value={'5'}>Pineapple</SelectItem>
           </FMKSelect>
           <FMKCheckbox name="remember" label="Remember me" />
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </Form>
       )}
     </Formik>
