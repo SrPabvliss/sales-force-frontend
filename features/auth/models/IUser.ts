@@ -1,8 +1,9 @@
 export interface IUser {
-  name: string
-  height: number
-  weight: number
-  isDefault: boolean
+  id: number
+  firstLastName: string
+  firstName: string
+  role: string
+  accessModules: number[]
 }
 
 export interface IAuth {

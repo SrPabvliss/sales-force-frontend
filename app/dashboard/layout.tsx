@@ -6,10 +6,10 @@ interface LayoutProps {
 
 const layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <>
+    <div className="flex h-screen overflow-hidden">
       <SideNavBar />
-      <main className="flex-1 p-8">{children}</main>
-    </>
+      <main className="flex-1 overflow-auto p-8">{children}</main>
+    </div>
   )
 }
 
