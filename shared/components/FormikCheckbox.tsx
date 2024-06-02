@@ -15,7 +15,7 @@ export const FMKCheckbox: React.FC<FMKCheckboxProps> = ({ label, ...props }) => 
   const [field, meta, helpers] = useField(props as FieldHookConfig<any>)
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 py-1">
       <Checkbox id={props.name} checked={field.value} onCheckedChange={(value) => helpers.setValue(value)} />
       <Label
         htmlFor={props.name}

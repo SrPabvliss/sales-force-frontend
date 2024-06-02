@@ -5,6 +5,7 @@ import { IAuth } from '../models/IUser'
 interface IUseAuth extends IAuth {
   role: string
   remember: boolean
+  date: Date
 }
 
 export function useAuth() {
@@ -13,6 +14,7 @@ export function useAuth() {
     password: '',
     role: '',
     remember: false,
+    date: new Date(),
   }
 
   const validationSchema = yup.object().shape({
@@ -20,6 +22,7 @@ export function useAuth() {
     password: yup.string().required(),
     role: yup.string().required(),
     remember: yup.boolean(),
+    date: yup.date().required(),
   })
 
   const handleSubmit = (data: any) => {

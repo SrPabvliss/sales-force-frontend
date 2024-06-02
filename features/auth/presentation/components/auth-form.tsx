@@ -1,5 +1,6 @@
 'use client'
 import { FMKCheckbox } from '@/shared/components/FormikCheckbox'
+import { FMKDatePicker } from '@/shared/components/FormikDatePicker'
 import { FMKInput } from '@/shared/components/FormikInput'
 import { FMKSelect } from '@/shared/components/FormikSelect'
 import { FMKTextarea } from '@/shared/components/FormikTextArea'
@@ -26,6 +27,12 @@ export const AuthForm = () => {
             <SelectItem value={'5'}>Pineapple</SelectItem>
           </FMKSelect>
           <FMKCheckbox name="remember" label="Remember me" />
+          <FMKDatePicker
+            name="date"
+            label="Fecha de cita"
+            minDate={new Date()}
+            maxDate={new Date(new Date().setDate(new Date().getDate() + 30))}
+          />
           <Button type="submit">Submit</Button>
         </Form>
       )}
