@@ -31,11 +31,17 @@ export const UseAccountStore = create<StoreState>(
     (set) => ({
       user: DEFAULT_USER,
       setUser: (user?: IUser | undefined) => {
+        if (!user) {
+          set({ user: undefined })
+          return
+        }
+        // aqui maneejo la lógica
         set({ user })
       },
       getSubmodules: (modules: number[]) => {
         return modules.map((module) => SUBMODULES[module as keyof typeof SUBMODULES])
       },
+
       // retreiveFromCookie: async () => {
       //   const userToken = await getCookie(ACCESS_TOKEN_COOKIE_NAME)
 

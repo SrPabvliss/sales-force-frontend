@@ -8,7 +8,7 @@ const layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex h-screen overflow-hidden">
       <SideNavBar />
-      <main className="flex-1 overflow-auto p-8">{children}</main>
+      <main className="w-screen flex-1 flex-grow overflow-auto overflow-y-scroll scrollbar-hide">{children}</main>
     </div>
   )
 }

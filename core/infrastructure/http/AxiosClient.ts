@@ -28,6 +28,8 @@ export class AxiosClient implements HttpHandler {
           //TODO: logout
         }
 
+        //TODO: verificar que sea token valida
+
         if (AxiosClient.accessToken && config.headers) {
           config.headers.Authorization = `Bearer ${AxiosClient.accessToken.replaceAll('"', '')}`
         }
