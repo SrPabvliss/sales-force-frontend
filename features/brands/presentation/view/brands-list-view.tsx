@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 
 import { useBrandsView } from '../../hooks/use-brands-view'
-import { BrandTable } from '../components/DataTable/BrandTable'
-import { TableBreadCrumb } from '../components/TableBreadCrumb'
+import { BrandTable } from '../components/DataTable/brand-table'
+import { TableBreadCrumb } from '../components/table-breadcrumb'
 
 export const BrandsListView = () => {
   const { brands, handleDelete, handleEdit, handleAdd } = useBrandsView()

@@ -24,10 +24,10 @@ import { Input } from '@/components/ui/input'
 import { Table } from '@/components/ui/table'
 
 import { IBrand } from '../../../models/IBrands'
-import { createColumns } from './Columns'
-import DataTableBody from './TableBody'
-import DataTableFooter from './TableFooter'
-import DataTableHeader from './TableHeader'
+import { createColumns } from './columns'
+import DataTableBody from './table-body'
+import DataTableFooter from './table-footer'
+import DataTableHeader from './table-header'
 
 export const BrandTable = ({
   data,

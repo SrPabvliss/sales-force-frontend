@@ -1,8 +1,8 @@
 export const API_ROUTES = {
   BRANDS: {
     GET: '/brands',
-    POST: '/brands',
-    PUT: '/brands/:id',
+    CREATE: '/brands',
+    UPDATE: (id: number) => `/brands/${id}`,
     DELETE: (id: number) => `/brands/${id}`,
   },
 }

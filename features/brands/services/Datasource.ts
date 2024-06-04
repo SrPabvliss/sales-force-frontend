@@ -2,14 +2,14 @@ import { AxiosClient } from '@/core/infrastructure/http/AxiosClient'
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
 import { API_ROUTES } from '@/shared/api-routes/api-routes'
 
-import { BrandAdapter } from '../adapters/BrandAdapter'
+import { BrandAdapter } from '../adapters/brand-adapter'
 import { IApiBrand } from '../models/IApiBrands'
 import { IBrand } from '../models/IBrands'
 
 export interface BrandsDatasource {
   getAll(): Promise<IBrand[]>
   create(brand: IBrand): Promise<IBrand>
-  update(brand: IBrand): Promise<IBrand>
+  update(id: number, brand: Partial<IBrand>): Promise<IBrand>
   delete(id: number): Promise<boolean>
 }
 
@@ -29,12 +29,12 @@ export class BrandsDatasourceImpl implements BrandsDatasource {
     return BrandAdapter.toDomainList(rawData)
   }
 
-  async create(brand: IBrand): Promise<IBrand> {
-    return brand
+  async create(brand: Omit<IBrand, 'id'>): Promise<IBrand> {
+    return await this.httpClient.post<IBrand>(API_ROUTES.BRANDS.CREATE, brand)
   }
 
-  async update(brand: IBrand): Promise<IBrand> {
-    return brand
+  async update(id: number, brand: Partial<IBrand>): Promise<IBrand> {
+    return await this.httpClient.patch<IBrand>(API_ROUTES.BRANDS.UPDATE(id), brand)
   }
 
   async delete(id: number): Promise<boolean> {
