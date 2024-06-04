@@ -8,6 +8,7 @@ export class BrandAdapter {
     return {
       id: data.id,
       name: data.name,
+      isActive: data.isActive,
     }
   }
 
@@ -15,6 +16,7 @@ export class BrandAdapter {
     return {
       id: data.id,
       name: data.name,
+      isActive: data.isActive,
     }
   }
 

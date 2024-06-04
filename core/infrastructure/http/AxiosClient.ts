@@ -1,6 +1,6 @@
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
-import { getCookie } from '@/core/utils/CookiesUtil'
-import { HTTP_STATUS_CODES } from '@/core/utils/HttpStatusCodes'
+// import { getCookie } from '@/core/utils/CookiesUtil'
+// import { HTTP_STATUS_CODES } from '@/core/utils/HttpStatusCodes'
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 
 export class AxiosClient implements HttpHandler {
@@ -14,41 +14,41 @@ export class AxiosClient implements HttpHandler {
       baseURL: AxiosClient.baseUrl,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${AxiosClient.accessToken}`,
+        // Authorization: `Bearer ${AxiosClient.accessToken}`,
       },
     })
 
-    this.axiosInstance.interceptors.request.use(
-      async (config) => {
-        if (!AxiosClient.accessToken) {
-          AxiosClient.accessToken = await getCookie('accessToken')
-        }
+    // this.axiosInstance.interceptors.request.use(
+    //   async (config) => {
+    //     if (!AxiosClient.accessToken) {
+    //       AxiosClient.accessToken = await getCookie('accessToken')
+    //     }
 
-        if (!AxiosClient.accessToken) {
-          //TODO: logout
-        }
+    //     if (!AxiosClient.accessToken) {
+    //       //TODO: logout
+    //     }
 
-        //TODO: verificar que sea token valida
+    //     //TODO: verificar que sea token valida
 
-        if (AxiosClient.accessToken && config.headers) {
-          config.headers.Authorization = `Bearer ${AxiosClient.accessToken.replaceAll('"', '')}`
-        }
+    //     if (AxiosClient.accessToken && config.headers) {
+    //       config.headers.Authorization = `Bearer ${AxiosClient.accessToken.replaceAll('"', '')}`
+    //     }
 
-        return config
-      },
-      (error) => Promise.reject(error),
-    )
+    //     return config
+    //   },
+    //   (error) => Promise.reject(error),
+    // )
 
-    this.axiosInstance.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        if (error.response?.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-          //TODO: logout
-        }
+    // this.axiosInstance.interceptors.response.use(
+    //   (response) => response,
+    //   (error) => {
+    //     if (error.response?.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
+    //       //TODO: logout
+    //     }
 
-        return Promise.reject(error)
-      },
-    )
+    //     return Promise.reject(error)
+    //   },
+    // )
   }
 
   public static getInstance(): AxiosClient {

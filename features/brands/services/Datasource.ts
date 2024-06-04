@@ -10,7 +10,7 @@ export interface BrandsDatasource {
   getAll(): Promise<IBrand[]>
   create(brand: IBrand): Promise<IBrand>
   update(brand: IBrand): Promise<IBrand>
-  delete(brand: IBrand): Promise<void>
+  delete(id: number): Promise<boolean>
 }
 
 export class BrandsDatasourceImpl implements BrandsDatasource {
@@ -37,7 +37,7 @@ export class BrandsDatasourceImpl implements BrandsDatasource {
     return brand
   }
 
-  async delete(brand: IBrand): Promise<void> {
-    console.log('Deleted brand:', brand)
+  async delete(id: number): Promise<boolean> {
+    return await this.httpClient.delete<boolean>(`${API_ROUTES.BRANDS.DELETE(id)}`)
   }
 }
