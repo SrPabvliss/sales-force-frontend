@@ -2,15 +2,16 @@
 import { useParams } from 'next/navigation'
 
 import { BrandsCreateView } from '@/features/brands/presentation/view/brands-create-view'
+import { FC } from 'react'
 
-export const page = () => {
-  const { submodule } = useParams()
+const CreatePage: FC = () => {
+  const { submodule } = useParams() as { submodule: string }
 
-  const AvaliableCreateViews = {
+  const AvaliableCreateViews: Record<string, FC> = {
     brands: BrandsCreateView,
   }
 
-  const CreateView = AvaliableCreateViews[submodule as keyof typeof AvaliableCreateViews]
+  const CreateView = AvaliableCreateViews[submodule]
 
   if (!CreateView) {
     return <div>Not Found</div>
@@ -19,4 +20,4 @@ export const page = () => {
   return <CreateView />
 }
 
-export default page
+export default CreatePage

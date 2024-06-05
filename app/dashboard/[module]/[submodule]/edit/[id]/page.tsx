@@ -2,15 +2,20 @@
 import { useParams } from 'next/navigation'
 
 import { BrandsEditView } from '@/features/brands/presentation/view/brands-edit-view'
+import { FC } from 'react'
 
-export const page = () => {
-  const { submodule, id } = useParams()
+interface EditViewProps {
+  id: number
+}
 
-  const AvaliableEditViews = {
+const EditPage: FC = () => {
+  const { submodule, id } = useParams() as { submodule: string; id: string }
+
+  const AvaliableEditViews: Record<string, FC<EditViewProps>> = {
     brands: BrandsEditView,
   }
 
-  const EditView = AvaliableEditViews[submodule as keyof typeof AvaliableEditViews]
+  const EditView = AvaliableEditViews[submodule]
 
   if (!EditView) {
     return <div>Not Found</div>
@@ -19,4 +24,4 @@ export const page = () => {
   return <EditView id={Number(id)} />
 }
 
-export default page
+export default EditPage
