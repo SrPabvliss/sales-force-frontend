@@ -24,7 +24,7 @@ import { Input } from '@/components/ui/input'
 import { Table } from '@/components/ui/table'
 
 import { IBrand } from '../../../models/IBrands'
-import { createColumns } from './columns'
+import { createColumns } from './Columns'
 import DataTableBody from './table-body'
 import DataTableFooter from './table-footer'
 import DataTableHeader from './table-header'

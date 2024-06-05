@@ -9,13 +9,15 @@ export const BrandsEditView = ({ id }: { id: number }) => {
   const currentBrand = brands.find((brand) => brand.id === id)
   return (
     <>
-      <div className="p-32 px-64">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Marcas</h1>
-        </div>
-        <EditBreadCrumb />
-        <div className="mt-4 ">
-          <NewEditForm currentBrand={currentBrand} />
+      <div className="flex h-screen w-full flex-col items-center justify-center">
+        <div className="h-3/5 w-3/4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold">Marcas</h1>
+          </div>
+          <EditBreadCrumb />
+          <div className="mt-4 ">
+            <NewEditForm currentBrand={currentBrand} />
+          </div>
         </div>
       </div>
     </>

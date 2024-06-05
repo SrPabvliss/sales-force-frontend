@@ -14,6 +14,8 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 
+import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
+
 export const createColumns = (
   handleEdit: (id: number) => void,
   handleDelete: (id: number) => void,
@@ -69,9 +71,24 @@ export const createColumns = (
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleEdit(brand.id)}>Editar</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDelete(brand.id)} className="text-rose-500">
-              Eliminar
-            </DropdownMenuItem>
+            <ConfirmDialog
+              onConfirm={() => handleDelete(brand.id)}
+              title="¿Estás seguro?"
+              description={
+                brand.isActive
+                  ? '¿Estás seguro que deseas desactivar esta marca?'
+                  : '¿Estás seguro que deseas activar esta marca?'
+              }
+              isDestructive={brand.isActive}
+            >
+              <div
+                className={`w-full text-start text-sm ${
+                  brand.isActive ? 'text-red-500' : 'text-green-600'
+                } rounded-sm px-2 py-1 hover:bg-accent`}
+              >
+                {brand.isActive ? 'Desactivar' : 'Activar'}
+              </div>
+            </ConfirmDialog>
           </DropdownMenuContent>
         </DropdownMenu>
       )

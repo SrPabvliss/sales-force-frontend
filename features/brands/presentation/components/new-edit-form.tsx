@@ -1,5 +1,5 @@
-import { FMKInput } from '@/shared/components/FormikInput'
-import { FMKSwitch } from '@/shared/components/FormikSwitch'
+import { FMKInput } from '@/shared/components/formik/FormikInput'
+import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'
 import { Form, Formik } from 'formik'
 import React from 'react'
 
