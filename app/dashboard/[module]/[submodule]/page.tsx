@@ -8,11 +8,12 @@ import { LocationsListView } from '@/features/locations/presentation/view/locati
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
 import { UsersListView } from '@/features/users/presentation/view/users-list-view'
+import { FC } from 'react'
 
-export const page = () => {
-  const { submodule } = useParams()
+const Page: FC = () => {
+  const { submodule } = useParams() as { submodule: string }
 
-  const AvaliableListViews = {
+  const AvaliableListViews: Record<string, FC> = {
     brands: BrandsListView,
     categories: CategoriesListView,
     consumers: ConsumersListView,
@@ -22,7 +23,7 @@ export const page = () => {
     services: ServicesListView,
   }
 
-  const ListView = AvaliableListViews[submodule as keyof typeof AvaliableListViews]
+  const ListView = AvaliableListViews[submodule]
 
   if (!ListView) {
     return <div>Not Found</div>
@@ -31,4 +32,4 @@ export const page = () => {
   return <ListView />
 }
 
-export default page
+export default Page

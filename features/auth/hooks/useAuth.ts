@@ -15,6 +15,8 @@ interface IUseAuth extends IAuth {
 }
 
 export function useAuth() {
+  // proveeer utilidades al formulario
+
   const initialValues: IUseAuth = {
     email: '',
     password: '',
