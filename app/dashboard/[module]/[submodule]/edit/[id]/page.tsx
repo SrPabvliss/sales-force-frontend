@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation'
 
 import { BrandsEditView } from '@/features/brands/presentation/view/brands-edit-view'
 import { CategoriesEditView } from '@/features/categories/presentation/view/categories-edit-view'
+import { ConsumersEditView } from '@/features/consumers/presentation/view/consumers-edit-view'
 import { ProductsEditView } from '@/features/products/presentation/view/products-edit-view'
 import { FC } from 'react'
 
@@ -17,6 +18,7 @@ const EditPage: FC = () => {
     brands: BrandsEditView,
     categories: CategoriesEditView,
     products: ProductsEditView,
+    consumers: ConsumersEditView,
   }
 
   const EditView = AvaliableEditViews[submodule]

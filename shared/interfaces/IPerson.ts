@@ -6,6 +6,12 @@ export enum PersonGender {
   OTHER = 'OTHER',
 }
 
+export const PersonGenderOptions = {
+  [PersonGender.FEMALE]: 'Femenino',
+  [PersonGender.MALE]: 'Masculino',
+  [PersonGender.OTHER]: 'Otro',
+}
+
 export interface IPerson {
   id: number
   dni: string

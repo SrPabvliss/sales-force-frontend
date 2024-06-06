@@ -1,15 +1,29 @@
 import { usePathname, useRouter } from 'next/navigation'
 
+// import { LocationType } from '@/features/locations/models/ILocation'
 import * as yup from 'yup'
 
 import { IPerson } from '../../../shared/interfaces/IPerson'
 import { useConsumersStore } from '../context/consumers-store'
 import { ConsumerType, IConsumer } from '../models/IConsumer'
 
-export function useCategoriesForm(currentConsumer?: IConsumer) {
+export function useConsumersForm(currentConsumer?: IConsumer) {
   const { createConsumer, updateConsumer } = useConsumersStore()
   const router = useRouter()
   const pathname = usePathname()
+
+  // const defaultPerson: Omit<IPerson, 'id'> = {
+  //   name: '',
+  //   secondName: '',
+  //   lastName: '',
+  //   secondLastName: '',
+  //   email: '',
+  //   phone: '',
+  //   dni: '',
+  //   gender: undefined,
+  //   birthdate: undefined,
+  //   location: { id: 0, name: '', isActive: true, type: LocationType.CITY},
+  // }
 
   const initialValues: Omit<IConsumer, 'id'> = {
     person: currentConsumer?.person || ({} as IPerson),
