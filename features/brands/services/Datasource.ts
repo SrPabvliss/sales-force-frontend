@@ -2,8 +2,6 @@ import { AxiosClient } from '@/core/infrastructure/http/AxiosClient'
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
 import { API_ROUTES } from '@/shared/api-routes/api-routes'
 
-import { BrandAdapter } from '../adapters/brand-adapter'
-import { IApiBrand } from '../models/IApiBrands'
 import { IBrand } from '../models/IBrands'
 
 export interface BrandsDatasource {
@@ -25,8 +23,7 @@ export class BrandsDatasourceImpl implements BrandsDatasource {
   }
 
   async getAll(): Promise<IBrand[]> {
-    const rawData = await this.httpClient.get<IApiBrand[]>(API_ROUTES.BRANDS.GET)
-    return BrandAdapter.toDomainList(rawData)
+    return await this.httpClient.get<IBrand[]>(API_ROUTES.BRANDS.GET)
   }
 
   async create(brand: Omit<IBrand, 'id'>): Promise<IBrand> {

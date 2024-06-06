@@ -1,0 +1,20 @@
+import { IBrand } from '@/features/brands/models/IBrands'
+import { flexRender, Table } from '@tanstack/react-table'
+
+import { TableHeader, TableRow, TableHead } from '@/components/ui/table'
+
+const DataTableHeader = ({ table }: { table: Table<IBrand> }) => (
+  <TableHeader>
+    {table.getHeaderGroups().map((headerGroup) => (
+      <TableRow key={headerGroup.id}>
+        {headerGroup.headers.map((header) => (
+          <TableHead key={header.id}>
+            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+          </TableHead>
+        ))}
+      </TableRow>
+    ))}
+  </TableHeader>
+)
+
+export default DataTableHeader

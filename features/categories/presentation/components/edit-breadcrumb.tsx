@@ -19,7 +19,7 @@ export const EditBreadCrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href={pathname.split('/').slice(0, -2).join('/')}>Marcas</BreadcrumbLink>
+          <BreadcrumbLink href={pathname.split('/').slice(0, -2).join('/')}>Categorías</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

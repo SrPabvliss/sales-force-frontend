@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
-export const EditBreadCrumb = () => {
+export const CreateBreadCrumb = () => {
   const pathname = usePathname()
   return (
     <Breadcrumb>
@@ -19,11 +19,11 @@ export const EditBreadCrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href={pathname.split('/').slice(0, -2).join('/')}>Marcas</BreadcrumbLink>
+          <BreadcrumbLink href={pathname.slice(0, pathname.lastIndexOf('/'))}>Categorías</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Editar</BreadcrumbPage>
+          <BreadcrumbPage>Crear</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
