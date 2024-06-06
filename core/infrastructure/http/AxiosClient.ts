@@ -2,6 +2,7 @@ import { HttpHandler } from '@/core/interfaces/HttpHandler'
 // import { getCookie } from '@/core/utils/CookiesUtil'
 // import { HTTP_STATUS_CODES } from '@/core/utils/HttpStatusCodes'
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
+import toast from 'react-hot-toast'
 
 export class AxiosClient implements HttpHandler {
   private static instance: AxiosClient
@@ -49,6 +50,34 @@ export class AxiosClient implements HttpHandler {
     //     return Promise.reject(error)
     //   },
     // )
+
+    this.axiosInstance.interceptors.request.use(
+      (config) => {
+        if (AxiosClient.accessToken) {
+          config.headers.Authorization = `Bearer ${AxiosClient.accessToken.replaceAll('"', '')}`
+        }
+        return config
+      },
+      (error) => {
+        toast.error(`Request error: ${error.message}`)
+        return Promise.reject(error)
+      },
+    )
+
+    this.axiosInstance.interceptors.response.use(
+      (response) => {
+        if (!['get'].includes(response.config.method || '')) toast.success('Acción realizada con éxito!')
+        return response
+      },
+      (error) => {
+        if (error.response) {
+          toast.error(`Error: ${error.response.status} ${error.response.data?.message || error.message}`)
+        } else {
+          toast.error(`Error: ${error.message}`)
+        }
+        return Promise.reject(error)
+      },
+    )
   }
 
   public static getInstance(): AxiosClient {
@@ -66,7 +95,8 @@ export class AxiosClient implements HttpHandler {
   }
 
   async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response: AxiosResponse<T> = await this.axiosInstance.get(url, config)
+    const promise = this.axiosInstance.get<T>(url, config)
+    const response: AxiosResponse<T> = await promise
     return response.data
   }
 
