@@ -13,7 +13,7 @@ export interface IConsumer {
   person: IPerson
 }
 
-export interface ICreateConsumer extends Omit<IConsumer, 'id, person'> {
+export interface ICreateConsumer extends Omit<IConsumer, 'id' | 'person'> {
   person: ICreatePerson
 }
 

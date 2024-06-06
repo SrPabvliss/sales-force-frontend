@@ -20,6 +20,6 @@ export interface IPerson {
   location: ILocation
 }
 
-export interface ICreatePerson extends Omit<IPerson, 'id, location'> {
+export interface ICreatePerson extends Omit<IPerson, 'id' | 'location'> {
   locationId: number
 }

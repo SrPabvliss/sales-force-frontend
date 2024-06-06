@@ -1,4 +1,5 @@
 import { IConsumer } from '@/features/consumers/models/IConsumer'
+import { IPerson } from '@/shared/interfaces/IPerson'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -40,9 +41,23 @@ export const createColumns = (
     enableHiding: false,
   },
   {
+    accessorKey: 'person',
+    header: 'Nombre',
+    cell: ({ row }) => {
+      const person: IPerson = row.getValue('person')
+      return <div>{`${person.name}  ${person.lastName}`}</div>
+    },
+  },
+  {
     accessorKey: 'type',
     header: 'Tipo',
     cell: ({ row }) => <div className="capitalize">{row.getValue('type')}</div>,
+  },
+  {
+    accessorKey: 'isCustomer',
+    header: 'Cliente',
+    cell: ({ row }) =>
+      row.getValue('isCustomer') === true ? <Badge>Cliente</Badge> : <Badge variant="outline">No cliente</Badge>,
   },
   {
     accessorKey: 'isActive',
@@ -50,6 +65,7 @@ export const createColumns = (
     cell: ({ row }) =>
       row.getValue('isActive') === true ? <Badge>Activo</Badge> : <Badge variant="outline">Inactivo</Badge>,
   },
+
   {
     id: 'actions',
     enableHiding: false,
