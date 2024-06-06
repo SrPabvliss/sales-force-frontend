@@ -1,4 +1,5 @@
 import { IConsumer } from '@/features/consumers/models/IConsumer'
+import { ILocation } from '@/features/locations/models/ILocation'
 import { IPerson } from '@/shared/interfaces/IPerson'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
@@ -42,10 +43,27 @@ export const createColumns = (
   },
   {
     accessorKey: 'person',
+    header: 'Cédula',
+    cell: ({ row }) => {
+      const person: IPerson = row.getValue('person')
+      return <div>{person.dni}</div>
+    },
+  },
+  {
+    accessorKey: 'person',
     header: 'Nombre',
     cell: ({ row }) => {
       const person: IPerson = row.getValue('person')
       return <div>{`${person.name}  ${person.lastName}`}</div>
+    },
+  },
+  {
+    accessorKey: 'personLocation',
+    header: 'Ubicación',
+    cell: ({ row }) => {
+      const person: IPerson = row.getValue('person')
+      const location: ILocation = person.location
+      return <div>{location.name}</div>
     },
   },
   {
