@@ -1,4 +1,4 @@
-export interface IApiBrand {
+export interface ICategory {
   id: number
   name: string
   isActive: boolean
