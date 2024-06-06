@@ -1,4 +1,4 @@
-import { IBrand } from '@/features/brands/models/IBrands'
+import { ILocation, LocationType } from '@/features/locations/models/ILocation'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -19,7 +19,7 @@ import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
 export const createColumns = (
   handleEdit: (id: number) => void,
   handleDelete: (id: number) => void,
-): ColumnDef<IBrand>[] => [
+): ColumnDef<ILocation>[] => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -27,7 +27,6 @@ export const createColumns = (
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="border border-white bg-white "
       />
     ),
     cell: ({ row }) => (
@@ -46,6 +45,25 @@ export const createColumns = (
     cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
   },
   {
+    accessorKey: 'type',
+    header: 'Tipo',
+    cell: ({ row }) => {
+      const locationTypeLabelMap: { [key in LocationType]: string } = {
+        [LocationType.COUNTRY]: 'País',
+        [LocationType.STATE]: 'Estado',
+        [LocationType.CITY]: 'Ciudad',
+        [LocationType.NEIGHBORHOOD]: 'Barrio',
+      }
+
+      return <div className="capitalize">{locationTypeLabelMap[row.getValue('type') as LocationType]}</div>
+    },
+  },
+  {
+    accessorKey: 'parent',
+    header: 'Pertenece a',
+    cell: ({ row }) => <div className="capitalize">{(row.getValue('parent') as ILocation)?.name ?? 'No aplica'}</div>,
+  },
+  {
     accessorKey: 'isActive',
     header: 'Activo',
     cell: ({ row }) =>
@@ -53,10 +71,9 @@ export const createColumns = (
   },
   {
     id: 'actions',
-    header: 'Acciones',
     enableHiding: false,
     cell: ({ row }) => {
-      const brand = row.original
+      const category = row.original
 
       return (
         <DropdownMenu>
@@ -68,27 +85,27 @@ export const createColumns = (
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(brand.id.toString())}>
-              Copiar el ID de la marca
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
+              Copiar el ID de la ubicación
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleEdit(brand.id)}>Editar</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
             <ConfirmDialog
-              onConfirm={() => handleDelete(brand.id)}
+              onConfirm={() => handleDelete(category.id)}
               title="¿Estás seguro?"
               description={
-                brand.isActive
-                  ? '¿Estás seguro que deseas desactivar esta marca?'
-                  : '¿Estás seguro que deseas activar esta marca?'
+                category.isActive
+                  ? '¿Estás seguro que deseas desactivar esta categoría?'
+                  : '¿Estás seguro que deseas activar esta categoría?'
               }
-              isDestructive={brand.isActive}
+              isDestructive={category.isActive}
             >
               <div
                 className={`w-full text-start text-sm ${
-                  brand.isActive ? 'text-red-500' : 'text-green-600'
+                  category.isActive ? 'text-red-500' : 'text-green-600'
                 } rounded-sm px-2 py-1 hover:bg-accent`}
               >
-                {brand.isActive ? 'Desactivar' : 'Activar'}
+                {category.isActive ? 'Desactivar' : 'Activar'}
               </div>
             </ConfirmDialog>
           </DropdownMenuContent>

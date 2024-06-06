@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { BrandsCreateView } from '@/features/brands/presentation/view/brands-create-view'
 import { CategoriesCreateView } from '@/features/categories/presentation/view/categories-create-view'
 import { ConsumersCreateView } from '@/features/consumers/presentation/view/consumers-create-view'
+import { LocationsCreateView } from '@/features/locations/presentation/view/locations-create-view'
 import { ProductsCreateView } from '@/features/products/presentation/view/products-create-view'
 import { FC } from 'react'
 
@@ -15,6 +16,7 @@ const CreatePage: FC = () => {
     categories: CategoriesCreateView,
     products: ProductsCreateView,
     consumers: ConsumersCreateView,
+    locations: LocationsCreateView,
   }
 
   const CreateView = AvaliableCreateViews[submodule]
@@ -23,7 +25,11 @@ const CreatePage: FC = () => {
     return <div>Not Found</div>
   }
 
-  return <CreateView />
+  return (
+    <div className="flex items-center justify-center ">
+      <CreateView />
+    </div>
+  )
 }
 
 export default CreatePage

@@ -1,9 +1,9 @@
-import { IProduct } from '@/features/products/models/IProduct'
+import { ILocation } from '@/features/locations/models/ILocation'
 import { flexRender, Table } from '@tanstack/react-table'
 
 import { TableHeader, TableRow, TableHead } from '@/components/ui/table'
 
-const DataTableHeader = ({ table }: { table: Table<IProduct> }) => (
+const DataTableHeader = ({ table }: { table: Table<ILocation> }) => (
   <TableHeader className="rounded-t-lg">
     {table.getHeaderGroups().map((headerGroup) => (
       <TableRow key={headerGroup.id} className="rounded-md">
