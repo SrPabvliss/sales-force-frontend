@@ -36,11 +36,9 @@ export const useBrandsStore = create<StoreState>(
       },
       createBrand: async (brand: Omit<IBrand, 'id'>) => {
         await BrandsDatasourceImpl.getInstance().create(brand)
-        get().getAllBrands()
       },
       updateBrand: async (id: number, brand: Partial<IBrand>) => {
         await BrandsDatasourceImpl.getInstance().update(id, brand)
-        get().getAllBrands()
       },
     }),
     {
