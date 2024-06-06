@@ -12,7 +12,7 @@ export function useBrandsForm(currentBrand?: IBrand) {
 
   const initialValues: Omit<IBrand, 'id'> = {
     name: currentBrand?.name || '',
-    isActive: currentBrand?.isActive || true,
+    isActive: currentBrand?.isActive ?? true,
   }
 
   const validationSchema = yup.object().shape({

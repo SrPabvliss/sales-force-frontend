@@ -9,8 +9,10 @@ import { Card } from '@/components/ui/card'
 import { useCategoriesForm } from '../../hooks/use-categories-form'
 import { ICategory } from '../../models/ICategory'
 
-export const NewEditForm = ({ currentBrand }: { currentBrand?: ICategory }) => {
-  const { initialValues, handleSubmit, validationSchema } = useCategoriesForm(currentBrand)
+export const NewEditForm = ({ currentCategory }: { currentCategory?: ICategory }) => {
+  const { initialValues, handleSubmit, validationSchema } = useCategoriesForm(currentCategory)
+  console.log(currentCategory)
+
   return (
     <div className="flex justify-start gap-10">
       <Card className="w-1/2 p-8">

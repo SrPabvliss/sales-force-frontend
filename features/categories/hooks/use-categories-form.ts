@@ -12,7 +12,7 @@ export function useCategoriesForm(currentCategory?: ICategory) {
 
   const initialValues: Omit<ICategory, 'id'> = {
     name: currentCategory?.name || '',
-    isActive: currentCategory?.isActive || true,
+    isActive: currentCategory?.isActive ?? true,
   }
 
   const validationSchema = yup.object().shape({

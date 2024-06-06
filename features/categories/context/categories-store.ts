@@ -1,7 +1,7 @@
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { ICategory } from '../models/ICategory'
+import { ICategory, ICreateCategory, IUpdateCategory } from '../models/ICategory'
 import { CategoriesDatasourceImpl } from '../services/datasource'
 
 interface StoreState {
@@ -9,8 +9,8 @@ interface StoreState {
   setCategories: (categories: ICategory[]) => void
   getAllCategories: () => Promise<void>
   deleteCategory: (id: number) => Promise<void>
-  createCategory: (category: Omit<ICategory, 'id'>) => Promise<void>
-  updateCategory: (id: number, category: Partial<ICategory>) => Promise<void>
+  createCategory: (category: ICreateCategory) => Promise<void>
+  updateCategory: (id: number, category: IUpdateCategory) => Promise<void>
 }
 
 const DEFAULT_CATEGORIES: ICategory[] = []
@@ -34,10 +34,10 @@ export const useCategoriesStore = create<StoreState>(
           get().getAllCategories()
         }
       },
-      createCategory: async (category: Omit<ICategory, 'id'>) => {
+      createCategory: async (category: ICreateCategory) => {
         await CategoriesDatasourceImpl.getInstance().create(category)
       },
-      updateCategory: async (id: number, category: Partial<ICategory>) => {
+      updateCategory: async (id: number, category: IUpdateCategory) => {
         await CategoriesDatasourceImpl.getInstance().update(id, category)
       },
     }),

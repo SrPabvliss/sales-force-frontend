@@ -13,7 +13,7 @@ export function useProductForm(currentProduct?: IProduct) {
   const initialValues = {
     name: currentProduct?.name || '',
     description: currentProduct?.description || '',
-    isActive: currentProduct?.isActive || true,
+    isActive: currentProduct?.isActive ?? true,
     price: currentProduct?.price || undefined,
     stock: currentProduct?.stock || undefined,
     brandId: currentProduct?.brand.id.toString() || undefined,

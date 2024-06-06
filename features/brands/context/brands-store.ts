@@ -1,7 +1,7 @@
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { IBrand } from '../models/IBrands'
+import { IBrand, ICreateBrand, IUpdateBrand } from '../models/IBrands'
 import { BrandsDatasourceImpl } from '../services/Datasource'
 
 interface StoreState {
@@ -9,8 +9,8 @@ interface StoreState {
   setBrands: (brands: IBrand[]) => void
   getAllBrands: () => Promise<void>
   deleteBrand: (id: number) => Promise<void>
-  createBrand: (brand: Omit<IBrand, 'id'>) => Promise<void>
-  updateBrand: (id: number, brand: Partial<IBrand>) => Promise<void>
+  createBrand: (brand: ICreateBrand) => Promise<void>
+  updateBrand: (id: number, brand: IUpdateBrand) => Promise<void>
 }
 
 const DEFAULT_BRANDS: IBrand[] = []
@@ -34,10 +34,10 @@ export const useBrandsStore = create<StoreState>(
           get().getAllBrands()
         }
       },
-      createBrand: async (brand: Omit<IBrand, 'id'>) => {
+      createBrand: async (brand: ICreateBrand) => {
         await BrandsDatasourceImpl.getInstance().create(brand)
       },
-      updateBrand: async (id: number, brand: Partial<IBrand>) => {
+      updateBrand: async (id: number, brand: IUpdateBrand) => {
         await BrandsDatasourceImpl.getInstance().update(id, brand)
       },
     }),

@@ -16,7 +16,7 @@ export const CategoriesEditView = ({ id }: { id: number }) => {
           </div>
           <EditBreadCrumb />
           <div className="mt-4 ">
-            <NewEditForm currentBrand={currentBrand} />
+            <NewEditForm currentCategory={currentBrand} />
           </div>
         </div>
       </div>
