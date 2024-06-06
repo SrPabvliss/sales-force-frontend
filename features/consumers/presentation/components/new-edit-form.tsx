@@ -1,3 +1,4 @@
+import { useLocationsStore } from '@/features/locations/context/locations-store'
 import { FMKInput } from '@/shared/components/formik/FormikInput'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
 import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'
@@ -13,7 +14,8 @@ import { IConsumer } from '../../models/IConsumer'
 
 export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }) => {
   const { initialValues, handleSubmit, validationSchema } = useConsumersForm(currentConsumer)
-
+  const { locations } = useLocationsStore()
+  console.log(locations)
   console.log(currentConsumer)
 
   return (
@@ -42,9 +44,9 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
               <FMKSelect
                 name="person.location"
                 label="Ubicación"
-                options={Object.values(PersonGender).map((gender) => ({
-                  label: PersonGenderOptions[gender],
-                  value: gender,
+                options={locations.map((location) => ({
+                  label: location.name,
+                  value: location.id.toString(),
                 }))}
               />
 
