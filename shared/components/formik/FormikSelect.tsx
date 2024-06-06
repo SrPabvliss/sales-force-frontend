@@ -29,23 +29,25 @@ interface FMKSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 export const FMKSelect: React.FC<FMKSelectProps> = ({ label, options, ...props }) => {
   const [field, meta, helpers] = useField(props as FieldHookConfig<string>)
   return (
-    <div className="form-group">
+    <div className="form-group w-full">
       <Label htmlFor={props.name}>{label}</Label>
-      <Select onValueChange={(value) => helpers.setValue(value)} value={field.value}>
-        <SelectTrigger className="w-full max-w-xs">
-          <SelectValue placeholder={props.placeholder || 'Select an option'} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>{label}</SelectLabel>
-            {options.map((option, index) => (
-              <SelectItem key={index} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="w-full">
+        <Select onValueChange={(value) => helpers.setValue(value)} value={field.value}>
+          <SelectTrigger className="w-full max-w-xs">
+            <SelectValue placeholder={props.placeholder || 'Select an option'} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>{label}</SelectLabel>
+              {options.map((option, index) => (
+                <SelectItem key={index} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
       {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}
     </div>
   )

@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation'
 
 import { BrandsCreateView } from '@/features/brands/presentation/view/brands-create-view'
 import { CategoriesCreateView } from '@/features/categories/presentation/view/categories-create-view'
+import { LocationsCreateView } from '@/features/locations/presentation/view/locations-create-view'
 import { ProductsCreateView } from '@/features/products/presentation/view/products-create-view'
 import { FC } from 'react'
 
@@ -13,6 +14,7 @@ const CreatePage: FC = () => {
     brands: BrandsCreateView,
     categories: CategoriesCreateView,
     products: ProductsCreateView,
+    locations: LocationsCreateView,
   }
 
   const CreateView = AvaliableCreateViews[submodule]
