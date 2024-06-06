@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation'
 
 import { BrandsEditView } from '@/features/brands/presentation/view/brands-edit-view'
 import { CategoriesEditView } from '@/features/categories/presentation/view/categories-edit-view'
+import { ProductsEditView } from '@/features/products/presentation/view/products-edit-view'
 import { FC } from 'react'
 
 interface EditViewProps {
@@ -15,6 +16,7 @@ const EditPage: FC = () => {
   const AvaliableEditViews: Record<string, FC<EditViewProps>> = {
     brands: BrandsEditView,
     categories: CategoriesEditView,
+    products: ProductsEditView,
   }
 
   const EditView = AvaliableEditViews[submodule]

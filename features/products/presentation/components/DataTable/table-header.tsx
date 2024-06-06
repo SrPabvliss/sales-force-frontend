@@ -1,9 +1,9 @@
-import { ICategory } from '@/features/categories/models/ICategory'
+import { IProduct } from '@/features/products/models/IProduct'
 import { flexRender, Table } from '@tanstack/react-table'
 
 import { TableHeader, TableRow, TableHead } from '@/components/ui/table'
 
-const DataTableHeader = ({ table }: { table: Table<ICategory> }) => (
+const DataTableHeader = ({ table }: { table: Table<IProduct> }) => (
   <TableHeader>
     {table.getHeaderGroups().map((headerGroup) => (
       <TableRow key={headerGroup.id}>

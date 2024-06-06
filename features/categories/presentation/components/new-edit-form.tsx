@@ -18,7 +18,7 @@ export const NewEditForm = ({ currentBrand }: { currentBrand?: ICategory }) => {
           {() => (
             <Form className="flex  flex-col gap-6">
               <FMKInput name="name" label="Nombre" />
-              <FMKSwitch name="isActive" label="Marca activa" />
+              <FMKSwitch name="isActive" label="Categoría activa" />
               <Button type="submit" className="btn-primary">
                 Guardar
               </Button>

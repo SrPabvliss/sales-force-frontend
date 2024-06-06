@@ -1,3 +1,5 @@
+import { usePathname } from 'next/navigation'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,7 +9,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
-export const TableBreadCrumb = () => {
+export const EditBreadCrumb = () => {
+  const pathname = usePathname()
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -16,7 +19,11 @@ export const TableBreadCrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Categorías</BreadcrumbPage>
+          <BreadcrumbLink href={pathname.split('/').slice(0, -2).join('/')}>Productos</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Editar</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

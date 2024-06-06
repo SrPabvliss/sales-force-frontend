@@ -1,4 +1,4 @@
-import { ICategory } from '@/features/categories/models/ICategory'
+import { IProduct } from '@/features/products/models/IProduct'
 import { flexRender, Table } from '@tanstack/react-table'
 
 import { TableBody, TableRow, TableCell } from '@/components/ui/table'
@@ -8,7 +8,7 @@ const DataTableBody = ({
   rowsPerPage,
   pageIndex,
 }: {
-  table: Table<ICategory>
+  table: Table<IProduct>
   rowsPerPage: number
   pageIndex: number
 }) => (

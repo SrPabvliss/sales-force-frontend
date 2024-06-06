@@ -12,7 +12,7 @@ export const BrandsListView = () => {
         <div className="h-3/5 w-3/4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Marcas</h1>
-            <Button onClick={() => handleAdd()}>Nueva Marca</Button>
+            <Button onClick={() => handleAdd()}>Nueva marca</Button>
           </div>
           <TableBreadCrumb />
           <div className="mt-4">

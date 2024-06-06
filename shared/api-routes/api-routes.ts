@@ -11,4 +11,10 @@ export const API_ROUTES = {
     UPDATE: (id: number) => `/categories/${id}`,
     DELETE: (id: number) => `/categories/${id}`,
   },
+  PRODUCTS: {
+    GET: '/products',
+    CREATE: '/products',
+    UPDATE: (id: number) => `/products/${id}`,
+    DELETE: (id: number) => `/products/${id}`,
+  },
 }

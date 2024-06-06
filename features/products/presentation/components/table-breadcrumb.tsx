@@ -16,7 +16,7 @@ export const TableBreadCrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Categorías</BreadcrumbPage>
+          <BreadcrumbPage>Productos</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
