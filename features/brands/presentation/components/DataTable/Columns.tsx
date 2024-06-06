@@ -27,6 +27,7 @@ export const createColumns = (
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="border border-white bg-white "
       />
     ),
     cell: ({ row }) => (
@@ -52,6 +53,7 @@ export const createColumns = (
   },
   {
     id: 'actions',
+    header: 'Acciones',
     enableHiding: false,
     cell: ({ row }) => {
       const brand = row.original

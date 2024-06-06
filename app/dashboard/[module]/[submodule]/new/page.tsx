@@ -21,7 +21,11 @@ const CreatePage: FC = () => {
     return <div>Not Found</div>
   }
 
-  return <CreateView />
+  return (
+    <div className="flex items-center justify-center ">
+      <CreateView />
+    </div>
+  )
 }
 
 export default CreatePage

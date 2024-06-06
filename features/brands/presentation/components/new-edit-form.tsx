@@ -12,7 +12,7 @@ import { IBrand } from '../../models/IBrands'
 export const NewEditForm = ({ currentBrand }: { currentBrand?: IBrand }) => {
   const { initialValues, handleSubmit, validationSchema } = useBrandsForm(currentBrand)
   return (
-    <div className="flex justify-start gap-10">
+    <div className="flex justify-center gap-10">
       <Card className="w-1/2 p-8">
         <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
           {() => (
