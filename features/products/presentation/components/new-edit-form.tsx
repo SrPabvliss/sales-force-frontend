@@ -18,7 +18,7 @@ export const NewEditForm = ({ currentProduct }: { currentProduct?: IProduct }) =
   const { categories } = useCategoriesStore()
   const { brands } = useBrandsStore()
   return (
-    <div className="flex justify-start gap-10">
+    <div className="flex justify-center gap-10">
       <Card className="w-1/2 p-8">
         <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
           {() => (
