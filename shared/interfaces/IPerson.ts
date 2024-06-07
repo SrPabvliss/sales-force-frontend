@@ -29,3 +29,5 @@ export interface IPerson {
 export interface ICreatePerson extends Omit<IPerson, 'id' | 'location'> {
   locationId: number
 }
+
+export interface IUpdatePerson extends Partial<ICreatePerson> {}

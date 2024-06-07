@@ -5,6 +5,11 @@ export enum ConsumerType {
   COMPANY = 'COMPANY',
 }
 
+export const ConsumerTypeOptions = {
+  [ConsumerType.NATURAL]: 'Natural',
+  [ConsumerType.COMPANY]: 'Jurídico',
+}
+
 export interface IConsumer {
   id: number
   type: ConsumerType

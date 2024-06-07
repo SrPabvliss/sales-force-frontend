@@ -50,7 +50,7 @@ export const createColumns = (
     },
   },
   {
-    accessorKey: 'person',
+    accessorKey: 'personFullName',
     header: 'Nombre',
     cell: ({ row }) => {
       const person: IPerson = row.getValue('person')

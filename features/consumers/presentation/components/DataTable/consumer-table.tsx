@@ -76,8 +76,8 @@ export const ConsumersTable = ({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filtra por nombre..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+          value={(table.getColumn('person')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('person')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

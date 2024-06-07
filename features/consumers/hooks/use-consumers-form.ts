@@ -1,32 +1,28 @@
 import { usePathname, useRouter } from 'next/navigation'
 
 // import { LocationType } from '@/features/locations/models/ILocation'
+
 import * as yup from 'yup'
 
-import { IPerson } from '../../../shared/interfaces/IPerson'
 import { useConsumersStore } from '../context/consumers-store'
-import { ConsumerType, IConsumer } from '../models/IConsumer'
+import { ConsumerType, IConsumer, ICreateConsumer, IUpdateConsumer } from '../models/IConsumer'
 
 export function useConsumersForm(currentConsumer?: IConsumer) {
   const { createConsumer, updateConsumer } = useConsumersStore()
   const router = useRouter()
   const pathname = usePathname()
 
-  // const defaultPerson: Omit<IPerson, 'id'> = {
-  //   name: '',
-  //   secondName: '',
-  //   lastName: '',
-  //   secondLastName: '',
-  //   email: '',
-  //   phone: '',
-  //   dni: '',
-  //   gender: undefined,
-  //   birthdate: undefined,
-  //   location: { id: 0, name: '', isActive: true, type: LocationType.CITY},
-  // }
-
-  const initialValues: Omit<IConsumer, 'id'> = {
-    person: currentConsumer?.person || ({} as IPerson),
+  const initialValues = {
+    name: currentConsumer?.person?.name || '',
+    secondName: currentConsumer?.person?.secondName || '',
+    lastName: currentConsumer?.person?.lastName || '',
+    secondLastName: currentConsumer?.person?.secondLastName || '',
+    email: currentConsumer?.person?.email || '',
+    phone: currentConsumer?.person?.phone || '',
+    dni: currentConsumer?.person?.dni || '',
+    gender: currentConsumer?.person?.gender || '',
+    birthdate: currentConsumer?.person?.birthdate || null,
+    locationId: currentConsumer?.person?.location.id.toString() || '',
     isActive: currentConsumer?.isActive ?? true,
     isCustomer: currentConsumer?.isCustomer ?? false,
     type: currentConsumer?.type || ConsumerType.NATURAL,
@@ -39,12 +35,48 @@ export function useConsumersForm(currentConsumer?: IConsumer) {
   })
 
   const handleSubmit = async (data: any) => {
+    const {
+      name,
+      dni,
+      secondName,
+      lastName,
+      secondLastName,
+      gender,
+      email,
+      phone,
+      birthdate,
+      locationId,
+      isActive,
+      isCustomer,
+      type,
+    } = data
+    console.log(data)
+
+    const personData = {
+      dni,
+      name,
+      secondName,
+      lastName,
+      secondLastName,
+      gender,
+      email: email || null,
+      phone: phone ? phone.toString() : null,
+      birthdate,
+      locationId: Number(locationId),
+    }
+
+    const consumerData = {
+      type,
+      isCustomer,
+      isActive,
+      person: personData,
+    }
     if (currentConsumer) {
-      await updateConsumer(currentConsumer.id, data)
+      await updateConsumer(currentConsumer.id, consumerData as IUpdateConsumer)
       router.push(pathname.split('/').slice(0, -2).join('/'))
       return
     }
-    await createConsumer(data)
+    await createConsumer(consumerData as ICreateConsumer)
     router.push(pathname.replace('/new', ''))
   }
 
