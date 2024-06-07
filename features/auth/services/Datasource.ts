@@ -1,18 +1,15 @@
-// fetch axios, http
-
 import { AxiosClient } from '@/core/infrastructure/http/AxiosClient'
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
+import { API_ROUTES } from '@/shared/api-routes/api-routes'
+import { IApiModule } from '@/shared/interfaces/IModule'
 
 import { UserAdapter } from '../adapters/UserAdapter'
 import { IApiUser } from '../models/IApiUser'
-import { IUser } from '../models/IUser'
-
-// UserClass
-
-// client HttpCLient = AxiosCLient | FetchClient
+import { IAuth, IUser } from '../models/IUser'
 
 interface UserDatasource {
-  fetchUser(): Promise<IUser>
+  login(credentials: IAuth): Promise<IUser>
+  getAccessModules(id: number): Promise<number[]>
 }
 
 export class UserDatasourceImpl implements UserDatasource {
@@ -26,8 +23,13 @@ export class UserDatasourceImpl implements UserDatasource {
     return new UserDatasourceImpl()
   }
 
-  async fetchUser(): Promise<IUser> {
-    const response = await this.httpClient.get<IApiUser>('https://pokeapi.co/api/v2/pokemon/ditto')
-    return UserAdapter.toDomain(response)
+  async login(credentials: IAuth): Promise<IUser> {
+    const data = await this.httpClient.post<IApiUser>(API_ROUTES.AUTH.LOGIN, credentials)
+    return UserAdapter.toDomain(data)
+  }
+
+  async getAccessModules(id: number): Promise<number[]> {
+    const rawData = await this.httpClient.get<IApiModule[]>(API_ROUTES.AUTH.GET_ACCESS_MODULES(id))
+    return rawData.map((module) => module.id)
   }
 }

@@ -9,7 +9,14 @@ export interface ISubmodule {
 }
 
 export interface IModule {
-  title: string
+  name: string
   alias: string
   submodules: ISubmodule[]
+}
+
+export interface IApiModule {
+  id: number
+  name: string
+  description: string
+  isActive: boolean
 }

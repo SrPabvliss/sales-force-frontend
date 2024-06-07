@@ -1,4 +1,9 @@
 export const API_ROUTES = {
+  AUTH: {
+    LOGIN: '/auth/login',
+    LOGOUT: '/auth/logout',
+    GET_ACCESS_MODULES: (id: number) => `/employees/${id}/permissions`,
+  },
   BRANDS: {
     GET: '/brands',
     CREATE: '/brands',

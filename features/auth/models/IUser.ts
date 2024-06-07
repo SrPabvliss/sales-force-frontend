@@ -1,12 +1,18 @@
+import { IPerson } from '@/shared/interfaces/IPerson'
+
+export enum EmployeeRole {
+  SELLER = 'SELLER',
+  SUPERVISOR = 'SUPERVISOR',
+  ADMIN = 'ADMIN',
+}
 export interface IUser {
   id: number
-  firstLastName: string
-  firstName: string
-  role: string
-  accessModules: number[]
+  role: EmployeeRole
+  isActive: boolean
+  person: IPerson
 }
 
 export interface IAuth {
-  email: string
+  username: string
   password: string
 }
