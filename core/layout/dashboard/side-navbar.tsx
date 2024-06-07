@@ -20,7 +20,6 @@ export const SideNavBar = () => {
 
   const modules = user ? getSubmodules(accessModules) : []
 
-  console.log(accessModules)
   return (
     <div className="relative min-w-[80px] border-r border-secondary pb-10 pt-14">
       <div className="absolute right-[-20px] top-7">

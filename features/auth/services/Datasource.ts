@@ -1,6 +1,7 @@
 import { AxiosClient } from '@/core/infrastructure/http/AxiosClient'
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
-import { API_ROUTES } from '@/shared/api-routes/api-routes'
+import { setCookie } from '@/core/utils/CookiesUtil'
+import { ACCESS_TOKEN_COOKIE_NAME, API_ROUTES } from '@/shared/api-routes/api-routes'
 import { IApiModule } from '@/shared/interfaces/IModule'
 
 import { UserAdapter } from '../adapters/UserAdapter'
@@ -25,6 +26,7 @@ export class UserDatasourceImpl implements UserDatasource {
 
   async login(credentials: IAuth): Promise<IUser> {
     const data = await this.httpClient.post<IApiUser>(API_ROUTES.AUTH.LOGIN, credentials)
+    data.token && setCookie(ACCESS_TOKEN_COOKIE_NAME, data.token)
     return UserAdapter.toDomain(data)
   }
 

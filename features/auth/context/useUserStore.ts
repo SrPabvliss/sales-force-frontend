@@ -6,6 +6,7 @@ import { LocationType } from '@/features/locations/models/ILocation'
 import { MODULES } from '@/shared/constants/submodules'
 import { IModule } from '@/shared/interfaces/IModule'
 import { PersonGender } from '@/shared/interfaces/IPerson'
+import toast from 'react-hot-toast'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -61,7 +62,11 @@ export const UseAccountStore = create<StoreState>(
       login: async (credentials) => {
         const user = await UserDatasourceImpl.getInstance().login(credentials)
         get().getAccessModules(user.id)
-        if (!user || !user.id || !get().accessModules) return
+        if (!user || !user.id || !get().accessModules) {
+          toast.error('Algo salió mal, por favor intente nuevamente.')
+          return
+        }
+        toast.success(`Bienvenido ${user.person.name}!`)
         set({ user })
       },
       getSubmodules: (modules) => {
