@@ -17,6 +17,7 @@ const CreatePage: FC = () => {
     products: ProductsCreateView,
     consumers: ConsumersCreateView,
     locations: LocationsCreateView,
+    consumers: ConsumersCreateView,
   }
 
   const CreateView = AvaliableCreateViews[submodule]

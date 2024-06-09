@@ -1,10 +1,12 @@
 import { BarChart, FileText, MapPin, Package, ShoppingCart, Tag, Users } from 'lucide-react'
 
+import { IModule } from '../interfaces/IModule'
+
 type variants = 'default' | 'ghost'
 
-export const SUBMODULES = {
+export const MODULES = {
   1: {
-    title: 'Administración',
+    name: 'Administración',
     alias: 'admin',
     submodules: [
       {
@@ -50,9 +52,9 @@ export const SUBMODULES = {
         alias: 'services',
       },
     ],
-  },
+  } as IModule,
   2: {
-    title: 'Supervisión',
+    name: 'Supervisión',
     alias: 'superv',
     submodules: [
       {
@@ -86,9 +88,9 @@ export const SUBMODULES = {
         alias: 'locations',
       },
     ],
-  },
+  } as IModule,
   3: {
-    title: 'Ventas',
+    name: 'Ventas',
     alias: 'ventas',
     submodules: [
       {
@@ -116,5 +118,5 @@ export const SUBMODULES = {
         alias: 'consumers',
       },
     ],
-  },
+  } as IModule,
 }

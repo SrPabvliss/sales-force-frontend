@@ -25,7 +25,7 @@ export function Nav({ modules, isCollapsed }: NavProps) {
         {modules.map((module, moduleIndex) => (
           <div key={moduleIndex}>
             <h3 className={cn('py-2  text-lg font-semibold text-muted-foreground', isCollapsed && 'text-sm')}>
-              {!isCollapsed ? module.title : module.alias.toUpperCase()}
+              {!isCollapsed ? module.name : module.alias.toUpperCase()}
             </h3>
             <ul className="flex flex-col gap-1 ">
               {module.submodules.map((submodule, submoduleIndex) =>

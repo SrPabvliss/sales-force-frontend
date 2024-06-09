@@ -4,6 +4,7 @@ import { useConsumersStore } from '../../context/consumers-store'
 import { EditBreadCrumb } from '../components/edit-breadcrumb'
 import { NewEditForm } from '../components/new-edit-form'
 
+
 export const ConsumersEditView = ({ id }: { id: number }) => {
   const { consumers } = useConsumersStore()
   const currentBrand = consumers.find((consumer) => consumer.id === id)

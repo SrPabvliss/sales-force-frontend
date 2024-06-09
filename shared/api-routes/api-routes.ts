@@ -1,4 +1,11 @@
+export const ACCESS_TOKEN_COOKIE_NAME = 'access_token'
+
 export const API_ROUTES = {
+  AUTH: {
+    LOGIN: '/auth/login',
+    LOGOUT: '/auth/logout',
+    GET_ACCESS_MODULES: (id: number) => `/employees/${id}/permissions`,
+  },
   BRANDS: {
     GET: '/brands',
     CREATE: '/brands',
@@ -28,5 +35,11 @@ export const API_ROUTES = {
     CREATE: '/locations',
     UPDATE: (id: number) => `/locations/${id}`,
     DELETE: (id: number) => `/locations/${id}`,
+  },
+  CONSUMERS: {
+    GET: '/consumers',
+    CREATE: '/consumers',
+    UPDATE: (id: number) => `/consumers/${id}`,
+    DELETE: (id: number) => `/consumers/${id}`,
   },
 }

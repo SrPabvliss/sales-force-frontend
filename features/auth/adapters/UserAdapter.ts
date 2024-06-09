@@ -6,11 +6,10 @@ import { IUser } from '../models/IUser'
 export class UserAdapter {
   static toDomain(data: IApiUser): IUser {
     return {
-      id: data.id,
-      firstLastName: data.firstLastName,
-      firstName: data.firstName,
-      role: data.role,
-      accessModules: data.accessModules,
+      id: data.employee.id,
+      role: data.employee.role,
+      isActive: data.employee.isActive,
+      person: data.employee.person,
     }
   }
 }

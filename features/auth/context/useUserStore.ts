@@ -2,44 +2,82 @@
 
 // create -> Datasource.create()
 
-import { SUBMODULES } from '@/shared/constants/submodules'
+import { LocationType } from '@/features/locations/models/ILocation'
+import { MODULES } from '@/shared/constants/submodules'
 import { IModule } from '@/shared/interfaces/IModule'
+import { PersonGender } from '@/shared/interfaces/IPerson'
+import toast from 'react-hot-toast'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { IUser } from '../models/IUser'
+import { EmployeeRole, IAuth, IUser } from '../models/IUser'
+import { UserDatasourceImpl } from '../services/Datasource'
 
 interface StoreState {
   user: IUser | undefined
+  accessModules: number[]
+  setAccessModules: (modules: number[]) => void
+  getAccessModules: (id: number) => void
+  login: (credentials: IAuth) => void
   setUser: (user?: IUser) => void
   getSubmodules: (modules: number[]) => IModule[]
-  // retreiveFromCookie: () => Promise<boolean>
 }
 
 const DEFAULT_USER: IUser = {
   id: 0,
-  firstLastName: 'Villacres',
-  firstName: 'Pablo',
-  role: 'ADMIN',
-  accessModules: [1, 2, 3],
+  role: EmployeeRole.SELLER,
+  isActive: false,
+  person: {
+    id: 0,
+    dni: '',
+    birthdate: new Date(),
+    gender: PersonGender.MALE,
+    name: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    location: {
+      id: 0,
+      isActive: false,
+      name: '',
+      type: LocationType.COUNTRY,
+    },
+  },
 }
+
+const DEFAULT_MODULES: number[] = []
 
 const STORE_NAME = 'user'
 
 export const UseAccountStore = create<StoreState>(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: DEFAULT_USER,
+      accessModules: DEFAULT_MODULES,
+      setAccessModules: (modules) => set({ accessModules: modules }),
+      getAccessModules: async (id) => {
+        const modules = await UserDatasourceImpl.getInstance().getAccessModules(id)
+        set({ accessModules: modules })
+      },
+      login: async (credentials) => {
+        const user = await UserDatasourceImpl.getInstance().login(credentials)
+        get().getAccessModules(user.id)
+        if (!user || !user.id || !get().accessModules) {
+          toast.error('Algo salió mal, por favor intente nuevamente.')
+          return
+        }
+        toast.success(`Bienvenido ${user.person.name}!`)
+        set({ user })
+      },
+      getSubmodules: (modules) => {
+        return modules.map((module) => MODULES[module as keyof typeof MODULES])
+      },
       setUser: (user?: IUser | undefined) => {
         if (!user) {
           set({ user: undefined })
           return
         }
-        // aqui maneejo la lógica
         set({ user })
-      },
-      getSubmodules: (modules: number[]) => {
-        return modules.map((module) => SUBMODULES[module as keyof typeof SUBMODULES])
       },
 
       // retreiveFromCookie: async () => {

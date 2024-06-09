@@ -2,6 +2,7 @@
 'use client'
 
 import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { IModule } from '@/shared/interfaces/IModule'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 
@@ -11,13 +12,13 @@ import { Nav } from './nav'
 
 export const SideNavBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const { user, getSubmodules } = UseAccountStore()
+  const { user, getSubmodules, accessModules } = UseAccountStore()
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed)
   }
 
-  const modules = user ? getSubmodules(user.accessModules) : []
+  const modules = user ? getSubmodules(accessModules) : []
 
   return (
     <div className="relative min-w-[80px] border-r border-secondary pb-10 pt-14">
@@ -27,7 +28,7 @@ export const SideNavBar = () => {
         </Button>
       </div>
       <div className="h-full overflow-y-scroll scrollbar-hide">
-        {user && <Nav isCollapsed={isCollapsed} modules={modules} />}
+        {user && <Nav isCollapsed={isCollapsed} modules={modules as IModule[]} />}
       </div>
     </div>
   )
