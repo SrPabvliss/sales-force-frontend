@@ -1,4 +1,3 @@
-
 import { useLocationsStore } from '@/features/locations/context/locations-store'
 import { FMKInput } from '@/shared/components/formik/FormikInput'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
@@ -8,7 +7,6 @@ import React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-
 
 import { FMKDatePicker } from '../../../../shared/components/formik/FormikDatePicker'
 import { PersonGender, PersonGenderOptions } from '../../../../shared/interfaces/IPerson'
