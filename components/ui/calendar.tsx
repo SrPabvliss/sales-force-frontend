@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
+import { format, setMonth } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import * as React from 'react'
-import { DayPicker } from 'react-day-picker'
+import { DayPicker, useDayPicker, useNavigation } from 'react-day-picker'
 
 import { buttonVariants } from '@/components/ui/button'
 
 import { cn } from '@/lib/utils'
+
+import { Select, SelectItem, SelectContent, SelectTrigger } from './select'
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -20,7 +23,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
         month: 'space-y-4',
         caption: 'flex justify-center pt-1 relative items-center',
-        caption_label: 'text-sm font-medium',
+        caption_label: 'text-sm font-medium hidden',
         nav: 'space-x-1 flex items-center',
         nav_button: cn(
           buttonVariants({ variant: 'outline' }),
@@ -43,11 +46,80 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         day_disabled: 'text-muted-foreground opacity-50',
         day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
         day_hidden: 'invisible',
+        caption_dropdowns: 'flex space-x-2',
         ...classNames,
       }}
       components={{
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        Dropdown: (props) => {
+          const { fromDate, fromMonth, fromYear, toDate, toMonth, toYear } = useDayPicker()
+          const { goToMonth, currentMonth } = useNavigation()
+
+          if (props.name === 'months') {
+            const selectItems = Array.from({ length: 12 }, (_, i) => ({
+              value: i.toString(),
+              label: format(setMonth(new Date(), i), 'MMMM'),
+            }))
+            return (
+              <Select
+                onValueChange={(newValue) => {
+                  const newDate = new Date(currentMonth)
+                  newDate.setMonth(parseInt(newValue))
+                  goToMonth(newDate)
+                }}
+                value={props.value?.toString()}
+              >
+                <SelectTrigger>{format(currentMonth, 'MMMM')}</SelectTrigger>
+                <SelectContent>
+                  {selectItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )
+          } else if (props.name === 'years') {
+            const earliestYear = fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear()
+
+            const latestYear = toYear || toMonth?.getFullYear() || toDate?.getFullYear()
+
+            let selectItems: { label: string; value: string }[] = []
+
+            if (earliestYear && latestYear) {
+              const yearsLength = latestYear - earliestYear + 1
+
+              selectItems = Array.from({ length: yearsLength }, (_, i) => {
+                return {
+                  label: (earliestYear + i).toString(),
+                  value: (earliestYear + i).toString(),
+                }
+              })
+            }
+
+            return (
+              <Select
+                onValueChange={(newValue) => {
+                  const newDate = new Date(currentMonth)
+                  newDate.setFullYear(parseInt(newValue))
+                  goToMonth(newDate)
+                }}
+                value={props.value?.toString()}
+              >
+                <SelectTrigger>{currentMonth.getFullYear()}</SelectTrigger>
+                <SelectContent>
+                  {selectItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )
+          }
+          return null
+        },
       }}
       {...props}
     />

@@ -1,6 +1,4 @@
-'use client'
-
-import { IConsumer } from '@/features/consumers/models/IConsumer'
+import { IEmployee } from '@/features/users/models/IEmployee'
 import {
   ColumnFiltersState,
   SortingState,
@@ -29,12 +27,12 @@ import DataTableBody from './table-body'
 import DataTableFooter from './table-footer'
 import DataTableHeader from './table-header'
 
-export const ConsumersTable = ({
+export const EmployeesTable = ({
   data,
   handleEdit,
   handleDelete,
 }: {
-  data: IConsumer[]
+  data: IEmployee[]
   handleEdit: (id: number) => void
   handleDelete: (id: number) => void
 }) => {

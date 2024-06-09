@@ -29,6 +29,7 @@ export const createColumns = (
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="border border-white bg-white "
       />
     ),
     cell: ({ row }) => (
@@ -51,6 +52,7 @@ export const createColumns = (
   },
   {
     accessorKey: 'personFullName',
+    accessorFn: (row) => `${row.person.name} ${row.person.lastName}`,
     header: 'Nombre',
     cell: ({ row }) => {
       const person: IPerson = row.getValue('person')
@@ -83,7 +85,6 @@ export const createColumns = (
     cell: ({ row }) =>
       row.getValue('isActive') === true ? <Badge>Activo</Badge> : <Badge variant="outline">Inactivo</Badge>,
   },
-
   {
     id: 'actions',
     enableHiding: false,
