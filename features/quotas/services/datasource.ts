@@ -4,22 +4,22 @@ import { API_ROUTES } from '@/shared/api-routes/api-routes'
 
 import { ICreateQuota, IUpdateQuota, IQuota } from '../models/IQuota'
 
-export interface LocationsDatasource {
+export interface QuotasDatasource {
   getAll(): Promise<IQuota[]>
   create(location: ICreateQuota): Promise<IQuota>
   update(id: number, location: IUpdateQuota): Promise<IQuota>
   delete(id: number): Promise<boolean>
 }
 
-export class ProductDataSourceImpl implements LocationsDatasource {
+export class QuotaDataSourceImpl implements QuotasDatasource {
   private httpClient: HttpHandler
 
   constructor() {
     this.httpClient = AxiosClient.getInstance()
   }
 
-  static getInstance(): ProductDataSourceImpl {
-    return new ProductDataSourceImpl()
+  static getInstance(): QuotaDataSourceImpl {
+    return new QuotaDataSourceImpl()
   }
 
   async getAll(): Promise<IQuota[]> {
