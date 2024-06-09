@@ -6,6 +6,13 @@ export enum PersonGender {
   OTHER = 'OTHER',
 }
 
+
+export const PersonGenderOptions = {
+  [PersonGender.FEMALE]: 'Femenino',
+  [PersonGender.MALE]: 'Masculino',
+  [PersonGender.OTHER]: 'Otro',
+}
+
 export interface IPerson {
   id: number
   dni: string
@@ -23,3 +30,6 @@ export interface IPerson {
 export interface ICreatePerson extends Omit<IPerson, 'id' | 'location'> {
   locationId: number
 }
+
+export interface IUpdatePerson extends Partial<ICreatePerson> {}
+

@@ -15,6 +15,7 @@ const CreatePage: FC = () => {
     brands: BrandsCreateView,
     categories: CategoriesCreateView,
     products: ProductsCreateView,
+    consumers: ConsumersCreateView,
     locations: LocationsCreateView,
     consumers: ConsumersCreateView,
   }
