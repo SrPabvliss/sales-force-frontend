@@ -40,7 +40,7 @@ export function useEmployeesForm(currentEmployee?: IEmployee) {
       secondName: yup.string(),
       lastName: yup.string().required('El apellido es requerido'),
       secondLastName: yup.string(),
-      gender: yup.string(),
+      gender: yup.string().required('El género es requerido'),
       email: yup.string().email('El correo no es válido').required('El correo es requerido'),
       phone: yup.string(),
       birthdate: yup.date(),
@@ -60,10 +60,10 @@ export function useEmployeesForm(currentEmployee?: IEmployee) {
     if (!currentEmployee) {
       await createEmployee(formattedData as ICreateEmployee)
       router.push(pathname.replace('/new', ''))
-    } else {
-      await updateEmployee(currentEmployee!.id, formattedData as IUpdateEmployee)
-      router.push(pathname.split('/').slice(0, -2).join('/'))
+      return
     }
+    await updateEmployee(currentEmployee!.id, formattedData as IUpdateEmployee)
+    router.push(pathname.split('/').slice(0, -2).join('/'))
   }
 
   return { handleSubmit, validationSchema, initialValues }

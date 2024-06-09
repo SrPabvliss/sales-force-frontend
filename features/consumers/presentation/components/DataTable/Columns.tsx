@@ -1,4 +1,4 @@
-import { IConsumer } from '@/features/consumers/models/IConsumer'
+import { ConsumerType, IConsumer } from '@/features/consumers/models/IConsumer'
 import { ILocation } from '@/features/locations/models/ILocation'
 import { IPerson } from '@/shared/interfaces/IPerson'
 import { ColumnDef } from '@tanstack/react-table'
@@ -71,7 +71,13 @@ export const createColumns = (
   {
     accessorKey: 'type',
     header: 'Tipo',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('type')}</div>,
+    cell: ({ row }) => {
+      const typeLabelMap: { [key in ConsumerType]: string } = {
+        [ConsumerType.NATURAL]: 'Natural',
+        [ConsumerType.COMPANY]: 'Jurídico',
+      }
+      return <div className="capitalize">{typeLabelMap[row.getValue('type') as ConsumerType]}</div>
+    },
   },
   {
     accessorKey: 'isCustomer',
