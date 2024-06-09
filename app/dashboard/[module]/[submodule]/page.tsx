@@ -7,7 +7,7 @@ import { ConsumersListView } from '@/features/consumers/presentation/view/consum
 import { LocationsListView } from '@/features/locations/presentation/view/locations-list-view'
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
-import { UsersListView } from '@/features/users/presentation/view/users-list-view'
+import { EmployeesListView } from '@/features/users/presentation/view/employees-list-view'
 import { FC } from 'react'
 
 const Page: FC = () => {
@@ -17,7 +17,7 @@ const Page: FC = () => {
     brands: BrandsListView,
     categories: CategoriesListView,
     consumers: ConsumersListView,
-    users: UsersListView,
+    users: EmployeesListView,
     locations: LocationsListView,
     products: ProductsListView,
     services: ServicesListView,

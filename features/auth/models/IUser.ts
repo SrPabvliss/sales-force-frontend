@@ -5,6 +5,17 @@ export enum EmployeeRole {
   SUPERVISOR = 'SUPERVISOR',
   ADMIN = 'ADMIN',
 }
+
+export interface EmployeeTypeOption {
+  value: EmployeeRole
+  label: string
+}
+
+export const employeeTypeOptions: EmployeeTypeOption[] = [
+  { value: EmployeeRole.SELLER, label: 'Vendedor' },
+  { value: EmployeeRole.SUPERVISOR, label: 'Supervisor' },
+  { value: EmployeeRole.ADMIN, label: 'Administrador' },
+]
 export interface IUser {
   id: number
   role: EmployeeRole

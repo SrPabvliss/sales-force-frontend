@@ -1,3 +1,4 @@
+import { employeeTypeOptions } from '@/features/auth/models/IUser'
 import { useLocationsStore } from '@/features/locations/context/locations-store'
 import { FMKInput } from '@/shared/components/formik/FormikInput'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
@@ -10,21 +11,23 @@ import { Card } from '@/components/ui/card'
 
 import { FMKDatePicker } from '../../../../shared/components/formik/FormikDatePicker'
 import { PersonGender, PersonGenderOptions } from '../../../../shared/interfaces/IPerson'
-import { useConsumersForm } from '../../hooks/use-consumers-form'
-import { ConsumerType, ConsumerTypeOptions, IConsumer } from '../../models/IConsumer'
+import { useEmployeesForm } from '../../hooks/use-employees-forms'
+import { IEmployee } from '../../models/IEmployee'
 
-export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }) => {
-  const { initialValues, handleSubmit, validationSchema } = useConsumersForm(currentConsumer)
+export const NewEditForm = ({ currentEmployee }: { currentEmployee?: IEmployee }) => {
+  const { initialValues, handleSubmit, validationSchema } = useEmployeesForm(currentEmployee)
   const { locations } = useLocationsStore()
 
   return (
     <div className="flex justify-center gap-10">
       <Card className=" mb-16 p-8">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+        <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
           {() => (
             <Form className="flex  flex-col gap-6">
               <FMKInput name="person.dni" label="Cedula" />
               <div className="grid grid-cols-2 gap-5">
+                <FMKInput name="username" label="Usuario" />
+                <FMKInput name="password" label="Contraseña" />
                 <FMKInput name="person.name" label="Nombre" />
                 <FMKInput name="person.secondName" label="Segundo Nombre" />
                 <FMKInput name="person.lastName" label="Apellido" />
@@ -33,6 +36,7 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
                 <FMKInput name="person.phone" label="Teléfono" />
 
                 <FMKDatePicker name="person.birthdate" label="Fecha de nacimiento" />
+
                 <FMKSelect
                   name="person.gender"
                   label="Género"
@@ -51,18 +55,10 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
                   }))}
                 />
 
-                <FMKSelect
-                  name="type"
-                  label="Tipo de consumidor"
-                  options={Object.values(ConsumerType).map((type) => ({
-                    label: ConsumerTypeOptions[type],
-                    value: type,
-                  }))}
-                />
+                <FMKSelect name="role" label="Rol" options={employeeTypeOptions} />
               </div>
 
-              <FMKSwitch name="isActive" label="Consumidor activo" />
-              <FMKSwitch name="isCustomer" label="Es cliente" />
+              <FMKSwitch name="isActive" label="Empleado activo" />
 
               <Button type="submit" className="btn-primary">
                 Guardar

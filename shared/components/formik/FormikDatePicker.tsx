@@ -1,9 +1,7 @@
-'use client'
-
 import { format, isBefore, isAfter } from 'date-fns'
 import { useField, FieldHookConfig } from 'formik'
 import { Calendar as CalendarIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -17,11 +15,19 @@ interface FMKDatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputEle
   name: string
   minDate?: Date
   maxDate?: Date
+  initialDate?: Date
 }
 
-export const FMKDatePicker: React.FC<FMKDatePickerProps> = ({ label, minDate, maxDate, ...props }) => {
+export const FMKDatePicker: React.FC<FMKDatePickerProps> = ({ label, minDate, maxDate, initialDate, ...props }) => {
   const [field, meta, helpers] = useField(props as FieldHookConfig<Date>)
-  const [date, setDate] = useState<Date | undefined>(field.value)
+  const [date, setDate] = useState<Date | undefined>(initialDate || field.value)
+
+  useEffect(() => {
+    if (initialDate) {
+      setDate(initialDate)
+      helpers.setValue(initialDate)
+    }
+  }, [])
 
   const handleDateChange = (selectedDate: Date | undefined) => {
     if (selectedDate) {
@@ -57,7 +63,16 @@ export const FMKDatePicker: React.FC<FMKDatePickerProps> = ({ label, minDate, ma
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
-          <Calendar mode="single" selected={date} onSelect={handleDateChange} initialFocus disabled={isDateDisabled} />
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={handleDateChange}
+            initialFocus
+            disabled={isDateDisabled}
+            captionLayout="dropdown-buttons"
+            fromYear={minDate?.getFullYear() || new Date().getFullYear() - 80}
+            toYear={maxDate?.getFullYear() || new Date().getFullYear()}
+          />
         </PopoverContent>
       </Popover>
       {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}

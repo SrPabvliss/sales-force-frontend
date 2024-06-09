@@ -1,4 +1,5 @@
-import { ILocation, LocationType } from '@/features/locations/models/ILocation'
+import { EmployeeRole } from '@/features/auth/models/IUser'
+import { IEmployee } from '@/features/users/models/IEmployee'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -19,7 +20,7 @@ import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
 export const createColumns = (
   handleEdit: (id: number) => void,
   handleDelete: (id: number) => void,
-): ColumnDef<ILocation>[] => [
+): ColumnDef<IEmployee>[] => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -27,7 +28,7 @@ export const createColumns = (
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="border border-white bg-white "
+        className="border border-white bg-white"
       />
     ),
     cell: ({ row }) => (
@@ -41,34 +42,57 @@ export const createColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
-    header: 'Nombre',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
-  },
-  {
-    accessorKey: 'type',
-    header: 'Tipo',
+    accessorKey: 'person.dni',
+    header: 'Cédula',
     cell: ({ row }) => {
-      const locationTypeLabelMap: { [key in LocationType]: string } = {
-        [LocationType.COUNTRY]: 'País',
-        [LocationType.STATE]: 'Estado',
-        [LocationType.CITY]: 'Ciudad',
-        [LocationType.NEIGHBORHOOD]: 'Barrio',
-      }
-
-      return <div className="capitalize">{locationTypeLabelMap[row.getValue('type') as LocationType]}</div>
+      const person = row.original.person
+      return person ? <div>{person.dni}</div> : <div>Sin DNI</div>
     },
   },
   {
-    accessorKey: 'parent',
-    header: 'Pertenece a',
-    cell: ({ row }) => <div className="capitalize">{(row.getValue('parent') as ILocation)?.name ?? 'No aplica'}</div>,
+    accessorKey: 'personFullName',
+    header: 'Nombre',
+    accessorFn: (row) => `${row.person.name} ${row.person.lastName}`,
+    cell: ({ row }) => {
+      const person = row.original.person
+      return person ? <div>{`${person.name} ${person.lastName}`}</div> : <div>Sin Nombre</div>
+    },
+  },
+  {
+    accessorKey: 'username',
+    header: 'Usuario',
+    cell: ({ row }) => {
+      const employee: IEmployee = row.original
+      return <div>{employee.username}</div>
+    },
+  },
+  {
+    accessorKey: 'person.location.name',
+    header: 'Ubicación',
+    cell: ({ row }) => {
+      const person = row.original.person
+      const location = person?.location
+      return location ? <div>{location.name}</div> : <div>Sin Ubicación</div>
+    },
+  },
+  {
+    accessorKey: 'role',
+    header: 'Rol',
+    cell: ({ row }) => {
+      const employeeTypeLableMap: { [key in EmployeeRole]: string } = {
+        [EmployeeRole.SELLER]: 'Vendedor',
+        [EmployeeRole.SUPERVISOR]: 'Supervisor',
+        [EmployeeRole.ADMIN]: 'Administrador',
+      }
+
+      return <div className="capitalize">{employeeTypeLableMap[row.original.role as EmployeeRole]}</div>
+    },
   },
   {
     accessorKey: 'isActive',
     header: 'Activo',
     cell: ({ row }) =>
-      row.getValue('isActive') === true ? <Badge>Activo</Badge> : <Badge variant="outline">Inactivo</Badge>,
+      row.original.isActive === true ? <Badge>Activo</Badge> : <Badge variant="outline">Inactivo</Badge>,
   },
   {
     id: 'actions',

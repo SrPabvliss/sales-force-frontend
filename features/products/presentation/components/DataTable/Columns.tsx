@@ -29,6 +29,7 @@ export const createColumns = (
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="border border-white bg-white "
       />
     ),
     cell: ({ row }) => (
