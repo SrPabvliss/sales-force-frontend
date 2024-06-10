@@ -57,21 +57,25 @@ export const createColumns = (
   //   },
   // },
   {
-    accessorKey: 'type',
-    header: 'Tipo',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('type')}</div>,
+    accessorKey: 'startDate',
+    header: 'Fecha inicio',
+    cell: ({ row }) => <div className="capitalize">{row.getValue('startDate')}</div>,
   },
   {
-    accessorKey: 'isCustomer',
-    header: 'Cliente',
-    cell: ({ row }) =>
-      row.getValue('isCustomer') === true ? <Badge>Cliente</Badge> : <Badge variant="outline">No cliente</Badge>,
+    accessorKey: 'endDate',
+    header: 'Fecha finalizacion',
+    cell: ({ row }) => <div className="capitalize">{row.getValue('endDate')}</div>,
   },
   {
     accessorKey: 'isActive',
     header: 'Activo',
     cell: ({ row }) =>
       row.getValue('isActive') === true ? <Badge>Activo</Badge> : <Badge variant="outline">Inactivo</Badge>,
+  },
+  {
+    accessorKey: 'goal',
+    header: 'Meta',
+    cell: ({ row }) => <div>{row.getValue('goal')}</div>,
   },
 
   {
