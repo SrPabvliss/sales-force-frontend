@@ -1,7 +1,7 @@
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { ILocation, ILocationCreate, ILocationUpdate } from '../models/ILocation'
+import { ILocation, ICreateLocation, IUpdateLocation } from '../models/ILocation'
 import { ProductDataSourceImpl } from '../services/datasource'
 
 interface StoreState {
@@ -9,8 +9,8 @@ interface StoreState {
   setLocations: (locations: ILocation[]) => void
   getAllLocations: () => Promise<void>
   deleteLocation: (id: number) => Promise<void>
-  createLocation: (location: ILocationCreate) => Promise<void>
-  updateLocation: (id: number, location: ILocationUpdate) => Promise<void>
+  createLocation: (location: ICreateLocation) => Promise<void>
+  updateLocation: (id: number, location: IUpdateLocation) => Promise<void>
 }
 
 const DEFAULT_LOCATIONS: ILocation[] = []
@@ -34,10 +34,10 @@ export const useLocationsStore = create<StoreState>(
           get().getAllLocations()
         }
       },
-      createLocation: async (location: ILocationCreate) => {
+      createLocation: async (location: ICreateLocation) => {
         await ProductDataSourceImpl.getInstance().create(location)
       },
-      updateLocation: async (id: number, location: ILocationUpdate) => {
+      updateLocation: async (id: number, location: IUpdateLocation) => {
         await ProductDataSourceImpl.getInstance().update(id, location)
       },
     }),

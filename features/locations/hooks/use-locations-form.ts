@@ -3,7 +3,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import * as yup from 'yup'
 
 import { useLocationsStore } from '../context/locations-store'
-import { ILocation, ILocationCreate, ILocationUpdate, LocationType } from '../models/ILocation'
+import { ILocation, ICreateLocation, IUpdateLocation, LocationType } from '../models/ILocation'
 
 export function useLocationsForm({ currentLocation, hasParent }: { currentLocation?: ILocation; hasParent?: boolean }) {
   const { createLocation: createCategory, updateLocation: updateCategory } = useLocationsStore()
@@ -24,19 +24,19 @@ export function useLocationsForm({ currentLocation, hasParent }: { currentLocati
     parentId: yup.string(),
   })
 
-  const handleSubmit = async (data: ILocationCreate | ILocationUpdate) => {
+  const handleSubmit = async (data: ICreateLocation | IUpdateLocation) => {
     const fomattedData = {
       ...data,
       parentId: hasParent === true ? Number(data.parentId) : undefined,
     }
 
     if (currentLocation) {
-      await updateCategory(currentLocation.id, fomattedData as ILocationUpdate)
+      await updateCategory(currentLocation.id, fomattedData as IUpdateLocation)
       router.push(pathname.split('/').slice(0, -2).join('/'))
       return
     }
 
-    await createCategory(fomattedData as ILocationCreate)
+    await createCategory(fomattedData as ICreateLocation)
     router.push(pathname.replace('/new', ''))
   }
 

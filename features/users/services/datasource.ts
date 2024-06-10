@@ -42,7 +42,7 @@ export class EmployeesDatasourceImpl implements EmployeeDatasource {
   }
 
   async delete(id: number): Promise<boolean> {
-    return await this.httpClient.delete<boolean>(`${API_ROUTES.EMPLOYEES.DELETE(id)}`)
+    return await this.httpClient.patch<boolean>(`${API_ROUTES.EMPLOYEES.TOGGLE_ACTIVE(id)}`)
   }
 
   // async getPermissions(id: number): Promise<number[]> {
