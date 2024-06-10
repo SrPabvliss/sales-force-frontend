@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { useQuotasStore } from '../context/quotas-store'
 
-export function useLocationsView() {
+export function useQuotasView() {
   const router = useRouter()
   const pathname = usePathname()
   const { quotas, getAllQuotas, deleteQuota } = useQuotasStore()
