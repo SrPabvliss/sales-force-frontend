@@ -6,6 +6,8 @@ import { CategoriesCreateView } from '@/features/categories/presentation/view/ca
 import { ConsumersCreateView } from '@/features/consumers/presentation/view/consumers-create-view'
 import { LocationsCreateView } from '@/features/locations/presentation/view/locations-create-view'
 import { ProductsCreateView } from '@/features/products/presentation/view/products-create-view'
+import { ServicesCreateView } from '@/features/services-feature/presentation/view/services-create-view'
+import { EmployeesCreateView } from '@/features/users/presentation/view/employees-create-view'
 import { FC } from 'react'
 
 const CreatePage: FC = () => {
@@ -17,7 +19,8 @@ const CreatePage: FC = () => {
     products: ProductsCreateView,
     consumers: ConsumersCreateView,
     locations: LocationsCreateView,
-    consumers: ConsumersCreateView,
+    users: EmployeesCreateView,
+    services: ServicesCreateView,
   }
 
   const CreateView = AvaliableCreateViews[submodule]

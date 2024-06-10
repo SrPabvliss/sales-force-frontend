@@ -1,7 +1,7 @@
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { IProduct, IProductCreate, IProductUpdate } from '../models/IProduct'
+import { IProduct, ICreateProduct, IUpdateProduct } from '../models/IProduct'
 import { ProductsDatasourceImpl } from '../services/datasource'
 
 interface StoreState {
@@ -9,8 +9,8 @@ interface StoreState {
   setProducts: (products: IProduct[]) => void
   getAllProducts: () => Promise<void>
   deleteProduct: (id: number) => Promise<void>
-  createProduct: (product: IProductCreate) => Promise<void>
-  updateProduct: (id: number, product: IProductUpdate) => Promise<void>
+  createProduct: (product: ICreateProduct) => Promise<void>
+  updateProduct: (id: number, product: IUpdateProduct) => Promise<void>
 }
 
 const DEFAULT_PRODUCTS: IProduct[] = []
@@ -34,10 +34,10 @@ export const useProductsStore = create<StoreState>(
           get().getAllProducts()
         }
       },
-      createProduct: async (product: IProductCreate) => {
+      createProduct: async (product: ICreateProduct) => {
         await ProductsDatasourceImpl.getInstance().create(product)
       },
-      updateProduct: async (id: number, product: IProductUpdate) => {
+      updateProduct: async (id: number, product: IUpdateProduct) => {
         await ProductsDatasourceImpl.getInstance().update(id, product)
       },
     }),

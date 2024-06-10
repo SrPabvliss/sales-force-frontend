@@ -25,10 +25,10 @@ export interface ILocation {
   parent?: ILocation
 }
 
-export interface ILocationCreate extends Omit<ILocation, 'id' | 'parent'> {
+export interface ICreateLocation extends Omit<ILocation, 'id' | 'parent'> {
   parentId?: number
 }
 
-export interface ILocationUpdate extends Partial<ILocationCreate> {
+export interface IUpdateLocation extends Partial<ICreateLocation> {
   parentId?: number
 }

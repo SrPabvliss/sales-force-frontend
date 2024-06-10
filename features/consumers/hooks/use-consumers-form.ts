@@ -1,7 +1,5 @@
 import { usePathname, useRouter } from 'next/navigation'
 
-// import { LocationType } from '@/features/locations/models/ILocation'
-
 import * as yup from 'yup'
 
 import { useConsumersStore } from '../context/consumers-store'
@@ -13,70 +11,56 @@ export function useConsumersForm(currentConsumer?: IConsumer) {
   const pathname = usePathname()
 
   const initialValues = {
-    name: currentConsumer?.person?.name || '',
-    secondName: currentConsumer?.person?.secondName || '',
-    lastName: currentConsumer?.person?.lastName || '',
-    secondLastName: currentConsumer?.person?.secondLastName || '',
-    email: currentConsumer?.person?.email || '',
-    phone: currentConsumer?.person?.phone || '',
-    dni: currentConsumer?.person?.dni || '',
-    gender: currentConsumer?.person?.gender || '',
-    birthdate: currentConsumer?.person?.birthdate || null,
-    locationId: currentConsumer?.person?.location.id.toString() || '',
-    isActive: currentConsumer?.isActive ?? true,
-    isCustomer: currentConsumer?.isCustomer ?? false,
     type: currentConsumer?.type || ConsumerType.NATURAL,
+    isCustomer: currentConsumer?.isCustomer ?? false,
+    isActive: currentConsumer?.isActive ?? true,
+    person: {
+      dni: currentConsumer?.person.dni || '',
+      name: currentConsumer?.person.name || '',
+      secondName: currentConsumer?.person.secondName || '',
+      lastName: currentConsumer?.person.lastName || '',
+      secondLastName: currentConsumer?.person.secondLastName || '',
+      gender: currentConsumer?.person.gender || '',
+      email: currentConsumer?.person.email || '',
+      phone: currentConsumer?.person.phone || '',
+      birthdate: currentConsumer?.person.birthdate || new Date(),
+      locationId: currentConsumer?.person.location.id.toString() || '',
+    },
   }
 
   const validationSchema = yup.object().shape({
     isActive: yup.boolean().required('El estado es requerido'),
     isCustomer: yup.boolean().required('El tipo de cliente es requerido'),
     type: yup.string().required('El tipo de consumidor es requerido'),
+    person: yup.object().shape({
+      dni: yup.string().required('La cédula es requerida'),
+      name: yup.string().required('El nombre es requerido'),
+      secondName: yup.string(),
+      lastName: yup.string().required('El apellido es requerido'),
+      secondLastName: yup.string(),
+      gender: yup.string().required('El género es requerido'),
+      email: yup.string().email('El correo no es válido').required('El correo es requerido'),
+      phone: yup.string(),
+      birthdate: yup.date(),
+      locationId: yup.string().required('La ubicación es requerida'),
+    }),
   })
 
   const handleSubmit = async (data: any) => {
-    const {
-      name,
-      dni,
-      secondName,
-      lastName,
-      secondLastName,
-      gender,
-      email,
-      phone,
-      birthdate,
-      locationId,
-      isActive,
-      isCustomer,
-      type,
-    } = data
-    console.log(data)
-
-    const personData = {
-      dni,
-      name,
-      secondName,
-      lastName,
-      secondLastName,
-      gender,
-      email: email || null,
-      phone: phone ? phone.toString() : null,
-      birthdate,
-      locationId: Number(locationId),
+    const formattedData = {
+      ...data,
+      person: {
+        ...data.person,
+        locationId: Number(data.person?.locationId),
+      },
     }
 
-    const consumerData = {
-      type,
-      isCustomer,
-      isActive,
-      person: personData,
-    }
     if (currentConsumer) {
-      await updateConsumer(currentConsumer.id, consumerData as IUpdateConsumer)
+      await updateConsumer(currentConsumer.id, formattedData as IUpdateConsumer)
       router.push(pathname.split('/').slice(0, -2).join('/'))
       return
     }
-    await createConsumer(consumerData as ICreateConsumer)
+    await createConsumer(formattedData as ICreateConsumer)
     router.push(pathname.replace('/new', ''))
   }
 

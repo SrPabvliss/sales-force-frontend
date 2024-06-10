@@ -6,6 +6,8 @@ import { CategoriesEditView } from '@/features/categories/presentation/view/cate
 import { ConsumersEditView } from '@/features/consumers/presentation/view/consumers-edit-view'
 import { LocationsEditView } from '@/features/locations/presentation/view/locations-edit-view'
 import { ProductsEditView } from '@/features/products/presentation/view/products-edit-view'
+import { ServicesEditView } from '@/features/services-feature/presentation/view/services-edit-view'
+import { EmployeesEditView } from '@/features/users/presentation/view/employees-edit-view'
 import { FC } from 'react'
 
 interface EditViewProps {
@@ -21,6 +23,8 @@ const EditPage: FC = () => {
     products: ProductsEditView,
     consumers: ConsumersEditView,
     locations: LocationsEditView,
+    users: EmployeesEditView,
+    services: ServicesEditView,
   }
 
   const EditView = AvaliableEditViews[submodule]

@@ -19,22 +19,22 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
 
   return (
     <div className="flex justify-center gap-10">
-      <Card className=" p-8">
+      <Card className=" mb-16 p-8">
         <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
           {() => (
             <Form className="flex  flex-col gap-6">
-              <FMKInput name="dni" label="Cedula" />
+              <FMKInput name="person.dni" label="Cedula" />
               <div className="grid grid-cols-2 gap-5">
-                <FMKInput name="name" label="Nombre" />
-                <FMKInput name="secondName" label="Segundo Nombre" />
-                <FMKInput name="lastName" label="Apellido" />
-                <FMKInput name="secondLastName" label="Segundo Apellido" />
-                <FMKInput name="email" label="Correo" />
-                <FMKInput name="phone" label="Teléfono" />
+                <FMKInput name="person.name" label="Nombre" />
+                <FMKInput name="person.secondName" label="Segundo Nombre" />
+                <FMKInput name="person.lastName" label="Apellido" />
+                <FMKInput name="person.secondLastName" label="Segundo Apellido" />
+                <FMKInput name="person.email" label="Correo" />
+                <FMKInput name="person.phone" label="Teléfono" />
 
-                <FMKDatePicker name="birthdate" label="Fecha de nacimiento" />
+                <FMKDatePicker name="person.birthdate" label="Fecha de nacimiento" />
                 <FMKSelect
-                  name="gender"
+                  name="person.gender"
                   label="Género"
                   options={Object.values(PersonGender).map((gender) => ({
                     label: PersonGenderOptions[gender],
@@ -43,7 +43,7 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
                 />
 
                 <FMKSelect
-                  name="locationId"
+                  name="person.locationId"
                   label="Ubicación"
                   options={locations.map((location) => ({
                     label: location.name,

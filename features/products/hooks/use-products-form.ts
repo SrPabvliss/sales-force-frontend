@@ -3,7 +3,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import * as yup from 'yup'
 
 import { useProductsStore } from '../context/products-store'
-import { IProduct, IProductCreate, IProductUpdate } from '../models/IProduct'
+import { IProduct, ICreateProduct, IUpdateProduct } from '../models/IProduct'
 
 export function useProductForm(currentProduct?: IProduct) {
   const { createProduct: createCategory, updateProduct: updateCategory } = useProductsStore()
@@ -30,7 +30,7 @@ export function useProductForm(currentProduct?: IProduct) {
     categoryId: yup.string().required('La categoría es requerida'),
   })
 
-  const handleSubmit = async (data: IProductCreate | IProductUpdate) => {
+  const handleSubmit = async (data: ICreateProduct | IUpdateProduct) => {
     const formattedData = {
       ...data,
       brandId: Number(data.brandId),
@@ -38,12 +38,12 @@ export function useProductForm(currentProduct?: IProduct) {
     }
 
     if (currentProduct) {
-      await updateCategory(currentProduct.id, formattedData as IProductUpdate)
+      await updateCategory(currentProduct.id, formattedData as IUpdateProduct)
       router.push(pathname.split('/').slice(0, -2).join('/'))
       return
     }
 
-    await createCategory(formattedData as IProductCreate)
+    await createCategory(formattedData as ICreateProduct)
     router.push(pathname.replace('/new', ''))
   }
 

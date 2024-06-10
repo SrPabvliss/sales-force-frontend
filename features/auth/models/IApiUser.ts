@@ -1,10 +1,6 @@
 import { IPerson } from '@/shared/interfaces/IPerson'
 
-enum EmployeeRole {
-  SELLER = 'SELLER',
-  SUPERVISOR = 'SUPERVISOR',
-  ADMIN = 'ADMIN',
-}
+import { EmployeeRole } from './IUser'
 
 interface IEmployee {
   id: number
