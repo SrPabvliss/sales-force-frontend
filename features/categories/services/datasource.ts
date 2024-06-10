@@ -35,6 +35,6 @@ export class CategoriesDatasourceImpl implements CategoriesDatasource {
   }
 
   async delete(id: number): Promise<boolean> {
-    return await this.httpClient.delete<boolean>(`${API_ROUTES.CATEGORIES.DELETE(id)}`)
+    return await this.httpClient.patch<boolean>(`${API_ROUTES.CATEGORIES.TOGGLE_ACTIVE(id)}`)
   }
 }

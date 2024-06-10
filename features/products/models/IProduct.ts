@@ -12,9 +12,9 @@ export interface IProduct {
   category: ICategory
 }
 
-export interface IProductCreate extends Omit<IProduct, 'id' | 'category' | 'brand'> {
+export interface ICreateProduct extends Omit<IProduct, 'id' | 'category' | 'brand'> {
   brandId: number
   categoryId: number
 }
 
-export interface IProductUpdate extends Partial<IProductCreate> {}
+export interface IUpdateProduct extends Partial<ICreateProduct> {}
