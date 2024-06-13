@@ -2,7 +2,6 @@
 
 // create -> Datasource.create()
 
-import { LocationType } from '@/features/locations/models/ILocation'
 import { MODULES } from '@/shared/constants/submodules'
 import { IModule } from '@/shared/interfaces/IModule'
 import { PersonGender } from '@/shared/interfaces/IPerson'
@@ -40,7 +39,6 @@ const DEFAULT_USER: IUser = {
       id: 0,
       isActive: false,
       name: '',
-      type: LocationType.COUNTRY,
     },
   },
 }

@@ -3,40 +3,31 @@ import { usePathname, useRouter } from 'next/navigation'
 import * as yup from 'yup'
 
 import { useLocationsStore } from '../context/locations-store'
-import { ILocation, ICreateLocation, IUpdateLocation, LocationType } from '../models/ILocation'
+import { ILocation, ICreateLocation, IUpdateLocation } from '../models/ILocation'
 
-export function useLocationsForm({ currentLocation, hasParent }: { currentLocation?: ILocation; hasParent?: boolean }) {
-  const { createLocation: createCategory, updateLocation: updateCategory } = useLocationsStore()
+export function useLocationsForm({ currentLocation }: { currentLocation?: ILocation }) {
+  const { createLocation, updateLocation } = useLocationsStore()
   const router = useRouter()
   const pathname = usePathname()
 
   const initialValues = {
     name: currentLocation?.name || '',
     isActive: currentLocation?.isActive ?? true,
-    type: currentLocation?.type || LocationType.COUNTRY,
-    parentId: currentLocation?.parent?.id.toString() || undefined,
   }
 
   const validationSchema = yup.object().shape({
     name: yup.string().required('El nombre es requerido'),
     isActive: yup.boolean().required('El estado es requerido'),
-    type: yup.string().required('El tipo es requerido'),
-    parentId: yup.string(),
   })
 
   const handleSubmit = async (data: ICreateLocation | IUpdateLocation) => {
-    const fomattedData = {
-      ...data,
-      parentId: hasParent === true ? Number(data.parentId) : undefined,
-    }
-
     if (currentLocation) {
-      await updateCategory(currentLocation.id, fomattedData as IUpdateLocation)
+      await updateLocation(currentLocation.id, data as IUpdateLocation)
       router.push(pathname.split('/').slice(0, -2).join('/'))
       return
     }
 
-    await createCategory(fomattedData as ICreateLocation)
+    await createLocation(data as ICreateLocation)
     router.push(pathname.replace('/new', ''))
   }
 
