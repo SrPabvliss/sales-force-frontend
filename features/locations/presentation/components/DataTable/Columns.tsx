@@ -1,4 +1,4 @@
-import { ILocation, LocationType } from '@/features/locations/models/ILocation'
+import { ILocation } from '@/features/locations/models/ILocation'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -44,25 +44,6 @@ export const createColumns = (
     accessorKey: 'name',
     header: 'Nombre',
     cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
-  },
-  {
-    accessorKey: 'type',
-    header: 'Tipo',
-    cell: ({ row }) => {
-      const locationTypeLabelMap: { [key in LocationType]: string } = {
-        [LocationType.COUNTRY]: 'País',
-        [LocationType.STATE]: 'Estado',
-        [LocationType.CITY]: 'Ciudad',
-        [LocationType.NEIGHBORHOOD]: 'Barrio',
-      }
-
-      return <div className="capitalize">{locationTypeLabelMap[row.getValue('type') as LocationType]}</div>
-    },
-  },
-  {
-    accessorKey: 'parent',
-    header: 'Pertenece a',
-    cell: ({ row }) => <div className="capitalize">{(row.getValue('parent') as ILocation)?.name ?? 'No aplica'}</div>,
   },
   {
     accessorKey: 'isActive',
