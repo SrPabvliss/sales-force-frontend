@@ -1,4 +1,4 @@
-import { BarChart, FileText, MapPin, Package, ShoppingCart, Tag, Users } from 'lucide-react'
+import { BarChart, CircleDollarSign, FileText, MapPin, Package, ShoppingCart, Tag, Users } from 'lucide-react'
 
 import { IModule } from '../interfaces/IModule'
 
@@ -32,6 +32,12 @@ export const MODULES = {
         icon: Users,
         variant: 'ghost' as variants,
         alias: 'users',
+      },
+      {
+        title: 'Cuotas',
+        icon: CircleDollarSign,
+        variant: 'ghost' as variants,
+        alias: 'quotas',
       },
       {
         title: 'Ubicaciones',

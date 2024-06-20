@@ -6,6 +6,7 @@ import { CategoriesListView } from '@/features/categories/presentation/view/cate
 import { ConsumersListView } from '@/features/consumers/presentation/view/consumers-list-view'
 import { LocationsListView } from '@/features/locations/presentation/view/locations-list-view'
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
+import { QuotasListView } from '@/features/quotas/presentation/view/quotas-list-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
 import { EmployeesListView } from '@/features/users/presentation/view/employees-list-view'
 import { FC } from 'react'
@@ -21,6 +22,7 @@ const Page: FC = () => {
     locations: LocationsListView,
     products: ProductsListView,
     services: ServicesListView,
+    quotas: QuotasListView,
   }
 
   const ListView = AvaliableListViews[submodule]
