@@ -19,7 +19,7 @@ export const CreateBreadCrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href={pathname.slice(0, pathname.lastIndexOf('/'))}>Consumidores</BreadcrumbLink>
+          <BreadcrumbLink href={pathname.slice(0, pathname.lastIndexOf('/'))}>Cuotas</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

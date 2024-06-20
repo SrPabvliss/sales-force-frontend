@@ -5,24 +5,42 @@ import * as yup from 'yup'
 import { useQuotasStore } from '../context/quotas-store'
 import { ICreateQuota, IQuota, IUpdateQuota } from '../models/IQuota'
 
-export function useLocationsForm({ currentQuota }: { currentQuota?: IQuota }) {
-  const { createQuota: createQuota, updateQuota: updateQuota } = useQuotasStore()
+export function useQuotasForm({ currentQuota }: { currentQuota?: IQuota }) {
+  const { createQuota, updateQuota } = useQuotasStore()
   const router = useRouter()
   const pathname = usePathname()
 
-  const initialValues = {}
+  const initialValues = {
+    employeeId: currentQuota?.employee.id.toString() || '',
+    goal: currentQuota?.goal || 0,
+    commission: currentQuota?.commission || 0,
+    startDate: currentQuota?.startDate || new Date(),
+    endDate: currentQuota?.endDate || new Date(new Date().setDate(new Date().getDate() + 30)),
+    isActive: currentQuota?.isActive || true,
+    isAchieved: currentQuota?.isAchieved || false,
+  }
 
   const validationSchema = yup.object().shape({
-    name: yup.string().required('El nombre es requerido'),
-    isActive: yup.boolean().required('El estado es requerido'),
-    type: yup.string().required('El tipo es requerido'),
-    parentId: yup.string(),
+    employeeId: yup.string().required('El empleado es requerido'),
+    goal: yup.number().required('El valor de meta es requerido'),
+    commission: yup
+      .number()
+      .required('La comisión porcentual es requerida')
+      .min(1, 'La comision mínima es de 1%')
+      .max(100, 'La comision máxima es de 100%'),
+    startDate: yup.date().required('La fecha de inicio es requerida'),
+    endDate: yup
+      .date()
+      .required('La fecha de fin es requerida')
+      .min(yup.ref('startDate'), 'La fecha de fin debe ser mayor a la fecha de inicio'),
+    isActive: yup.boolean().required('La cuota activa es requerida'),
+    isAchieved: yup.boolean().required('La cuota completada es requerida'),
   })
 
   const handleSubmit = async (data: ICreateQuota | IUpdateQuota) => {
     const fomattedData = {
       ...data,
-      //parentId: hasParent === true ? Number(data.parentId) : undefined,
+      employeeId: Number(data.employeeId),
     }
 
     if (currentQuota) {

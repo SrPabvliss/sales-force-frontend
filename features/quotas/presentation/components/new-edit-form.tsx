@@ -1,4 +1,4 @@
-import { useLocationsStore } from '@/features/locations/context/locations-store'
+import { useEmployeesStore } from '@/features/users/context/employees-store'
 import { FMKInput } from '@/shared/components/formik/FormikInput'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
 import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'
@@ -9,60 +9,45 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 import { FMKDatePicker } from '../../../../shared/components/formik/FormikDatePicker'
-import { PersonGender, PersonGenderOptions } from '../../../../shared/interfaces/IPerson'
-import { useConsumersForm } from '../../hooks/use-consumers-form'
-import { ConsumerType, ConsumerTypeOptions, IConsumer } from '../../models/IConsumer'
+import { useQuotasForm } from '../../hooks/use-quotas-form'
+import { IQuota } from '../../models/IQuota'
 
-export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }) => {
-  const { initialValues, handleSubmit, validationSchema } = useConsumersForm(currentConsumer)
-  const { locations } = useLocationsStore()
+export const NewEditForm = ({ currentQuota }: { currentQuota?: IQuota }) => {
+  const { initialValues, handleSubmit, validationSchema } = useQuotasForm({ currentQuota })
+  const { employees } = useEmployeesStore()
 
   return (
     <div className="flex justify-center gap-10">
       <Card className=" p-8">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+        <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
           {() => (
             <Form className="flex  flex-col gap-6">
-              <FMKInput name="dni" label="Cedula" />
-              <div className="grid grid-cols-2 gap-5">
-                <FMKInput name="name" label="Nombre" />
-                <FMKInput name="secondName" label="Segundo Nombre" />
-                <FMKInput name="lastName" label="Apellido" />
-                <FMKInput name="secondLastName" label="Segundo Apellido" />
-                <FMKInput name="email" label="Correo" />
-                <FMKInput name="phone" label="Teléfono" />
-
-                <FMKDatePicker name="birthdate" label="Fecha de nacimiento" />
+              <div className="w-full">
                 <FMKSelect
-                  name="gender"
-                  label="Género"
-                  options={Object.values(PersonGender).map((gender) => ({
-                    label: PersonGenderOptions[gender],
-                    value: gender,
-                  }))}
-                />
-
-                <FMKSelect
-                  name="locationId"
-                  label="Ubicación"
-                  options={locations.map((location) => ({
-                    label: location.name,
-                    value: location.id.toString(),
-                  }))}
-                />
-
-                <FMKSelect
-                  name="type"
-                  label="Tipo de consumidor"
-                  options={Object.values(ConsumerType).map((type) => ({
-                    label: ConsumerTypeOptions[type],
-                    value: type,
+                  name="employeeId"
+                  label="Empleado"
+                  options={employees.map((employee) => ({
+                    label: `${employee.person.name} ${employee.person.lastName}`,
+                    value: employee.id.toString(),
                   }))}
                 />
               </div>
+              <div className="flex gap-4">
+                <FMKInput name="goal" label="Valor de meta" type="number" />
+                <FMKInput name="commission" label="Comisión porcentual" type="number" />
+              </div>
 
-              <FMKSwitch name="isActive" label="Consumidor activo" />
-              <FMKSwitch name="isCustomer" label="Es cliente" />
+              <div className="flex w-full gap-4">
+                <div className="flex-1">
+                  <FMKDatePicker name="startDate" label="Fecha de inicio" />
+                </div>
+                <div className="flex-1">
+                  <FMKDatePicker name="endDate" label="Fecha de fin" />
+                </div>
+              </div>
+
+              <FMKSwitch name="isActive" label="Cuota Activa" />
+              <FMKSwitch name="isAchieved" label="Completada" />
 
               <Button type="submit" className="btn-primary">
                 Guardar

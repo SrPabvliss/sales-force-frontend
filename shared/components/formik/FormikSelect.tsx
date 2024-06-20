@@ -33,7 +33,7 @@ export const FMKSelect: React.FC<FMKSelectProps> = ({ label, options, ...props }
       <Label htmlFor={props.name}>{label}</Label>
       <div className="w-full">
         <Select onValueChange={(value) => helpers.setValue(value)} value={field.value}>
-          <SelectTrigger className="w-full max-w-xs">
+          <SelectTrigger className="w-full ">
             <SelectValue placeholder={props.placeholder || 'Select an option'} />
           </SelectTrigger>
           <SelectContent>

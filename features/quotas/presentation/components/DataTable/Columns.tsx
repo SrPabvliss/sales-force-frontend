@@ -65,6 +65,11 @@ export const createColumns = (
     cell: ({ row }) => <div>{`$ ${row.getValue('goal')}`}</div>,
   },
   {
+    accessorKey: 'commission',
+    header: 'Comisión',
+    cell: ({ row }) => <div>{`${row.getValue('commission')}%`}</div>,
+  },
+  {
     accessorKey: 'startDate',
     header: 'Fecha inicio',
     cell: ({ row }) => (

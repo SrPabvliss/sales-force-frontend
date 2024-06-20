@@ -76,8 +76,8 @@ export const QuotasTable = ({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filtra por nombre..."
-          value={(table.getColumn('')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('')?.setFilterValue(event.target.value)}
+          value={(table.getColumn('personFullName')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('personFullName')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

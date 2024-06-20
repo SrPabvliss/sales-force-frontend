@@ -16,7 +16,7 @@ export const QuotasEditView = ({ id }: { id: number }) => {
           </div>
           <EditBreadCrumb />
           <div className="mt-4 ">
-            <NewEditForm currentConsumer={currentQuota} />
+            <NewEditForm currentQuota={currentQuota} />
           </div>
         </div>
       </div>
