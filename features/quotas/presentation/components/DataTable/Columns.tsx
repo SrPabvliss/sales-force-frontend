@@ -28,6 +28,7 @@ export const createColumns = (
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="border border-white bg-white "
       />
     ),
     cell: ({ row }) => (
@@ -40,42 +41,60 @@ export const createColumns = (
     enableSorting: false,
     enableHiding: false,
   },
-  // {
-  //   accessorKey: 'person',
-  //   header: 'Cédula',
-  //   cell: ({ row }) => {
-  //     const person: IPerson = row.getValue('person')
-  //     return <div>{person.dni}</div>
-  //   },
-  // },
-  // {
-  //   accessorKey: 'personFullName',
-  //   header: 'Nombre',
-  //   cell: ({ row }) => {
-  //     const person: IPerson = row.getValue('person')
-  //     return <div>{`${person.name}  ${person.lastName}`}</div>
-  //   },
-  // },
+
+  {
+    accessorKey: 'person.dni',
+    header: 'Cédula',
+    cell: ({ row }) => {
+      const person = row.original.employee.person
+      return person ? <div>{person.dni}</div> : <div>Sin DNI</div>
+    },
+  },
+  {
+    accessorKey: 'personFullName',
+    header: 'Nombre',
+    accessorFn: (row) => `${row.employee.person.name} ${row.employee.person.lastName}`,
+    cell: ({ row }) => {
+      const person = row.original.employee.person
+      return person ? <div>{`${person.name} ${person.lastName}`}</div> : <div>Sin Nombre</div>
+    },
+  },
+  {
+    accessorKey: 'goal',
+    header: 'Meta',
+    cell: ({ row }) => <div>{`$ ${row.getValue('goal')}`}</div>,
+  },
   {
     accessorKey: 'startDate',
     header: 'Fecha inicio',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('startDate')}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {new Date(row.getValue('startDate')).toLocaleDateString('es', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })}
+      </div>
+    ),
   },
   {
     accessorKey: 'endDate',
     header: 'Fecha finalizacion',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('endDate')}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {new Date(row.getValue('endDate')).toLocaleDateString('es', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })}
+      </div>
+    ),
   },
   {
     accessorKey: 'isActive',
     header: 'Activo',
     cell: ({ row }) =>
       row.getValue('isActive') === true ? <Badge>Activo</Badge> : <Badge variant="outline">Inactivo</Badge>,
-  },
-  {
-    accessorKey: 'goal',
-    header: 'Meta',
-    cell: ({ row }) => <div>{row.getValue('goal')}</div>,
   },
 
   {
@@ -95,7 +114,7 @@ export const createColumns = (
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
-              Copiar el ID de la categoría
+              Copiar el ID de la cuota
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
@@ -104,8 +123,8 @@ export const createColumns = (
               title="¿Estás seguro?"
               description={
                 category.isActive
-                  ? '¿Estás seguro que deseas desactivar esta categoría?'
-                  : '¿Estás seguro que deseas activar esta categoría?'
+                  ? '¿Estás seguro que deseas desactivar esta cuota?'
+                  : '¿Estás seguro que deseas activar esta cuota?'
               }
               isDestructive={category.isActive}
             >

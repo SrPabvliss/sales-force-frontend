@@ -7,14 +7,14 @@ import { useQuotasStore } from '../context/quotas-store'
 export function useQuotasView() {
   const router = useRouter()
   const pathname = usePathname()
-  const { quotas, getAllQuotas, deleteQuota } = useQuotasStore()
+  const { quotas, getAllQuotas, toggleActive } = useQuotasStore()
 
   useEffect(() => {
     getAllQuotas()
   }, [getAllQuotas])
 
   const handleDelete = async (id: number) => {
-    await deleteQuota(id)
+    await toggleActive(id)
   }
 
   const handleEdit = (id: number) => {

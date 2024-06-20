@@ -48,4 +48,12 @@ export const API_ROUTES = {
     UPDATE: (id: number) => `/employees/${id}`,
     TOGGLE_ACTIVE: (id: number) => `/employees/${id}/toggle-active`,
   },
+  QUOTAS: {
+    GET: '/quotas',
+    GET_BY_EMPLOYEE: (id: number) => `/employees/${id}/quotas`,
+    GET_QUOTA: (id: number) => `/quotas/${id}`,
+    CREATE: '/quotas',
+    UPDATE: (id: number) => `/quotas/${id}`,
+    TOGGLE_ACTIVE: (id: number) => `/quotas/${id}/toggle-active`,
+  },
 }

@@ -6,9 +6,11 @@ import { ICreateQuota, IUpdateQuota, IQuota } from '../models/IQuota'
 
 export interface QuotasDatasource {
   getAll(): Promise<IQuota[]>
-  create(location: ICreateQuota): Promise<IQuota>
-  update(id: number, location: IUpdateQuota): Promise<IQuota>
-  delete(id: number): Promise<boolean>
+  getByEmployee(id: number): Promise<IQuota[]>
+  getQuota(id: number): Promise<IQuota>
+  create(quota: ICreateQuota): Promise<IQuota>
+  update(id: number, quota: IUpdateQuota): Promise<IQuota>
+  toogleActive(id: number): Promise<boolean>
 }
 
 export class QuotaDataSourceImpl implements QuotasDatasource {
@@ -23,18 +25,26 @@ export class QuotaDataSourceImpl implements QuotasDatasource {
   }
 
   async getAll(): Promise<IQuota[]> {
-    return await this.httpClient.get<IQuota[]>(API_ROUTES.LOCATIONS.GET)
+    return await this.httpClient.get<IQuota[]>(API_ROUTES.QUOTAS.GET)
   }
 
-  async create(location: ICreateQuota): Promise<IQuota> {
-    return await this.httpClient.post<IQuota>(API_ROUTES.LOCATIONS.CREATE, location)
+  async getByEmployee(id: number): Promise<IQuota[]> {
+    return await this.httpClient.get<IQuota[]>(API_ROUTES.QUOTAS.GET_BY_EMPLOYEE(id))
   }
 
-  async update(id: number, location: IUpdateQuota): Promise<IQuota> {
-    return await this.httpClient.patch<IQuota>(`${API_ROUTES.LOCATIONS.UPDATE(id)}`, location)
+  async getQuota(id: number): Promise<IQuota> {
+    return await this.httpClient.get<IQuota>(API_ROUTES.QUOTAS.GET_QUOTA(id))
   }
 
-  async delete(id: number): Promise<boolean> {
-    return await this.httpClient.delete<boolean>(`${API_ROUTES.LOCATIONS.DELETE(id)}`)
+  async create(quota: ICreateQuota): Promise<IQuota> {
+    return await this.httpClient.post<IQuota>(API_ROUTES.QUOTAS.CREATE, quota)
+  }
+
+  async update(id: number, quota: IUpdateQuota): Promise<IQuota> {
+    return await this.httpClient.patch<IQuota>(`${API_ROUTES.QUOTAS.UPDATE(id)}`, quota)
+  }
+
+  async toogleActive(id: number): Promise<boolean> {
+    return await this.httpClient.patch<boolean>(API_ROUTES.QUOTAS.TOGGLE_ACTIVE(id))
   }
 }
