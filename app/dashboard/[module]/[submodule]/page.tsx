@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { BrandsListView } from '@/features/brands/presentation/view/brands-list-view'
 import { CategoriesListView } from '@/features/categories/presentation/view/categories-list-view'
 import { ConsumersListView } from '@/features/consumers/presentation/view/consumers-list-view'
+import { DelegationsListView } from '@/features/delegations/presentation/view/delegations-list-view'
 import { LocationsListView } from '@/features/locations/presentation/view/locations-list-view'
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
 import { QuotasListView } from '@/features/quotas/presentation/view/quotas-list-view'
@@ -23,6 +24,7 @@ const Page: FC = () => {
     products: ProductsListView,
     services: ServicesListView,
     quotas: QuotasListView,
+    delegations: DelegationsListView,
   }
 
   const ListView = AvaliableListViews[submodule]

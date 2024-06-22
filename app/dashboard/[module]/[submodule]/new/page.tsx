@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { BrandsCreateView } from '@/features/brands/presentation/view/brands-create-view'
 import { CategoriesCreateView } from '@/features/categories/presentation/view/categories-create-view'
 import { ConsumersCreateView } from '@/features/consumers/presentation/view/consumers-create-view'
+import { DelegationsCreateView } from '@/features/delegations/presentation/view/delegations-create-view'
 import { LocationsCreateView } from '@/features/locations/presentation/view/locations-create-view'
 import { ProductsCreateView } from '@/features/products/presentation/view/products-create-view'
 import { QuotasCreateView } from '@/features/quotas/presentation/view/quotas-create-view'
@@ -23,6 +24,7 @@ const CreatePage: FC = () => {
     users: EmployeesCreateView,
     services: ServicesCreateView,
     quotas: QuotasCreateView,
+    delegations: DelegationsCreateView,
   }
 
   const CreateView = AvaliableCreateViews[submodule]
