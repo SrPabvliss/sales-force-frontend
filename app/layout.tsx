@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn('flex h-screen w-full gap-4 ', inter.className, {
+        className={cn('flex h-screen max-h-screen w-full gap-4 ', inter.className, {
           'debug-screens': process.env.NODE_ENV === 'development',
         })}
       >

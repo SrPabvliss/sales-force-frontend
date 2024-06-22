@@ -12,6 +12,7 @@ export interface IEmployee {
 export interface ICreateEmployee extends Omit<IEmployee, 'id' | 'person'> {
   person: ICreatePerson
   password: string
+  moduleId: number[]
 }
 
 export interface IUpdateEmployee extends Partial<ICreateEmployee> {}

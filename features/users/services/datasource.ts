@@ -1,6 +1,7 @@
 import { AxiosClient } from '@/core/infrastructure/http/AxiosClient'
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
 import { API_ROUTES } from '@/shared/api-routes/api-routes'
+import { IApiModule } from '@/shared/interfaces/IModule'
 
 import { EmployeeAdapter } from '../Adapters/employees-adapter'
 import { IApiEmployee } from '../models/IApiEmployee'
@@ -11,8 +12,8 @@ export interface EmployeeDatasource {
   create(employee: ICreateEmployee): Promise<IEmployee>
   update(id: number, employee: IUpdateEmployee): Promise<IEmployee>
   delete(id: number): Promise<boolean>
-  // getPermissions(id: number): Promise<number[]>
-  // asignPermissions(id: number, permissions: number[]): Promise<boolean>
+  getPermissions(id: number): Promise<number[]>
+  assignPermissions(id: number, moduleId: number[]): Promise<boolean>
 }
 
 export class EmployeesDatasourceImpl implements EmployeeDatasource {
@@ -45,11 +46,14 @@ export class EmployeesDatasourceImpl implements EmployeeDatasource {
     return await this.httpClient.patch<boolean>(`${API_ROUTES.EMPLOYEES.TOGGLE_ACTIVE(id)}`)
   }
 
-  // async getPermissions(id: number): Promise<number[]> {
-  //   return await this.httpClient.get<number[]>(API_ROUTES.EMPLOYEES.GET_PERMISSIONS(id))
-  // }
+  async getPermissions(id: number): Promise<number[]> {
+    const rawData = await this.httpClient.get<IApiModule[]>(API_ROUTES.AUTH.GET_ACCESS_MODULES(id))
+    return rawData.map((module) => module.id)
+  }
 
-  // async asignPermissions(id: number, permissions: number[]): Promise<boolean> {
-  //   return await this.httpClient.post<boolean>(API_ROUTES.EMPLOYEES.ASIGN_PERMISSIONS(id), permissions)
-  // }
+  async assignPermissions(id: number, moduleId: number[]): Promise<boolean> {
+    return await this.httpClient.post<boolean>(API_ROUTES.EMPLOYEES.ASSIGN_PERMISSIONS(id), {
+      moduleId,
+    })
+  }
 }

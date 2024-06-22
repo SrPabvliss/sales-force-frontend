@@ -9,8 +9,10 @@ interface StoreState {
   setEmployees: (employees: IEmployee[]) => void
   getAllEmployees: () => Promise<void>
   deleteEmployee: (id: number) => Promise<void>
-  createEmployee: (employee: ICreateEmployee) => Promise<void>
-  updateEmployee: (id: number, employee: IUpdateEmployee) => Promise<void>
+  createEmployee: (employee: ICreateEmployee, moduleId: number[]) => Promise<void>
+  updateEmployee: (id: number, employee: IUpdateEmployee, moduleId: number[]) => Promise<void>
+  getPermissions: (id: number) => Promise<number[]>
+  assignPermissions: (id: number, moduleId: number[]) => Promise<boolean>
 }
 
 const DEFAULT_EMPLOYEES: IEmployee[] = []
@@ -34,11 +36,23 @@ export const useEmployeesStore = create<StoreState>(
           get().getAllEmployees()
         }
       },
-      createEmployee: async (employee: ICreateEmployee) => {
-        await EmployeesDatasourceImpl.getInstance().create(employee)
+      createEmployee: async (employee: ICreateEmployee, moduleId: number[]) => {
+        await EmployeesDatasourceImpl.getInstance()
+          .create(employee)
+          .then(async (response) => {
+            const { id } = response
+            await EmployeesDatasourceImpl.getInstance().assignPermissions(id, moduleId)
+          })
       },
-      updateEmployee: async (id: number, employee: IUpdateEmployee) => {
+      updateEmployee: async (id: number, employee: IUpdateEmployee, moduleId: number[]) => {
         await EmployeesDatasourceImpl.getInstance().update(id, employee)
+        await EmployeesDatasourceImpl.getInstance().assignPermissions(id, moduleId)
+      },
+      getPermissions: async (id: number) => {
+        return await EmployeesDatasourceImpl.getInstance().getPermissions(id)
+      },
+      assignPermissions: async (id: number, moduleId: number[]) => {
+        return await EmployeesDatasourceImpl.getInstance().assignPermissions(id, moduleId)
       },
     }),
     {

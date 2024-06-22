@@ -60,7 +60,6 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
                   }))}
                 />
               </div>
-
               <FMKSwitch name="isActive" label="Consumidor activo" />
               <FMKSwitch name="isCustomer" label="Es cliente" />
 
