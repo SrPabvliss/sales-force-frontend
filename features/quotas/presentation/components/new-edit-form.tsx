@@ -1,4 +1,4 @@
-import { useEmployeesStore } from '@/features/users/context/employees-store'
+import { useEmployeesStore } from '@/features/employees/context/employees-store'
 import { FMKInput } from '@/shared/components/formik/FormikInput'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
 import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'

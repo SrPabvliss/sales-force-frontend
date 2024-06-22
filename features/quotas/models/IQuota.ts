@@ -1,4 +1,4 @@
-import { IEmployee } from '@/features/users/models/IEmployee'
+import { IEmployee } from '@/features/employees/models/IEmployee'
 
 export interface IQuota {
   id: number

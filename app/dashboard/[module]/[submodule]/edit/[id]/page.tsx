@@ -5,11 +5,11 @@ import { BrandsEditView } from '@/features/brands/presentation/view/brands-edit-
 import { CategoriesEditView } from '@/features/categories/presentation/view/categories-edit-view'
 import { ConsumersEditView } from '@/features/consumers/presentation/view/consumers-edit-view'
 import { DelegationsEditView } from '@/features/delegations/presentation/view/delegations-edit-view'
+import { EmployeesEditView } from '@/features/employees/presentation/view/employees-edit-view'
 import { LocationsEditView } from '@/features/locations/presentation/view/locations-edit-view'
 import { ProductsEditView } from '@/features/products/presentation/view/products-edit-view'
 import { QuotasEditView } from '@/features/quotas/presentation/view/quotas-edit-view'
 import { ServicesEditView } from '@/features/services-feature/presentation/view/services-edit-view'
-import { EmployeesEditView } from '@/features/users/presentation/view/employees-edit-view'
 import { FC } from 'react'
 
 interface EditViewProps {
@@ -25,7 +25,7 @@ const EditPage: FC = () => {
     products: ProductsEditView,
     consumers: ConsumersEditView,
     locations: LocationsEditView,
-    users: EmployeesEditView,
+    employees: EmployeesEditView,
     services: ServicesEditView,
     quotas: QuotasEditView,
     delegations: DelegationsEditView,

@@ -16,38 +16,14 @@ type variants = 'default' | 'ghost'
 
 export const MODULES = {
   1: {
-    name: 'Administración',
-    alias: 'admin',
+    name: 'Comunes',
+    alias: 'comun',
     submodules: [
-      {
-        title: 'Marcas',
-        icon: Tag,
-        variant: 'ghost' as variants,
-        alias: 'brands',
-      },
-      {
-        title: 'Categorías',
-        icon: Tag,
-        variant: 'ghost' as variants,
-        alias: 'categories',
-      },
       {
         title: 'Consumidores',
         icon: Users,
         variant: 'ghost' as variants,
         alias: 'consumers',
-      },
-      {
-        title: 'Usuarios',
-        icon: Users,
-        variant: 'ghost' as variants,
-        alias: 'users',
-      },
-      {
-        title: 'Cuotas',
-        icon: CircleDollarSign,
-        variant: 'ghost' as variants,
-        alias: 'quotas',
       },
       {
         title: 'Ubicaciones',
@@ -76,6 +52,36 @@ export const MODULES = {
     ],
   } as IModule,
   2: {
+    name: 'Administración',
+    alias: 'admin',
+    submodules: [
+      {
+        title: 'Empleados',
+        icon: Users,
+        variant: 'ghost' as variants,
+        alias: 'employees',
+      },
+      {
+        title: 'Cuotas',
+        icon: CircleDollarSign,
+        variant: 'ghost' as variants,
+        alias: 'quotas',
+      },
+      {
+        title: 'Marcas',
+        icon: Tag,
+        variant: 'ghost' as variants,
+        alias: 'brands',
+      },
+      {
+        title: 'Categorías',
+        icon: Tag,
+        variant: 'ghost' as variants,
+        alias: 'categories',
+      },
+    ],
+  } as IModule,
+  3: {
     name: 'Supervisión',
     alias: 'superv',
     submodules: [
@@ -83,35 +89,29 @@ export const MODULES = {
         title: 'Ventas',
         icon: FileText,
         variant: 'ghost' as variants,
-        alias: 'sales',
-      },
-      {
-        title: 'Compras',
-        icon: FileText,
-        variant: 'ghost' as variants,
-        alias: 'purchases',
+        alias: 'sales_reports',
       },
       {
         title: 'Productos',
         icon: FileText,
         variant: 'ghost' as variants,
-        alias: 'products',
+        alias: 'products_reports',
       },
       {
         title: 'Consumidores',
         icon: FileText,
         variant: 'ghost' as variants,
-        alias: 'consumers',
+        alias: 'consumers_reports',
       },
       {
-        title: 'Ubicaciones',
+        title: 'Empleados',
         icon: FileText,
         variant: 'ghost' as variants,
-        alias: 'locations',
+        alias: 'employees_reports',
       },
     ],
   } as IModule,
-  3: {
+  4: {
     name: 'Ventas',
     alias: 'ventas',
     submodules: [
@@ -128,16 +128,16 @@ export const MODULES = {
         alias: 'opportunities',
       },
       {
-        title: 'Productos',
+        title: 'Ventas',
         icon: BarChart,
         variant: 'ghost' as variants,
-        alias: 'products',
+        alias: 'sales',
       },
       {
-        title: 'Consumidores',
+        title: 'Cotizaciones',
         icon: BarChart,
         variant: 'ghost' as variants,
-        alias: 'consumers',
+        alias: 'quotes',
       },
     ],
   } as IModule,

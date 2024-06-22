@@ -1,5 +1,5 @@
 import { IConsumer } from '@/features/consumers/models/IConsumer'
-import { IEmployee } from '@/features/users/models/IEmployee'
+import { IEmployee } from '@/features/employees/models/IEmployee'
 
 export interface IDelegation {
   id: number

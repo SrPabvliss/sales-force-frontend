@@ -1,6 +1,6 @@
 import { useConsumersStore } from '@/features/consumers/context/consumers-store'
+import { useEmployeesStore } from '@/features/employees/context/employees-store'
 import { useLocationsStore } from '@/features/locations/context/locations-store'
-import { useEmployeesStore } from '@/features/users/context/employees-store'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
 import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'
 import { Form, Formik } from 'formik'

@@ -1,5 +1,5 @@
 import { EmployeeRole } from '@/features/auth/models/IUser'
-import { IEmployee } from '@/features/users/models/IEmployee'
+import { IEmployee } from '@/features/employees/models/IEmployee'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 

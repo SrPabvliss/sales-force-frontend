@@ -1,4 +1,4 @@
-import { IEmployee } from '@/features/users/models/IEmployee'
+import { IEmployee } from '@/features/employees/models/IEmployee'
 import { flexRender, Table } from '@tanstack/react-table'
 
 import { TableBody, TableRow, TableCell } from '@/components/ui/table'
