@@ -1,0 +1,66 @@
+import { useConsumersStore } from '@/features/consumers/context/consumers-store'
+import { useEmployeesStore } from '@/features/users/context/employees-store'
+import { FMKSelect } from '@/shared/components/formik/FormikSelect'
+import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'
+import { Form, Formik } from 'formik'
+import React from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+
+import { useDelegationsStore } from '../../context/delegations-store'
+import { useDelegationForm } from '../../hooks/use-delegations-form'
+import { IDelegation } from '../../models/IDelegation'
+import { DelegationsTable } from './DataTable/delegations-table'
+
+export const NewEditForm = ({ currentDelegation }: { currentDelegation?: IDelegation }) => {
+  const { initialValues, handleSubmit, validationSchema } = useDelegationForm(currentDelegation)
+  const { employees } = useEmployeesStore()
+  const { consumers } = useConsumersStore()
+  const { getAllDelegationsByEmployee } = useDelegationsStore()
+
+  return (
+    <div className="flex justify-center gap-10">
+      <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
+        {({ values }) => (
+          <>
+            <Card className="w-1/3 p-8">
+              <Form className="flex flex-col gap-6">
+                <FMKSelect
+                  name="employeeId"
+                  label="Empleado"
+                  options={employees.map((employee) => ({
+                    label: `${employee.person.name} ${employee.person.lastName} - ${employee.person.dni}`,
+                    value: employee.id.toString(),
+                  }))}
+                />
+                <FMKSelect
+                  name="consumerId"
+                  label="Consumidor"
+                  options={consumers.map((consumer) => ({
+                    label: `${consumer.person.name} ${consumer.person.lastName} - ${consumer.person.dni}`,
+                    value: consumer.id.toString(),
+                  }))}
+                />
+                <FMKSwitch name="isActive" label="Delegación activa" />
+                <Button type="submit" className="btn-primary">
+                  Guardar
+                </Button>
+              </Form>
+            </Card>
+            {values.employeeId &&
+              (() => {
+                const delegations = getAllDelegationsByEmployee(Number(values.employeeId))
+
+                return (
+                  <Card className="w-4/6 p-8">
+                    <DelegationsTable data={delegations} />
+                  </Card>
+                )
+              })()}
+          </>
+        )}
+      </Formik>
+    </div>
+  )
+}

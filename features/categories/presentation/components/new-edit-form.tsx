@@ -11,7 +11,6 @@ import { ICategory } from '../../models/ICategory'
 
 export const NewEditForm = ({ currentCategory }: { currentCategory?: ICategory }) => {
   const { initialValues, handleSubmit, validationSchema } = useCategoriesForm(currentCategory)
-  console.log(currentCategory)
 
   return (
     <div className="flex justify-center gap-10">
