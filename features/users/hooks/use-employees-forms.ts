@@ -4,29 +4,54 @@ import * as yup from 'yup'
 
 import { useEmployeesStore } from '../context/employees-store'
 import { ICreateEmployee, IEmployee, IUpdateEmployee } from '../models/IEmployee'
+import { EmployeesDatasourceImpl } from '../services/datasource'
 
 export function useEmployeesForm(currentEmployee?: IEmployee) {
   const { createEmployee, updateEmployee } = useEmployeesStore()
   const router = useRouter()
   const pathname = usePathname()
 
-  const initialValues = {
-    username: currentEmployee?.username || '',
-    role: currentEmployee?.role || '',
-    isActive: currentEmployee?.isActive || true,
-    password: '',
-    person: {
-      dni: currentEmployee?.person.dni || '',
-      name: currentEmployee?.person.name || '',
-      secondName: currentEmployee?.person.secondName || '',
-      lastName: currentEmployee?.person.lastName || '',
-      secondLastName: currentEmployee?.person.secondLastName || '',
-      gender: currentEmployee?.person.gender || '',
-      email: currentEmployee?.person.email || '',
-      phone: currentEmployee?.person.phone || '',
-      birthdate: currentEmployee?.person.birthdate || new Date(),
-      locationId: currentEmployee?.person.location.id.toString() || '',
-    },
+  const getCurrentEmployeModules = async (id: number) => {
+    let modules = <number[]>[]
+    await EmployeesDatasourceImpl.getInstance()
+      .getPermissions(id)
+      .then((data) => {
+        modules = data
+      })
+
+    return modules
+  }
+
+  async function getInitialValues() {
+    let moduleId = <number[]>[]
+    if (currentEmployee?.id) {
+      try {
+        moduleId = await getCurrentEmployeModules(currentEmployee.id)
+      } catch (error) {
+        console.error('Error al obtener los módulos del empleado', error)
+        // Aquí puedes manejar el error como consideres apropiado
+      }
+    }
+
+    return {
+      username: currentEmployee?.username || '',
+      role: currentEmployee?.role || '',
+      isActive: currentEmployee?.isActive || true,
+      password: undefined,
+      person: {
+        dni: currentEmployee?.person.dni || '',
+        name: currentEmployee?.person.name || '',
+        secondName: currentEmployee?.person.secondName || '',
+        lastName: currentEmployee?.person.lastName || '',
+        secondLastName: currentEmployee?.person.secondLastName || '',
+        gender: currentEmployee?.person.gender || '',
+        email: currentEmployee?.person.email || '',
+        phone: currentEmployee?.person.phone || '',
+        birthdate: currentEmployee?.person.birthdate || new Date(),
+        locationId: currentEmployee?.person.location.id.toString() || '',
+      },
+      moduleId: moduleId,
+    }
   }
 
   const validationSchema = yup.object().shape({
@@ -46,11 +71,13 @@ export function useEmployeesForm(currentEmployee?: IEmployee) {
       birthdate: yup.date(),
       locationId: yup.string().required('La ubicación es requerida'),
     }),
+    moduleId: yup.array().of(yup.number()).required('Se deben seleccionar los módulos de acceso'),
   })
 
   const handleSubmit = async (data: ICreateEmployee | IUpdateEmployee) => {
+    const { moduleId, ...rest } = data
     const formattedData = {
-      ...data,
+      ...rest,
       person: {
         ...data.person,
         locationId: Number(data.person?.locationId),
@@ -58,13 +85,13 @@ export function useEmployeesForm(currentEmployee?: IEmployee) {
     }
 
     if (!currentEmployee) {
-      await createEmployee(formattedData as ICreateEmployee)
+      await createEmployee(formattedData as ICreateEmployee, moduleId as number[])
       router.push(pathname.replace('/new', ''))
       return
     }
-    await updateEmployee(currentEmployee!.id, formattedData as IUpdateEmployee)
+    await updateEmployee(currentEmployee!.id, formattedData as IUpdateEmployee, moduleId as number[])
     router.push(pathname.split('/').slice(0, -2).join('/'))
   }
 
-  return { handleSubmit, validationSchema, initialValues }
+  return { handleSubmit, validationSchema, getInitialValues }
 }

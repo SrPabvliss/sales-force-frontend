@@ -47,6 +47,8 @@ export const API_ROUTES = {
     CREATE: '/employees',
     UPDATE: (id: number) => `/employees/${id}`,
     TOGGLE_ACTIVE: (id: number) => `/employees/${id}/toggle-active`,
+    GET_PERMISSIONS: (id: number) => `/employees/${id}/permissions`,
+    ASSIGN_PERMISSIONS: (id: number) => `/employees/${id}/permissions`,
   },
   QUOTAS: {
     GET: '/quotas',

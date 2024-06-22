@@ -1,4 +1,5 @@
 import { useConsumersStore } from '@/features/consumers/context/consumers-store'
+import { useLocationsStore } from '@/features/locations/context/locations-store'
 import { useEmployeesStore } from '@/features/users/context/employees-store'
 import { FMKSelect } from '@/shared/components/formik/FormikSelect'
 import { FMKSwitch } from '@/shared/components/formik/FormikSwitch'
@@ -17,6 +18,7 @@ export const NewEditForm = ({ currentDelegation }: { currentDelegation?: IDelega
   const { initialValues, handleSubmit, validationSchema } = useDelegationForm(currentDelegation)
   const { employees } = useEmployeesStore()
   const { consumers } = useConsumersStore()
+  const { locations } = useLocationsStore()
   const { getAllDelegationsByEmployee } = useDelegationsStore()
 
   return (
@@ -35,12 +37,22 @@ export const NewEditForm = ({ currentDelegation }: { currentDelegation?: IDelega
                   }))}
                 />
                 <FMKSelect
+                  name="locationId"
+                  label="Ubicación"
+                  options={locations.map((location) => ({
+                    label: location.name,
+                    value: location.id.toString(),
+                  }))}
+                />
+                <FMKSelect
                   name="consumerId"
                   label="Consumidor"
-                  options={consumers.map((consumer) => ({
-                    label: `${consumer.person.name} ${consumer.person.lastName} - ${consumer.person.dni}`,
-                    value: consumer.id.toString(),
-                  }))}
+                  options={consumers
+                    .filter((consumer) => consumer.person.location.id === Number((values as any).locationId))
+                    .map((consumer) => ({
+                      label: `${consumer.person.name} ${consumer.person.lastName} - ${consumer.person.dni}	`,
+                      value: consumer.id.toString(),
+                    }))}
                 />
                 <FMKSwitch name="isActive" label="Delegación activa" />
                 <Button type="submit" className="btn-primary">
