@@ -11,6 +11,7 @@ import { LocationsEditView } from '@/features/locations/presentation/view/locati
 import { ProductsEditView } from '@/features/products/presentation/view/products-edit-view'
 import { QuotasEditView } from '@/features/quotas/presentation/view/quotas-edit-view'
 import { ServicesEditView } from '@/features/services-feature/presentation/view/services-edit-view'
+import { TasksEditView } from '@/features/tasks/presentation/view/tasks-edit-view'
 import { FC } from 'react'
 
 interface EditViewProps {
@@ -31,6 +32,7 @@ const EditPage: FC = () => {
     quotas: QuotasEditView,
     delegations: DelegationsEditView,
     chances: ChancesEditView,
+    tasks: TasksEditView,
   }
 
   const EditView = AvaliableEditViews[submodule]
