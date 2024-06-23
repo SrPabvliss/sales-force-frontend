@@ -1,7 +1,3 @@
-// store, redux, zustand, manejadores de estado
-
-// create -> Datasource.create()
-
 import { MODULES } from '@/shared/constants/submodules'
 import { IModule } from '@/shared/interfaces/IModule'
 import { PersonGender } from '@/shared/interfaces/IPerson'
