@@ -11,6 +11,7 @@ import { LocationsCreateView } from '@/features/locations/presentation/view/loca
 import { ProductsCreateView } from '@/features/products/presentation/view/products-create-view'
 import { QuotasCreateView } from '@/features/quotas/presentation/view/quotas-create-view'
 import { ServicesCreateView } from '@/features/services-feature/presentation/view/services-create-view'
+import { TasksCreateView } from '@/features/tasks/presentation/view/tasks-create-view'
 import { FC } from 'react'
 
 const CreatePage: FC = () => {
@@ -27,6 +28,7 @@ const CreatePage: FC = () => {
     quotas: QuotasCreateView,
     delegations: DelegationsCreateView,
     chances: ChancesCreateView,
+    tasks: TasksCreateView,
   }
 
   const CreateView = AvaliableCreateViews[submodule]

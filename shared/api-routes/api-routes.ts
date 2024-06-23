@@ -73,4 +73,14 @@ export const API_ROUTES = {
     UPDATE_STATUS: (id: number) => `/chances/${id}/status`,
     DELETE: (id: number) => `/chances/${id}`,
   },
+  TASKS: {
+    GET_ALL: '/tasks',
+    GET_BY_ID: (id: number) => `/tasks/${id}`,
+    GET_BY_EMPLOYEE: (id: number) => `/tasks/employee/${id}`,
+    GET_BY_CONSUMER: (id: number) => `/tasks/consumer/${id}`,
+    CREATE: '/tasks',
+    UPDATE: (id: number) => `/tasks/${id}`,
+    DELETE: (id: number) => `/tasks/${id}`,
+    ADD_COMMENT: (id: number) => `/tasks/${id}/comment`,
+  },
 }

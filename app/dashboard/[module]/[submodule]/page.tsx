@@ -11,6 +11,7 @@ import { LocationsListView } from '@/features/locations/presentation/view/locati
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
 import { QuotasListView } from '@/features/quotas/presentation/view/quotas-list-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
+import { TasksListView } from '@/features/tasks/presentation/view/tasks-list-view'
 import { FC } from 'react'
 
 const Page: FC = () => {
@@ -27,6 +28,7 @@ const Page: FC = () => {
     quotas: QuotasListView,
     delegations: DelegationsListView,
     chances: ChancesListView,
+    tasks: TasksListView,
   }
 
   const ListView = AvaliableListViews[submodule]
