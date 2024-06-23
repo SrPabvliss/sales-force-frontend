@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation'
 
 import { BrandsEditView } from '@/features/brands/presentation/view/brands-edit-view'
 import { CategoriesEditView } from '@/features/categories/presentation/view/categories-edit-view'
+import { ChancesEditView } from '@/features/chances/presentation/view/chances-edit-view'
 import { ConsumersEditView } from '@/features/consumers/presentation/view/consumers-edit-view'
 import { DelegationsEditView } from '@/features/delegations/presentation/view/delegations-edit-view'
 import { EmployeesEditView } from '@/features/employees/presentation/view/employees-edit-view'
@@ -29,6 +30,7 @@ const EditPage: FC = () => {
     services: ServicesEditView,
     quotas: QuotasEditView,
     delegations: DelegationsEditView,
+    chances: ChancesEditView,
   }
 
   const EditView = AvaliableEditViews[submodule]

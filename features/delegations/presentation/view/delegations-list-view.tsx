@@ -5,7 +5,7 @@ import { DelegationsTable } from '../components/DataTable/delegations-table'
 import { TableBreadCrumb } from '../components/table-breadcrumb'
 
 export const DelegationsListView = () => {
-  const { delegations, handleDelete, handleEdit, handleAdd } = useDelegationsView()
+  const { delegations, handleDelete, handleAdd } = useDelegationsView()
   return (
     <>
       <div className="flex h-screen w-full flex-col items-center justify-center">
@@ -16,7 +16,7 @@ export const DelegationsListView = () => {
           </div>
           <TableBreadCrumb />
           <div className="mt-4">
-            <DelegationsTable data={delegations} handleDelete={handleDelete} handleEdit={handleEdit} />
+            <DelegationsTable data={delegations} handleDelete={handleDelete} />
           </div>
         </div>
       </div>

@@ -9,10 +9,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from '@/components/ui/dialog'
 
 interface ConfirmDialogProps {
   onConfirm: () => void
+  onCancel?: () => void
   title: string
   description: string
   children: React.ReactNode
@@ -21,6 +23,7 @@ interface ConfirmDialogProps {
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   onConfirm,
+  onCancel,
   title,
   description,
   children,
@@ -35,10 +38,16 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline">Cancelar</Button>
-          <Button variant={isDestructive ? 'destructive' : 'default'} onClick={onConfirm}>
-            Continuar
-          </Button>
+          <DialogClose asChild>
+            <Button variant="outline" onClick={onCancel}>
+              Cancelar
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button variant={isDestructive ? 'destructive' : 'default'} onClick={onConfirm}>
+              Continuar
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

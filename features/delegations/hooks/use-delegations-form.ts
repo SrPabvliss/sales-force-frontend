@@ -13,6 +13,7 @@ export function useDelegationForm(currentDelegation?: IDelegation) {
   const initialValues = {
     employeeId: currentDelegation?.employee.id.toString() || '',
     consumerId: currentDelegation?.consumer.id.toString() || '',
+    locationId: currentDelegation?.consumer.person.location.id.toString() || '',
     isActive: currentDelegation?.isActive || true,
   }
 
@@ -23,8 +24,10 @@ export function useDelegationForm(currentDelegation?: IDelegation) {
   })
 
   const handleSubmit = async (data: ICreateDelegation | IUpdateDelegation) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { locationId, ...rest } = data as any
     const formattedData = {
-      ...data,
+      ...rest,
       employeeId: Number(data.employeeId),
       consumerId: Number(data.consumerId),
     }

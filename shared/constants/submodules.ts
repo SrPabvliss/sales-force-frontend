@@ -125,7 +125,7 @@ export const MODULES = {
         title: 'Oportunidades',
         icon: BarChart,
         variant: 'ghost' as variants,
-        alias: 'opportunities',
+        alias: 'chances',
       },
       {
         title: 'Ventas',
