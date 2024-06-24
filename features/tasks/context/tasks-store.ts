@@ -30,7 +30,6 @@ export const useTasksStore = create<StoreState>(
       },
       getAllTasks: async () => {
         const tasks = await TasksDataSourceImpl.getInstance().getAll()
-        console.log(tasks)
         set({ tasks })
       },
       getAllTasksByEmployee: (id: number) => {
