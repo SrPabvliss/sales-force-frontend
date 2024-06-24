@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import './globals.css'
+import { UserSettings } from '@/core/layout/dashboard/user-settings'
+import { ThemeProvider } from '@/core/providers/themes-provider'
 import { Toaster } from 'react-hot-toast'
 
 import { TooltipProvider } from '@/components/ui/tooltip'
@@ -27,8 +29,11 @@ export default function RootLayout({
           'debug-screens': process.env.NODE_ENV === 'development',
         })}
       >
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster position="bottom-right" />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TooltipProvider>{children}</TooltipProvider>
+          <Toaster position="bottom-right" />
+          <UserSettings />
+        </ThemeProvider>
       </body>
     </html>
   )

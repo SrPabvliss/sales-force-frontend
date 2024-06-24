@@ -11,11 +11,13 @@ export const AuthForm = () => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
       {() => (
-        <Form>
+        <Form className="mt-4 space-y-6">
           <FMKInput name="username" label="Usuario" />
-          <FMKInput name="password" label="Password" />
+          <FMKInput name="password" label="Contraseña" type="password" />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="w-full  text-white ">
+            Iniciar sesión
+          </Button>
         </Form>
       )}
     </Formik>

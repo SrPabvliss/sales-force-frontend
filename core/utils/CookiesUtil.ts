@@ -13,3 +13,7 @@ export const getCookie = async (key: string) => {
 
   return cookieData
 }
+
+export const deleteCookie = (key: string) => {
+  cookies().delete(key)
+}

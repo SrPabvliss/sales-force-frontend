@@ -27,18 +27,18 @@ const DataTableFooter: React.FC<DataTableFooterProps> = ({
             setRowsPerPage(Number(e.target.value))
             setPageIndex(0)
           }}
-          className="rounded border bg-primary-foreground bg-purple-100 p-1"
+          className="rounded border bg-transparent p-1"
         >
-          <option value={5} className="bg-purple-100">
+          <option value={5} className="bg-transparent text-black ">
             5
           </option>
-          <option value={10} className="bg-purple-100">
+          <option value={10} className="bg-transparent text-black">
             10
           </option>
-          <option value={20} className="bg-purple-100">
+          <option value={20} className="bg-transparent text-black">
             20
           </option>
-          <option value={50} className="bg-purple-100">
+          <option value={50} className="bg-transparent text-black">
             50
           </option>
         </select>

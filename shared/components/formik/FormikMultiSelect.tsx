@@ -25,12 +25,33 @@ const customStyles = {
       borderColor: 'hsl(var(--ring))',
     },
   }),
-  menu: (provided: any) => ({
-    ...provided,
-    backgroundColor: 'hsl(var(--popover))',
-    color: 'hsl(var(--popover-foreground))',
-    fontSize: '0.9rem',
-  }),
+  menu: (provided: any) => {
+    const isDarkMode = document.documentElement.classList.contains('dark')
+    return {
+      ...provided,
+      backgroundColor: isDarkMode ? 'hsl(var(--popover))' : 'white',
+      color: isDarkMode ? 'hsl(var(--popover-foreground))' : 'black',
+      fontSize: '0.9rem',
+    }
+  },
+  option: (provided: any, state: any) => {
+    const isDarkMode = document.documentElement.classList.contains('dark')
+    return {
+      ...provided,
+      backgroundColor: state.isSelected
+        ? isDarkMode
+          ? 'hsl(var(--ring))'
+          : '#E2E8F0'
+        : state.isFocused
+          ? isDarkMode
+            ? 'hsl(var(--border))'
+            : '#CBD5E0'
+          : isDarkMode
+            ? 'hsl(var(--popover))'
+            : 'white',
+      color: isDarkMode ? 'hsl(var(--popover-foreground))' : 'black',
+    }
+  },
   multiValue: (provided: any) => ({
     ...provided,
     backgroundColor: 'hsl(var(--accent))',
@@ -48,6 +69,7 @@ const customStyles = {
     color: 'hsl(var(--destructive))',
     ':hover': {
       borderRadius: 'var(--radius)',
+      color: 'hsl(var(--destructive-foreground))',
     },
   }),
 }
@@ -61,7 +83,7 @@ export const FMKMultiSelect: React.FC<FMKMultiSelectProps> = ({ name, label, opt
 
   return (
     <div>
-      <label className="text-sm font-medium"> {label}</label>
+      <label className="text-sm font-medium">{label}</label>
       <Select
         styles={customStyles}
         isMulti
