@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { useTasksStore } from '../../context/transactions-store'
+import { useTransactionsStore } from '../../context/transactions-store'
 import { EditBreadCrumb } from '../components/edit-breadcrumb'
 import { NewEditForm } from '../components/new-edit-form'
 
 export const TasksEditView = ({ id }: { id: number }) => {
-  const { tasks } = useTasksStore()
+  const { tasks } = useTransactionsStore()
   const currentTask = tasks.find((delegation) => delegation.id === id)
   return (
     <>

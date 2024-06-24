@@ -12,6 +12,7 @@ import { ProductsListView } from '@/features/products/presentation/view/products
 import { QuotasListView } from '@/features/quotas/presentation/view/quotas-list-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
 import { TasksListView } from '@/features/tasks/presentation/view/tasks-list-view'
+import { TransactionListView } from '@/features/transactions/presentation/view/transactions-list-view'
 import { FC } from 'react'
 
 const Page: FC = () => {
@@ -29,6 +30,7 @@ const Page: FC = () => {
     delegations: DelegationsListView,
     chances: ChancesListView,
     tasks: TasksListView,
+    transactions: TransactionListView,
   }
 
   const ListView = AvaliableListViews[submodule]

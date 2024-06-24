@@ -1,9 +1,9 @@
-import { ITask } from '@/features/tasks/models/ITask'
+import { ITransaction } from '@/features/transactions/models/ITransaction'
 import { flexRender, Table } from '@tanstack/react-table'
 
 import { TableHeader, TableRow, TableHead } from '@/components/ui/table'
 
-const DataTableHeader = ({ table }: { table: Table<ITask> }) => (
+const DataTableHeader = ({ table }: { table: Table<ITransaction> }) => (
   <TableHeader className="rounded-t-lg">
     {table.getHeaderGroups().map((headerGroup) => (
       <TableRow key={headerGroup.id} className="rounded-md">

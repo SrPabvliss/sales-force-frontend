@@ -1,4 +1,5 @@
-import { ITask, TaskStatus } from '@/features/tasks/models/ITask'
+import { IItem } from '@/features/transactions/models/IItem'
+import { ITransaction, TransactionStatus } from '@/features/transactions/models/ITransaction'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -12,9 +13,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
 } from '@/components/ui/dropdown-menu'
 
 import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
@@ -22,8 +20,8 @@ import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
 export const createColumns = (
   handleEdit?: (id: number) => void,
   handleDelete?: (id: number) => void,
-  handleStatusChange?: (id: number, status: TaskStatus) => void,
-): ColumnDef<ITask>[] => [
+  // handleStatusChange?: (id: number, status: TransactionStatus) => void,
+): ColumnDef<ITransaction>[] => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -63,15 +61,25 @@ export const createColumns = (
     },
   },
   {
+    accessorKey: 'items',
+    header: 'Productos',
+    cell: ({ row }) => (row.getValue('items') as IItem[]).length,
+  },
+  {
+    accessorKey: 'total',
+    header: 'Total',
+    cell: ({ row }) => {
+      return <div>{row.getValue('total')} </div>
+    },
+  },
+  {
     accessorKey: 'status',
     header: 'Estado',
     cell: ({ row }) =>
       (() => {
         switch (row.getValue('status')) {
-          case 'COMPLETED':
+          case 'PAID':
             return <Badge variant="default">Completada</Badge>
-          case 'RESCHEDULED':
-            return <Badge variant="outline">Reagendada</Badge>
           case 'CANCELED':
             return <Badge variant="destructive">Cancelada</Badge>
           case 'PENDING':
@@ -82,46 +90,40 @@ export const createColumns = (
       })(),
   },
   {
-    accessorKey: 'type',
-    header: 'Tipo',
+    accessorKey: 'origin',
+    header: 'Origen',
     cell: ({ row }) =>
       (() => {
-        switch (row.getValue('type')) {
-          case 'VISIT':
-            return <Badge variant="default">Visita</Badge>
-          case 'CALL':
-            return <Badge variant="outline">Llamada</Badge>
+        switch (row.getValue('origin')) {
+          case 'SALE':
+            return <Badge variant="default">Venta</Badge>
+          case 'QUOTATION':
+            return <Badge variant="secondary">Cotización</Badge>
           default:
             return <Badge variant="outline">Sin asignar</Badge>
         }
       })(),
   },
   {
-    accessorKey: 'estimatedTime',
-    header: 'Tiempo estimado',
-    cell: ({ row }) => {
-      return <div>{row.getValue('estimatedTime')} min</div>
-    },
-  },
-  {
     accessorKey: 'date',
     header: 'Fecha',
     cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString(),
   },
+
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const task = row.original
+      const transaction = row.original
 
-      const statuses = [
-        { label: 'Completada', value: TaskStatus.COMPLETED },
-        { label: 'Reagendada', value: TaskStatus.RESCHEDULED },
-        { label: 'Cancelada', value: TaskStatus.CANCELED },
-        { label: 'Pendiente', value: TaskStatus.PENDING },
-      ]
+      // const statuses = [
+      //   { label: 'Completada', value: TaskStatus.COMPLETED },
+      //   { label: 'Reagendada', value: TaskStatus.RESCHEDULED },
+      //   { label: 'Cancelada', value: TaskStatus.CANCELED },
+      //   { label: 'Pendiente', value: TaskStatus.PENDING },
+      // ]
 
-      const filteredStatuses = statuses.filter((status) => status.value !== task.status)
+      // const filteredStatuses = statuses.filter((status) => status.value !== task.status)
 
       return (
         <DropdownMenu>
@@ -133,11 +135,11 @@ export const createColumns = (
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(task.id.toString())}>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(transaction.id.toString())}>
               Copiar el ID de la tarea
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {handleStatusChange && (
+            {/* <DropdownMenuSeparator /> */}
+            {/* {handleStatusChange && (
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Estado</DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
@@ -148,13 +150,15 @@ export const createColumns = (
                   ))}
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
+            )} */}
+            <DropdownMenuSeparator />
+            {handleEdit && transaction.status !== TransactionStatus.PAID && (
+              <DropdownMenuItem onClick={() => handleEdit(transaction.id)}>Editar</DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
-            {handleEdit && <DropdownMenuItem onClick={() => handleEdit(task.id)}>Editar</DropdownMenuItem>}
-            <DropdownMenuSeparator />
-            {handleDelete && (
+            {handleDelete && transaction.status !== TransactionStatus.PAID && (
               <ConfirmDialog
-                onConfirm={() => handleDelete(task.id)}
+                onConfirm={() => handleDelete(transaction.id)}
                 title="¿Estás seguro?"
                 description={'¿Estás seguro que deseas eliminar esta tarea?'}
                 isDestructive={true}

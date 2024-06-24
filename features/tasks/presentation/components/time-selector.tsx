@@ -12,7 +12,7 @@ interface FMKTimeSelectorProps {
 }
 
 const FMKTimeSelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
-  const [field, , helpers] = useField(name)
+  const [field, meta, helpers] = useField(name)
 
   const handleSelectTime = (time: number) => {
     helpers.setValue(time)
@@ -34,6 +34,7 @@ const FMKTimeSelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
           </Card>
         ))}
       </div>
+      {meta.touched && meta.error ? <div className="text-sm text-red-500">{meta.error}</div> : null}
     </div>
   )
 }

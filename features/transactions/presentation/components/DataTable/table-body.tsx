@@ -1,4 +1,4 @@
-import { ITask } from '@/features/tasks/models/ITask'
+import { ITransaction } from '@/features/transactions/models/ITransaction'
 import { flexRender, Table } from '@tanstack/react-table'
 
 import { TableBody, TableRow, TableCell } from '@/components/ui/table'
@@ -8,7 +8,7 @@ const DataTableBody = ({
   rowsPerPage,
   pageIndex,
 }: {
-  table: Table<ITask>
+  table: Table<ITransaction>
   rowsPerPage: number
   pageIndex: number
 }) => (
