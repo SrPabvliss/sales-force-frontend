@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import './globals.css'
+import { UserSettings } from '@/core/layout/dashboard/user-settings'
 import { ThemeProvider } from '@/core/providers/themes-provider'
 import { Toaster } from 'react-hot-toast'
 
@@ -30,8 +31,9 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <TooltipProvider>{children}</TooltipProvider>
+          <Toaster position="bottom-right" />
+          <UserSettings />
         </ThemeProvider>
-        <Toaster position="bottom-right" />
       </body>
     </html>
   )

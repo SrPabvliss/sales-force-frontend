@@ -15,8 +15,8 @@ export function useAuth() {
   }
 
   const validationSchema = yup.object().shape({
-    username: yup.string().required(),
-    password: yup.string().required(),
+    username: yup.string().required('El usuario es requerido'),
+    password: yup.string().required('La contraseña es requerida'),
   })
 
   const handleSubmit = async (data: IAuth) => {

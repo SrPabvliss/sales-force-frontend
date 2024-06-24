@@ -1,11 +1,12 @@
+import { deleteCookie } from '@/core/utils/CookiesUtil'
+import { ACCESS_TOKEN_COOKIE_NAME } from '@/shared/api-routes/api-routes'
 import { MODULES } from '@/shared/constants/submodules'
 import { IModule } from '@/shared/interfaces/IModule'
-import { PersonGender } from '@/shared/interfaces/IPerson'
 import toast from 'react-hot-toast'
 import { create, StateCreator } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { EmployeeRole, IAuth, IUser } from '../models/IUser'
+import { IAuth, IUser } from '../models/IUser'
 import { UserDatasourceImpl } from '../services/Datasource'
 
 interface StoreState {
@@ -16,28 +17,10 @@ interface StoreState {
   login: (credentials: IAuth) => void
   setUser: (user?: IUser) => void
   getSubmodules: (modules: number[]) => IModule[]
+  logout: () => void
 }
 
-const DEFAULT_USER: IUser = {
-  id: 0,
-  role: EmployeeRole.SELLER,
-  isActive: false,
-  person: {
-    id: 0,
-    dni: '',
-    birthdate: new Date(),
-    gender: PersonGender.MALE,
-    name: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    location: {
-      id: 0,
-      isActive: false,
-      name: '',
-    },
-  },
-}
+export const DEFAULT_USER: IUser | undefined = undefined
 
 const DEFAULT_MODULES: number[] = []
 
@@ -73,7 +56,11 @@ export const UseAccountStore = create<StoreState>(
         }
         set({ user })
       },
-
+      logout: async () => {
+        await deleteCookie(ACCESS_TOKEN_COOKIE_NAME)
+        toast.success(`Hasta luego ${get().user?.person.name}!`)
+        set({ user: DEFAULT_USER, accessModules: DEFAULT_MODULES })
+      },
       // retreiveFromCookie: async () => {
       //   const userToken = await getCookie(ACCESS_TOKEN_COOKIE_NAME)
 

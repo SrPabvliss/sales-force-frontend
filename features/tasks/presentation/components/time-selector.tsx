@@ -26,7 +26,7 @@ const FMKTimeSelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
           <Card
             key={time}
             onClick={() => handleSelectTime(time)}
-            className={`cursor-pointer  ${field.value === time ? 'bg-primary text-white' : 'bg-gray-100'}`}
+            className={`cursor-pointer  ${field.value === time ? 'bg-primary text-white' : 'bg-transparent'}`}
           >
             <CardHeader>
               <CardTitle className="text-sm font-medium">{time} min</CardTitle>

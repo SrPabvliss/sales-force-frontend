@@ -128,16 +128,10 @@ export const MODULES = {
         alias: 'chances',
       },
       {
-        title: 'Ventas',
+        title: 'Transacciones',
         icon: BarChart,
         variant: 'ghost' as variants,
-        alias: 'sales',
-      },
-      {
-        title: 'Cotizaciones',
-        icon: BarChart,
-        variant: 'ghost' as variants,
-        alias: 'quotes',
+        alias: 'transactions',
       },
     ],
   } as IModule,
