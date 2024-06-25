@@ -13,6 +13,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from '@/components/ui/dropdown-menu'
 
 import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
@@ -20,7 +23,7 @@ import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
 export const createColumns = (
   handleEdit?: (id: number) => void,
   handleDelete?: (id: number) => void,
-  // handleStatusChange?: (id: number, status: TransactionStatus) => void,
+  handleStatusChange?: (id: number, status: TransactionStatus) => void,
 ): ColumnDef<ITransaction>[] => [
   {
     id: 'select',
@@ -69,7 +72,7 @@ export const createColumns = (
     accessorKey: 'total',
     header: 'Total',
     cell: ({ row }) => {
-      return <div>{row.getValue('total')} </div>
+      return <div>{parseFloat(row.getValue('total')).toFixed(2)} </div>
     },
   },
   {
@@ -116,14 +119,13 @@ export const createColumns = (
     cell: ({ row }) => {
       const transaction = row.original
 
-      // const statuses = [
-      //   { label: 'Completada', value: TaskStatus.COMPLETED },
-      //   { label: 'Reagendada', value: TaskStatus.RESCHEDULED },
-      //   { label: 'Cancelada', value: TaskStatus.CANCELED },
-      //   { label: 'Pendiente', value: TaskStatus.PENDING },
-      // ]
+      const statuses = [
+        { label: 'Pendiente', value: TransactionStatus.PENDING },
+        { label: 'Completada', value: TransactionStatus.PAID },
+        { label: 'Cancelada', value: TransactionStatus.CANCELED },
+      ]
 
-      // const filteredStatuses = statuses.filter((status) => status.value !== task.status)
+      const filteredStatuses = statuses.filter((status) => status.value !== transaction.status)
 
       return (
         <DropdownMenu>
@@ -138,35 +140,42 @@ export const createColumns = (
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(transaction.id.toString())}>
               Copiar el ID de la tarea
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator /> */}
-            {/* {handleStatusChange && (
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>Estado</DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  {filteredStatuses.map((status) => (
-                    <DropdownMenuItem key={status.value} onClick={() => handleStatusChange(task.id, status.value)}>
-                      Marcar como {status.label.toLowerCase()}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-            )} */}
-            <DropdownMenuSeparator />
             {handleEdit && transaction.status !== TransactionStatus.PAID && (
-              <DropdownMenuItem onClick={() => handleEdit(transaction.id)}>Editar</DropdownMenuItem>
+              <>
+                <DropdownMenuSeparator />
+                {handleStatusChange && (
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>Estado</DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      {filteredStatuses.map((status) => (
+                        <DropdownMenuItem
+                          key={status.value}
+                          onClick={() => handleStatusChange(transaction.id, status.value)}
+                        >
+                          Marcar como {status.label.toLowerCase()}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleEdit(transaction.id)}>Editar</DropdownMenuItem>
+              </>
             )}
-            <DropdownMenuSeparator />
             {handleDelete && transaction.status !== TransactionStatus.PAID && (
-              <ConfirmDialog
-                onConfirm={() => handleDelete(transaction.id)}
-                title="¿Estás seguro?"
-                description={'¿Estás seguro que deseas eliminar esta tarea?'}
-                isDestructive={true}
-              >
-                <div className={`w-full rounded-sm px-2 py-1 text-start text-sm text-red-500 hover:bg-accent`}>
-                  Eliminar
-                </div>
-              </ConfirmDialog>
+              <>
+                <DropdownMenuSeparator />
+                <ConfirmDialog
+                  onConfirm={() => handleDelete(transaction.id)}
+                  title="¿Estás seguro?"
+                  description={'¿Estás seguro que deseas eliminar esta tarea?'}
+                  isDestructive={true}
+                >
+                  <div className={`w-full rounded-sm px-2 py-1 text-start text-sm text-red-500 hover:bg-accent`}>
+                    Eliminar
+                  </div>
+                </ConfirmDialog>
+              </>
             )}
           </DropdownMenuContent>
         </DropdownMenu>

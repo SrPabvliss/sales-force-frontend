@@ -50,7 +50,7 @@ export const createColumns = (
     header: 'Precio por hora',
     cell: ({ row }) => (
       <div>
-        {row.getValue('pricePerHour')} <span className="text-sm">/ hora</span>
+        {parseFloat(row.getValue('pricePerHour')).toFixed(2)} <span className="text-sm">/ hora</span>
       </div>
     ),
   },

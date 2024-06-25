@@ -16,9 +16,20 @@ export enum TransactionType {
   DOOR_TO_DOOR = 'DOOR_TO_DOOR',
 }
 
+export const TransactionTypeTranslations: Record<TransactionType, string> = {
+  [TransactionType.LOCAL]: 'Local',
+  [TransactionType.ONLINE]: 'En línea',
+  [TransactionType.DOOR_TO_DOOR]: 'Puerta a Puerta',
+}
+
 export enum TransactionOrigin {
   SALE = 'SALE',
   QUOTATION = 'QUOTATION',
+}
+
+export const TransactionOriginTranslations: Record<TransactionOrigin, string> = {
+  [TransactionOrigin.SALE]: 'Venta',
+  [TransactionOrigin.QUOTATION]: 'Cotización',
 }
 
 export interface ITransaction {

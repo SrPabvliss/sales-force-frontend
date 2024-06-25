@@ -29,7 +29,6 @@ export function useEmployeesForm(currentEmployee?: IEmployee) {
         moduleId = await getCurrentEmployeModules(currentEmployee.id)
       } catch (error) {
         console.error('Error al obtener los módulos del empleado', error)
-        // Aquí puedes manejar el error como consideres apropiado
       }
     }
 

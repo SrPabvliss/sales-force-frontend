@@ -4,7 +4,7 @@ import { UseAccountStore } from '@/features/auth/context/useUserStore'
 import { EmployeeRole } from '@/features/auth/models/IUser'
 import { useConsumersStore } from '@/features/consumers/context/consumers-store'
 import { useEmployeesStore } from '@/features/employees/context/employees-store'
-import { ITransaction } from '@/features/transactions/models/ITransaction'
+import { ITransaction, TransactionStatus } from '@/features/transactions/models/ITransaction'
 import {
   ColumnFiltersState,
   SortingState,
@@ -45,12 +45,12 @@ export const TransactionsTable = ({
   data,
   handleEdit,
   handleDelete,
-  // handleStatusChange,
+  handleStatusChange,
 }: {
   data: ITransaction[]
   handleEdit?: (id: number) => void
   handleDelete?: (id: number) => void
-  // handleStatusChange?: (id: number, status: TransactionStatus) => void
+  handleStatusChange?: (id: number, status: TransactionStatus) => void
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -59,7 +59,10 @@ export const TransactionsTable = ({
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
   const [pageIndex, setPageIndex] = React.useState(0)
 
-  const columns = React.useMemo(() => createColumns(handleEdit, handleDelete), [handleEdit, handleDelete])
+  const columns = React.useMemo(
+    () => createColumns(handleEdit, handleDelete, handleStatusChange),
+    [handleEdit, handleDelete, handleStatusChange],
+  )
   const { employees } = useEmployeesStore()
   const { consumers } = useConsumersStore()
   const { user } = UseAccountStore()

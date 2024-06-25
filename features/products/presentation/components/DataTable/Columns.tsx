@@ -66,7 +66,7 @@ export const createColumns = (
   {
     accessorKey: 'price',
     header: 'Precio',
-    cell: ({ row }) => <div>{row.getValue('price')}</div>,
+    cell: ({ row }) => <div>{parseFloat(row.getValue('price')).toFixed(2)}</div>,
   },
   {
     accessorKey: 'stock',

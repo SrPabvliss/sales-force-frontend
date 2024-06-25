@@ -14,8 +14,14 @@ import { Card } from '@/components/ui/card'
 import { EmployeeRole } from '../../../auth/models/IUser'
 import { useTransactionsStore } from '../../context/transactions-store'
 import { useTransactionsForm } from '../../hooks/use-transactions-form'
-import { IPayMethod } from '../../models/IPaymentMethod'
-import { ITransaction, TransactionType, TransactionOrigin } from '../../models/ITransaction'
+import { IPayMethod, PayMethodTranslations } from '../../models/IPaymentMethod'
+import {
+  ITransaction,
+  TransactionType,
+  TransactionOrigin,
+  TransactionTypeTranslations,
+  TransactionOriginTranslations,
+} from '../../models/ITransaction'
 import FMKProbabilitySelector from './probability-selector'
 import ProductServiceSelector from './product-service-selector'
 
@@ -97,7 +103,7 @@ export const NewEditForm = ({ currentTransaction }: { currentTransaction?: ITran
                             name="payMethodId"
                             label="Método de pago"
                             options={payMethods.map((payMethod: IPayMethod) => ({
-                              label: payMethod.name,
+                              label: PayMethodTranslations[payMethod.name] || payMethod.name,
                               value: payMethod.id.toString(),
                             }))}
                           />
@@ -108,22 +114,24 @@ export const NewEditForm = ({ currentTransaction }: { currentTransaction?: ITran
                           <FMKSelect
                             name="type"
                             label="Tipo"
-                            options={Object.keys(TransactionType).map((key) => ({
-                              label: key,
-                              value: key,
+                            options={Object.values(TransactionType).map((type) => ({
+                              label: TransactionTypeTranslations[type] || type,
+                              value: type,
                             }))}
                           />
                         </div>
-                        <div className="flex-1">
-                          <FMKSelect
-                            name="origin"
-                            label="Origen"
-                            options={Object.keys(TransactionOrigin).map((key) => ({
-                              label: key,
-                              value: key,
-                            }))}
-                          />
-                        </div>
+                        {!currentTransaction && (
+                          <div className="flex-1">
+                            <FMKSelect
+                              name="origin"
+                              label="Origen"
+                              options={Object.values(TransactionOrigin).map((origin) => ({
+                                label: TransactionOriginTranslations[origin] || origin,
+                                value: origin,
+                              }))}
+                            />
+                          </div>
+                        )}
                       </div>
                       <div className="flex gap-2">
                         <div className="flex-1">

@@ -38,7 +38,14 @@ export function useTransactionsForm(currentTransaction?: ITransaction) {
     successProbability: currentTransaction?.successProbability
       ? getClosesProbability(currentTransaction?.successProbability)
       : 0,
-    items: currentTransaction?.items || [],
+    items:
+      currentTransaction?.items.map((item) => {
+        return {
+          productId: item.product ? item.product.id.toString() : undefined,
+          serviceId: item.service ? item.service.id.toString() : undefined,
+          quantity: item.quantity,
+        }
+      }) || [],
   }
 
   const uniqueProductTest = yup
@@ -62,7 +69,7 @@ export function useTransactionsForm(currentTransaction?: ITransaction) {
   const validationSchema = yup.object().shape({
     employeeId: yup.string().required('El empleado es requerido'),
     delegationId: yup.string().required('La delegación es requerida'),
-    successProbability: yup.number().required('La probabilidad de éxito es requerida'),
+    successProbability: yup.number(),
     payMethodId: yup.string().required('El método de pago es requerido'),
     type: yup.string().required('El tipo de transacción es requerido'),
     origin: yup.string().required('El origen de la transacción es requerido'),
