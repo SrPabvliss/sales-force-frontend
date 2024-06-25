@@ -1,5 +1,7 @@
 'use client'
 
+import { useBrandsStore } from '@/features/brands/context/brands-store'
+import { useCategoriesStore } from '@/features/categories/context/categories-store'
 import { IProduct } from '@/features/products/models/IProduct'
 import {
   ColumnFiltersState,
@@ -22,6 +24,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Table } from '@/components/ui/table'
 
 import { createColumns } from './Columns'
@@ -44,6 +55,13 @@ export const ProductsTable = ({
   const [rowSelection, setRowSelection] = React.useState({})
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
   const [pageIndex, setPageIndex] = React.useState(0)
+
+  const [categoryFilter, setCategoryFilter] = React.useState<string>('ALL')
+  const [brandFilter, setBrandFilter] = React.useState<string>('ALL')
+
+  const { categories } = useCategoriesStore()
+  const { brands } = useBrandsStore()
+
   const columns = React.useMemo(() => createColumns(handleEdit, handleDelete), [handleEdit, handleDelete])
 
   const table = useReactTable({
@@ -71,15 +89,61 @@ export const ProductsTable = ({
     pageCount: Math.ceil(data.length / rowsPerPage),
   })
 
+  // Funciones para manejar los cambios en los filtros
+  const handleCategoryFilterChange = (value: string) => {
+    table.getColumn('category')?.setFilterValue(value === 'ALL' ? null : value)
+    setCategoryFilter(value)
+  }
+
+  const handleBrandFilterChange = (value: string) => {
+    table.getColumn('brand')?.setFilterValue(value === 'ALL' ? null : value)
+    setBrandFilter(value)
+  }
+
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center gap-4 py-4">
         <Input
           placeholder="Filtra por nombre..."
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
+
+        <Select value={categoryFilter} onValueChange={handleCategoryFilterChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona una categoría" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Categorías</SelectLabel>
+              <SelectItem value="ALL">Todas</SelectItem>
+              {categories.map((category, index) => (
+                <SelectItem key={index} value={category.name}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Select value={brandFilter} onValueChange={handleBrandFilterChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona una marca" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Marcas</SelectLabel>
+              <SelectItem value="ALL">Todas</SelectItem>
+              {brands.map((brand, index) => (
+                <SelectItem key={index} value={brand.name}>
+                  {brand.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

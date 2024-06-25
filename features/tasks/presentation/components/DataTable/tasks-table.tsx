@@ -113,94 +113,82 @@ export const TasksTable = ({
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
-        <div className="flex gap-4">
-          {handleEdit && (
-            <>
-              <div>
-                <Select
-                  value={(table.getColumn('employee')?.getFilterValue() as string) ?? user?.person.dni.toString()}
-                  onValueChange={(value) => {
-                    table.getColumn('employee')?.setFilterValue(value)
-                  }}
-                  disabled={user?.role === EmployeeRole.SELLER}
-                >
-                  <SelectTrigger className="w-full ">
-                    <SelectValue placeholder={'Selecciona un empleado'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Empleados</SelectLabel>
-                      <SelectItem value=" ">Todos</SelectItem>
-                      {employees.map((employee, index) => (
-                        <SelectItem key={index} value={employee.person.dni.toString()}>
-                          {`${employee.person.name} ${employee.person.lastName} - ${employee.person.dni}`}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Select
-                  value={table.getColumn('consumer')?.getFilterValue() as string}
-                  onValueChange={(value) => {
-                    table.getColumn('consumer')?.setFilterValue(value)
-                  }}
-                >
-                  <SelectTrigger className="w-full ">
-                    <SelectValue placeholder={'Selecciona un consumidor'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Consumidores</SelectLabel>
-                      <SelectItem value=" ">Todos</SelectItem>
-                      {consumers.map((consumer, index) => (
-                        <SelectItem key={index} value={consumer.person.dni.toString()}>
-                          {`${consumer.person.name} ${consumer.person.lastName} - ${consumer.person.dni}`}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+      <div className="flex items-center gap-4 py-4">
+        <Select
+          value={(table.getColumn('employee')?.getFilterValue() as string) ?? user?.person.dni.toString()}
+          onValueChange={(value) => {
+            table.getColumn('employee')?.setFilterValue(value)
+          }}
+          disabled={user?.role === EmployeeRole.SELLER}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona un empleado" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Empleados</SelectLabel>
+              <SelectItem value=" ">Todos</SelectItem>
+              {employees.map((employee, index) => (
+                <SelectItem key={index} value={employee.person.dni.toString()}>
+                  {`${employee.person.name} ${employee.person.lastName} - ${employee.person.dni}`}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
 
-              <div>
-                <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
-                  <SelectTrigger className="w-full ">
-                    <SelectValue placeholder={'Selecciona un estado'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Estados</SelectLabel>
-                      <SelectItem value="ALL">Todos</SelectItem>
-                      <SelectItem value="COMPLETED">Completada</SelectItem>
-                      <SelectItem value="RESCHEDULED">Reagendada</SelectItem>
-                      <SelectItem value="CANCELED">Cancelada</SelectItem>
-                      <SelectItem value="PENDING">Pendiente</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+        <Select
+          value={table.getColumn('consumer')?.getFilterValue() as string}
+          onValueChange={(value) => {
+            table.getColumn('consumer')?.setFilterValue(value)
+          }}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona un consumidor" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Consumidores</SelectLabel>
+              <SelectItem value=" ">Todos</SelectItem>
+              {consumers.map((consumer, index) => (
+                <SelectItem key={index} value={consumer.person.dni.toString()}>
+                  {`${consumer.person.name} ${consumer.person.lastName} - ${consumer.person.dni}`}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
 
-              <div>
-                <Select value={typeFilter} onValueChange={handleTypeFilterChange}>
-                  <SelectTrigger className="w-full ">
-                    <SelectValue placeholder={'Selecciona un tipo'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Tipos</SelectLabel>
-                      <SelectItem value="ALL">Todos</SelectItem>
-                      <SelectItem value="VISIT">Visita</SelectItem>
-                      <SelectItem value="CALL">Llamada</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
-          )}
-        </div>
+        <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona un estado" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Estados</SelectLabel>
+              <SelectItem value="ALL">Todos</SelectItem>
+              <SelectItem value="COMPLETED">Completada</SelectItem>
+              <SelectItem value="RESCHEDULED">Reagendada</SelectItem>
+              <SelectItem value="CANCELED">Cancelada</SelectItem>
+              <SelectItem value="PENDING">Pendiente</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Select value={typeFilter} onValueChange={handleTypeFilterChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona un tipo" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Tipos</SelectLabel>
+              <SelectItem value="ALL">Todos</SelectItem>
+              <SelectItem value="VISIT">Visita</SelectItem>
+              <SelectItem value="CALL">Llamada</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -211,18 +199,16 @@ export const TasksTable = ({
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -49,19 +49,15 @@ export const createColumns = (
   },
   {
     accessorKey: 'category',
+    accessorFn: (row) => (row.category as ICategory).name,
     header: 'Categoría',
-    cell: ({ row }) => (
-      <div className="capitalize">
-        {row.getValue('category') ? (row.getValue('category') as ICategory).name : 'Sin categoría'}
-      </div>
-    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue('category')}</div>,
   },
   {
     accessorKey: 'brand',
+    accessorFn: (row) => (row.brand as IBrand).name,
     header: 'Marca',
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('brand') ? (row.getValue('brand') as IBrand).name : 'Sin marca'}</div>
-    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue('brand')}</div>,
   },
   {
     accessorKey: 'price',
