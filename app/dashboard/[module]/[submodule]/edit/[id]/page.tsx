@@ -12,6 +12,7 @@ import { ProductsEditView } from '@/features/products/presentation/view/products
 import { QuotasEditView } from '@/features/quotas/presentation/view/quotas-edit-view'
 import { ServicesEditView } from '@/features/services-feature/presentation/view/services-edit-view'
 import { TasksEditView } from '@/features/tasks/presentation/view/tasks-edit-view'
+import { TransactionsEditView } from '@/features/transactions/presentation/view/transactions-edit-view'
 import { FC } from 'react'
 
 interface EditViewProps {
@@ -33,6 +34,7 @@ const EditPage: FC = () => {
     delegations: DelegationsEditView,
     chances: ChancesEditView,
     tasks: TasksEditView,
+    transactions: TransactionsEditView,
   }
 
   const EditView = AvaliableEditViews[submodule]

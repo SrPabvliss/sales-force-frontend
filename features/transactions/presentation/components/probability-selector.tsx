@@ -4,14 +4,14 @@ import React from 'react'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 
-export const timeOptions = [10, 20, 40, 60, 80]
+export const timeOptions = [25, 50, 75, 100]
 
 interface FMKTimeSelectorProps {
   name: string
   label: string
 }
 
-const FMKTimeSelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
+const FMKProbabilitySelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
   const [field, meta, helpers] = useField(name)
 
   const handleSelectTime = (time: number) => {
@@ -29,7 +29,7 @@ const FMKTimeSelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
             className={`cursor-pointer  ${field.value === time ? 'bg-primary text-white' : 'bg-transparent'}`}
           >
             <CardHeader>
-              <CardTitle className="text-sm font-medium">{time} min</CardTitle>
+              <CardTitle className="text-sm font-medium">{time} %</CardTitle>
             </CardHeader>
           </Card>
         ))}
@@ -39,4 +39,4 @@ const FMKTimeSelector: React.FC<FMKTimeSelectorProps> = ({ name, label }) => {
   )
 }
 
-export default FMKTimeSelector
+export default FMKProbabilitySelector

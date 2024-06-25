@@ -83,4 +83,14 @@ export const API_ROUTES = {
     DELETE: (id: number) => `/tasks/${id}`,
     ADD_COMMENT: (id: number) => `/tasks/${id}/comment`,
   },
+  TRANSACTIONS: {
+    GET_ALL: '/transactions',
+    GET_BY_ID: (id: number) => `/transactions/${id}`,
+    CREATE: '/transactions',
+    UPDATE: (id: number) => `/transactions/${id}`,
+    DELETE: (id: number) => `/transactions/${id}`,
+  },
+  PAY_METHODS: {
+    GET: '/pay-methods',
+  },
 }

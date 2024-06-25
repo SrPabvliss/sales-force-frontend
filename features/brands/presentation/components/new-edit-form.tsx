@@ -14,16 +14,23 @@ export const NewEditForm = ({ currentBrand }: { currentBrand?: IBrand }) => {
   return (
     <div className="flex justify-center gap-10">
       <Card className="w-1/2 p-8">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
-          {() => (
-            <Form className="flex  flex-col gap-6">
-              <FMKInput name="name" label="Nombre" />
-              <FMKSwitch name="isActive" label="Marca activa" />
-              <Button type="submit" className="btn-primary">
-                Guardar
-              </Button>
-            </Form>
-          )}
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          enableReinitialize
+        >
+          {() => {
+            return (
+              <Form className="flex  flex-col gap-6">
+                <FMKInput name="name" label="Nombre" />
+                <FMKSwitch name="isActive" label="Marca activa" />
+                <Button type="submit" className="btn-primary">
+                  Guardar
+                </Button>
+              </Form>
+            )
+          }}
         </Formik>
       </Card>
     </div>

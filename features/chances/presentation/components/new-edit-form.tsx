@@ -21,7 +21,12 @@ export const NewEditForm = ({ currentChance }: { currentChance?: IChance }) => {
 
   return (
     <div className="flex justify-center gap-10">
-      <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
+      <Formik
+        initialValues={initialValues as any}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+        enableReinitialize
+      >
         {({ values }) => (
           <>
             <Card className="w-1/3 p-8">

@@ -19,7 +19,12 @@ export const NewEditForm = ({ currentQuota }: { currentQuota?: IQuota }) => {
   return (
     <div className="flex justify-center gap-10">
       <Card className=" p-8">
-        <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
+        <Formik
+          initialValues={initialValues as any}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          enableReinitialize
+        >
           {() => (
             <Form className="flex  flex-col gap-6">
               <div className="w-full">
