@@ -44,7 +44,7 @@ export function useTransactionsForm(currentTransaction?: ITransaction) {
   const uniqueProductTest = yup
     .string()
     .nullable()
-    .test('unique-product', 'El producto debe ser único y no puede estar vacío', function (value) {
+    .test('unique-product', 'El producto debe ser único', function (value) {
       const items = this.options?.context?.items.filter((item: any) => item.productId)
       const count = items.filter((item: any) => item.productId === value).length
       return count <= 1
@@ -53,7 +53,7 @@ export function useTransactionsForm(currentTransaction?: ITransaction) {
   const uniqueServiceTest = yup
     .string()
     .nullable()
-    .test('unique-service', 'El servicio debe ser único y no puede estar vacío', function (value) {
+    .test('unique-service', 'El servicio debe ser único', function (value) {
       const items = this.options.context?.items.filter((item: any) => item.serviceId)
       const count = items.filter((item: any) => item.serviceId === value).length
       return count <= 1
@@ -103,7 +103,7 @@ export function useTransactionsForm(currentTransaction?: ITransaction) {
       if (item.productId !== null && item.productId !== '') {
         const product = products.find((product) => product.id.toString() === item.productId)
         if (product?.stock && item.quantity > product?.stock) {
-          toast.error('La cantidad de productos no puede ser mayor al stock')
+          toast.error(`La cantidad del producto ${product.name} no puede ser mayor al stock`)
           hasErrors = true
         }
       }

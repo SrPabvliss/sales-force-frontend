@@ -29,7 +29,12 @@ export const NewEditForm = ({ currentTransaction }: { currentTransaction?: ITran
 
   return (
     <div className="flex justify-center gap-10">
-      <Formik initialValues={initialValues as any} onSubmit={handleSubmit} validationSchema={validationSchema}>
+      <Formik
+        initialValues={initialValues as any}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+        enableReinitialize
+      >
         {({ values }) => {
           const filteresTasks = tasks
             .filter((task) => task.delegation.employee.id.toString() === (values as any).employeeId)

@@ -20,7 +20,12 @@ export const NewEditForm = ({ currentConsumer }: { currentConsumer?: IConsumer }
   return (
     <div className="flex justify-center gap-10">
       <Card className=" mb-16 p-8">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          enableReinitialize
+        >
           {() => (
             <Form className="flex  flex-col gap-6">
               <FMKInput name="person.dni" label="Cedula" />
