@@ -62,6 +62,7 @@ export const createColumns = (
   {
     accessorKey: 'personLocation',
     header: 'Ubicación',
+    accessorFn: (row) => row.person.location.name,
     cell: ({ row }) => {
       const person: IPerson = row.getValue('person')
       const location: ILocation = person.location
@@ -82,8 +83,9 @@ export const createColumns = (
   {
     accessorKey: 'isCustomer',
     header: 'Cliente',
+    accessorFn: (row) => row.isCustomer.toString(),
     cell: ({ row }) =>
-      row.getValue('isCustomer') === true ? <Badge>Cliente</Badge> : <Badge variant="outline">No cliente</Badge>,
+      row.getValue('isCustomer') === 'true' ? <Badge>Cliente</Badge> : <Badge variant="outline">No cliente</Badge>,
   },
   {
     accessorKey: 'isActive',

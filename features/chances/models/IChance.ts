@@ -3,6 +3,7 @@ import { IDelegation } from '@/features/delegations/models/IDelegation'
 export enum ChanceStatus {
   WON = 'WON',
   LOST = 'LOST',
+  NONE = 'NONE',
 }
 
 export interface IChance {

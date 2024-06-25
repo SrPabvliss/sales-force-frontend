@@ -42,7 +42,8 @@ export const createColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: 'person.dni',
+    accessorKey: 'dni',
+    accessorFn: (row) => row.person.dni,
     header: 'Cédula',
     cell: ({ row }) => {
       const person = row.original.person
@@ -67,8 +68,9 @@ export const createColumns = (
     },
   },
   {
-    accessorKey: 'person.location.name',
+    accessorKey: 'location',
     header: 'Ubicación',
+    accessorFn: (row) => row.person.location.name,
     cell: ({ row }) => {
       const person = row.original.person
       const location = person?.location
@@ -78,6 +80,7 @@ export const createColumns = (
   {
     accessorKey: 'role',
     header: 'Rol',
+    accessorFn: (row) => row.role,
     cell: ({ row }) => {
       const employeeTypeLableMap: { [key in EmployeeRole]: string } = {
         [EmployeeRole.SELLER]: 'Vendedor',

@@ -1,5 +1,4 @@
 import { IQuota } from '@/features/quotas/models/IQuota'
-// import { IPerson } from '@/shared/interfaces/IPerson'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -43,7 +42,8 @@ export const createColumns = (
   },
 
   {
-    accessorKey: 'person.dni',
+    accessorKey: 'dni',
+    accessorFn: (row) => row.employee.person.dni,
     header: 'Cédula',
     cell: ({ row }) => {
       const person = row.original.employee.person

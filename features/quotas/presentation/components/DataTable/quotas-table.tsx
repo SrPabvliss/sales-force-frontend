@@ -71,13 +71,29 @@ export const QuotasTable = ({
     pageCount: Math.ceil(data.length / rowsPerPage),
   })
 
+  const handleNameFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value || ''
+    table.getColumn('personFullName')?.setFilterValue(value)
+  }
+
+  const handleDniFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value || ''
+    table.getColumn('dni')?.setFilterValue(value)
+  }
+
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center gap-4 py-4">
+        <Input
+          placeholder="Filtra por cédula..."
+          value={(table.getColumn('dni')?.getFilterValue() as string) ?? ''}
+          onChange={handleDniFilterChange}
+          className="max-w-sm"
+        />
         <Input
           placeholder="Filtra por nombre..."
           value={(table.getColumn('personFullName')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('personFullName')?.setFilterValue(event.target.value)}
+          onChange={handleNameFilterChange}
           className="max-w-sm"
         />
         <DropdownMenu>

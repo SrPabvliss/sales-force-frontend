@@ -67,6 +67,7 @@ export const createColumns = (
   },
   {
     accessorKey: 'status',
+    accessorFn: (row) => (row.status != null ? row.status : 'NONE'),
     header: 'Estado',
     cell: ({ row }) => {
       switch (row.getValue('status')) {
