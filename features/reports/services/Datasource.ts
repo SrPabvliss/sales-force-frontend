@@ -23,28 +23,20 @@ export class ReportsDatasourceImpl implements ReportsDatasource {
   }
 
   async transactionReportByYear(year: number): Promise<ITransactionYear> {
-    const data = await this.httpClient.get<ITransactionYear>(API_ROUTES.REPORTS.TRANSACTION_REPORT_BY_YEAR(year))
-    console.log(data)
-    return data
+    return await this.httpClient.get<ITransactionYear>(`${API_ROUTES.REPORTS.TRANSACTION_REPORT_BY_YEAR(year)}`)
   }
 
   async transactionReportByEmployee(employeeId: number): Promise<ITransactionEmployee[]> {
-    const data = await this.httpClient.get<ITransactionEmployee[]>(
-      API_ROUTES.REPORTS.TRANSACTION_REPORT_BY_EMPLOYEE(employeeId),
+    return await this.httpClient.get<ITransactionEmployee[]>(
+      `${API_ROUTES.REPORTS.TRANSACTION_REPORT_BY_EMPLOYEE(employeeId)}`,
     )
-    console.log(data)
-    return data
   }
 
   async mostSoldProducts(): Promise<IMostSoldItem[]> {
-    const data = await this.httpClient.get<IMostSoldItem[]>(API_ROUTES.REPORTS.MOST_SOLD_PRODUCTS)
-    console.log(data)
-    return data
+    return await this.httpClient.get<IMostSoldItem[]>(API_ROUTES.REPORTS.MOST_SOLD_PRODUCTS)
   }
 
   async mostSoldSevices(): Promise<IMostSoldItem[]> {
-    const data = await this.httpClient.get<IMostSoldItem[]>(API_ROUTES.REPORTS.MOST_SOLD_SERVICES)
-    console.log(data)
-    return data
+    return await this.httpClient.get<IMostSoldItem[]>(API_ROUTES.REPORTS.MOST_SOLD_SERVICES)
   }
 }

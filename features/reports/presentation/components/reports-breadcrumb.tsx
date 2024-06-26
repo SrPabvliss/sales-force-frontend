@@ -7,7 +7,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
-export const EmployeesBreadCrumb = () => {
+export const ReportsBreadCrumb = () => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -16,7 +16,7 @@ export const EmployeesBreadCrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Reporte de empleados</BreadcrumbPage>
+          <BreadcrumbPage>Reporte</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

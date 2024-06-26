@@ -12,6 +12,7 @@ import { UserDatasourceImpl } from '../services/Datasource'
 interface StoreState {
   user: IUser | undefined
   accessModules: number[]
+  loading: boolean // Nuevo estado de carga
   setAccessModules: (modules: number[]) => void
   getAccessModules: (id: number) => void
   login: (credentials: IAuth) => void
@@ -31,10 +32,11 @@ export const UseAccountStore = create<StoreState>(
     (set, get) => ({
       user: DEFAULT_USER,
       accessModules: DEFAULT_MODULES,
-      setAccessModules: (modules) => set({ accessModules: modules }),
+      loading: true, // Inicializa el estado de carga como true
+      setAccessModules: (modules) => set({ accessModules: modules, loading: false }),
       getAccessModules: async (id) => {
         const modules = await UserDatasourceImpl.getInstance().getAccessModules(id)
-        set({ accessModules: modules })
+        set({ accessModules: modules, loading: false })
       },
       login: async (credentials) => {
         const user = await UserDatasourceImpl.getInstance().login(credentials)
@@ -51,15 +53,15 @@ export const UseAccountStore = create<StoreState>(
       },
       setUser: (user?: IUser | undefined) => {
         if (!user) {
-          set({ user: undefined })
+          set({ user: undefined, loading: false })
           return
         }
-        set({ user })
+        set({ user, loading: false })
       },
       logout: async () => {
         await deleteCookie(ACCESS_TOKEN_COOKIE_NAME)
         toast.success(`Hasta luego ${get().user?.person.name}!`)
-        set({ user: DEFAULT_USER, accessModules: DEFAULT_MODULES })
+        set({ user: DEFAULT_USER, accessModules: DEFAULT_MODULES, loading: false })
       },
     }),
     {

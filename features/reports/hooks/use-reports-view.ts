@@ -1,17 +1,25 @@
-import { useEffect } from 'react'
+import { IEmployee } from '@/features/employees/models/IEmployee'
+import { EmployeesDatasourceImpl } from '@/features/employees/services/datasource'
+import { useState, useEffect } from 'react'
 
 import { ReportsDatasourceImpl } from '../services/Datasource'
 
 export function useReportsView() {
-  const { mostSoldProducts, mostSoldSevices, transactionReportByYear, transactionReportByEmployee } =
-    ReportsDatasourceImpl.getInstance()
+  const [employees, setEmployees] = useState<IEmployee[]>([])
+  const [years, setYears] = useState<number[]>([2022, 2023, 2024])
 
   useEffect(() => {
-    mostSoldProducts().then((data) => console.log(data))
-    mostSoldSevices().then((data) => console.log(data))
-    transactionReportByYear(2021).then((data) => console.log(data))
-    transactionReportByEmployee(1).then((data) => console.log(data))
-  }, [mostSoldProducts, mostSoldSevices, transactionReportByYear, transactionReportByEmployee])
+    EmployeesDatasourceImpl.getInstance().getAll().then(setEmployees)
+  }, [])
 
-  return {}
+  return {
+    employees,
+    years,
+    setYears,
+    fetchTransactionByEmployee: (employeeId: number) =>
+      ReportsDatasourceImpl.getInstance().transactionReportByEmployee(employeeId),
+    fetchTransactionByYear: (year: number) => ReportsDatasourceImpl.getInstance().transactionReportByYear(year),
+    fetchMostSoldProducts: () => ReportsDatasourceImpl.getInstance().mostSoldProducts(),
+    fetchMostSoldServices: () => ReportsDatasourceImpl.getInstance().mostSoldSevices(),
+  }
 }

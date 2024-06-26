@@ -16,11 +16,12 @@ export const MODULES = {
         alias: 'consumers',
       },
       {
-        title: 'Ubicaciones',
-        icon: MapPin,
+        title: 'Cuotas',
+        icon: CircleDollarSign,
         variant: 'ghost' as variants,
-        alias: 'locations',
+        alias: 'quotas',
       },
+
       {
         title: 'Productos',
         icon: Package,
@@ -52,10 +53,10 @@ export const MODULES = {
         alias: 'employees',
       },
       {
-        title: 'Cuotas',
-        icon: CircleDollarSign,
+        title: 'Ubicaciones',
+        icon: MapPin,
         variant: 'ghost' as variants,
-        alias: 'quotas',
+        alias: 'locations',
       },
       {
         title: 'Marcas',
