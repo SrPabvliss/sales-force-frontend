@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
+import { UseAccountStore } from '../../../../auth/context/useUserStore'
 
 export const createColumns = (
   handleEdit: (id: number) => void,
@@ -101,7 +102,8 @@ export const createColumns = (
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const category = row.original
+      const employee = row.original
+      const { user } = UseAccountStore()
 
       return (
         <DropdownMenu>
@@ -113,29 +115,35 @@ export const createColumns = (
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
-              Copiar el ID de la ubicación
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(employee.id.toString())}>
+              Copiar el ID del empleado
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
-            <ConfirmDialog
-              onConfirm={() => handleDelete(category.id)}
-              title="¿Estás seguro?"
-              description={
-                category.isActive
-                  ? '¿Estás seguro que deseas desactivar esta categoría?'
-                  : '¿Estás seguro que deseas activar esta categoría?'
-              }
-              isDestructive={category.isActive}
-            >
-              <div
-                className={`w-full text-start text-sm ${
-                  category.isActive ? 'text-red-500' : 'text-green-600'
-                } rounded-sm px-2 py-1 hover:bg-accent`}
-              >
-                {category.isActive ? 'Desactivar' : 'Activar'}
-              </div>
-            </ConfirmDialog>
+            {user?.role !== EmployeeRole.SELLER && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleEdit(employee.id)}>Editar</DropdownMenuItem>
+                {user?.role === EmployeeRole.ADMIN && (
+                  <ConfirmDialog
+                    onConfirm={() => handleDelete(employee.id)}
+                    title="¿Estás seguro?"
+                    description={
+                      employee.isActive
+                        ? '¿Estás seguro que deseas desactivar este empleado?'
+                        : '¿Estás seguro que deseas activar este empleado?'
+                    }
+                    isDestructive={employee.isActive}
+                  >
+                    <div
+                      className={`w-full text-start text-sm ${
+                        employee.isActive ? 'text-red-500' : 'text-green-600'
+                      } rounded-sm px-2 py-1 hover:bg-accent`}
+                    >
+                      {employee.isActive ? 'Desactivar' : 'Activar'}
+                    </div>
+                  </ConfirmDialog>
+                )}
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )

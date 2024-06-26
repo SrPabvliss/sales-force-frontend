@@ -1,3 +1,5 @@
+import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { EmployeeRole } from '@/features/auth/models/IUser'
 import { IQuota } from '@/features/quotas/models/IQuota'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
@@ -107,6 +109,7 @@ export const createColumns = (
     enableHiding: false,
     cell: ({ row }) => {
       const category = row.original
+      const { user } = UseAccountStore()
 
       return (
         <DropdownMenu>
@@ -121,26 +124,30 @@ export const createColumns = (
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
               Copiar el ID de la cuota
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
-            <ConfirmDialog
-              onConfirm={() => handleDelete(category.id)}
-              title="¿Estás seguro?"
-              description={
-                category.isActive
-                  ? '¿Estás seguro que deseas desactivar esta cuota?'
-                  : '¿Estás seguro que deseas activar esta cuota?'
-              }
-              isDestructive={category.isActive}
-            >
-              <div
-                className={`w-full text-start text-sm ${
-                  category.isActive ? 'text-red-500' : 'text-green-600'
-                } rounded-sm px-2 py-1 hover:bg-accent`}
-              >
-                {category.isActive ? 'Desactivar' : 'Activar'}
-              </div>
-            </ConfirmDialog>
+            {user?.role === EmployeeRole.ADMIN && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
+                <ConfirmDialog
+                  onConfirm={() => handleDelete(category.id)}
+                  title="¿Estás seguro?"
+                  description={
+                    category.isActive
+                      ? '¿Estás seguro que deseas desactivar esta cuota?'
+                      : '¿Estás seguro que deseas activar esta cuota?'
+                  }
+                  isDestructive={category.isActive}
+                >
+                  <div
+                    className={`w-full text-start text-sm ${
+                      category.isActive ? 'text-red-500' : 'text-green-600'
+                    } rounded-sm px-2 py-1 hover:bg-accent`}
+                  >
+                    {category.isActive ? 'Desactivar' : 'Activar'}
+                  </div>
+                </ConfirmDialog>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )

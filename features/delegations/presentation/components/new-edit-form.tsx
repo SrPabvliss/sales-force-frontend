@@ -1,3 +1,5 @@
+import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { EmployeeRole } from '@/features/auth/models/IUser'
 import { useConsumersStore } from '@/features/consumers/context/consumers-store'
 import { useEmployeesStore } from '@/features/employees/context/employees-store'
 import { useLocationsStore } from '@/features/locations/context/locations-store'
@@ -20,6 +22,7 @@ export const NewEditForm = ({ currentDelegation }: { currentDelegation?: IDelega
   const { consumers } = useConsumersStore()
   const { locations } = useLocationsStore()
   const { getAllDelegationsByEmployee } = useDelegationsStore()
+  const { user } = UseAccountStore()
 
   return (
     <div className="flex justify-center gap-10">
@@ -36,10 +39,19 @@ export const NewEditForm = ({ currentDelegation }: { currentDelegation?: IDelega
                 <FMKSelect
                   name="employeeId"
                   label="Empleado"
-                  options={employees.map((employee) => ({
-                    label: `${employee.person.name} ${employee.person.lastName} - ${employee.person.dni}`,
-                    value: employee.id.toString(),
-                  }))}
+                  options={
+                    user?.role === EmployeeRole.SELLER
+                      ? employees
+                          .filter((employee) => employee.id === user.id)
+                          .map((employee) => ({
+                            label: `${employee.person.name} ${employee.person.lastName} - ${employee.person.dni}`,
+                            value: employee.id.toString(),
+                          }))
+                      : employees.map((employee) => ({
+                          label: `${employee.person.name} ${employee.person.lastName} - ${employee.person.dni}`,
+                          value: employee.id.toString(),
+                        }))
+                  }
                 />
                 <FMKSelect
                   name="locationId"

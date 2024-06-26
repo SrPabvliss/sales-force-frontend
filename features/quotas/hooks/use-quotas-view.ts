@@ -1,5 +1,6 @@
 import { usePathname, useRouter } from 'next/navigation'
 
+import { useEmployeesStore } from '@/features/employees/context/employees-store'
 import { useEffect } from 'react'
 
 import { useQuotasStore } from '../context/quotas-store'
@@ -8,10 +9,12 @@ export function useQuotasView() {
   const router = useRouter()
   const pathname = usePathname()
   const { quotas, getAllQuotas, toggleActive } = useQuotasStore()
+  const { getAllEmployees } = useEmployeesStore()
 
   useEffect(() => {
+    getAllEmployees()
     getAllQuotas()
-  }, [getAllQuotas])
+  }, [getAllQuotas, getAllEmployees])
 
   const handleDelete = async (id: number) => {
     await toggleActive(id)

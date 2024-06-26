@@ -110,7 +110,7 @@ export const createColumns = (
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
-              Copiar el ID de la categoría
+              Copiar el ID del consumidor
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
