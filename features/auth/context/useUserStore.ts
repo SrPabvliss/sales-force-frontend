@@ -43,7 +43,7 @@ export const UseAccountStore = create<StoreState>(
           toast.error('Algo salió mal, por favor intente nuevamente.')
           return
         }
-        toast.success(`Bienvenido ${user.person.name}!`)
+        toast.success(`Bienvenid@ ${user.person.name}!`)
         set({ user })
       },
       getSubmodules: (modules) => {
@@ -61,17 +61,6 @@ export const UseAccountStore = create<StoreState>(
         toast.success(`Hasta luego ${get().user?.person.name}!`)
         set({ user: DEFAULT_USER, accessModules: DEFAULT_MODULES })
       },
-      // retreiveFromCookie: async () => {
-      //   const userToken = await getCookie(ACCESS_TOKEN_COOKIE_NAME)
-
-      //   if (!userToken) return false
-
-      //   const userData: IUserPayload = jwtDecode(userToken)
-      //   const { sub, ...userWithoutSub } = userData
-
-      //   set({ user: { ...userWithoutSub, id: sub, sub } })
-      //   return true
-      // },
     }),
     {
       name: STORE_NAME,

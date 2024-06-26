@@ -26,6 +26,7 @@ export interface ITask {
 export interface IComment {
   id: number
   content: string
+  taskId: number
 }
 
 export interface ICreateTask

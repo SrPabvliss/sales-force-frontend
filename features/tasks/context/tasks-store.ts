@@ -14,7 +14,7 @@ interface StoreState {
   createTask: (task: ICreateTask) => Promise<void>
   updateTask: (id: number, task: IUpdateTask) => Promise<void>
   deleteTask: (id: number) => Promise<void>
-  addCommnet: (taskId: number, comment: string) => Promise<void>
+  addComment: (taskId: number, comment: string) => Promise<void>
 }
 
 const DEFAULT_TASKS: ITask[] = []
@@ -54,9 +54,9 @@ export const useTasksStore = create<StoreState>(
         await TasksDataSourceImpl.getInstance().delete(id)
         get().getAllTasks()
       },
-      addCommnet: async (taskId: number, comment: string) => {
+      addComment: async (taskId: number, comment: string) => {
         await TasksDataSourceImpl.getInstance().addComment(taskId, comment)
-        get().getTaskById(taskId)
+        get().getAllTasks()
       },
     }),
     {
