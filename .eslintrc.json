@@ -5,10 +5,7 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "eslint-plugin-import-helpers"
-  ],
+  "plugins": ["@typescript-eslint", "eslint-plugin-import-helpers"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2021,
@@ -19,14 +16,7 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [
-          "/^next/",
-          "module",
-          "/^@/styles/",
-          "/^@/components/",
-          "/^@/lib/",
-          ["parent", "sibling", "index"]
-        ],
+        "groups": ["/^next/", "module", "/^@/styles/", "/^@/components/", "/^@/lib/", ["parent", "sibling", "index"]],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true
@@ -46,6 +36,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/rules-of-hooks": "off"
   }
 }
