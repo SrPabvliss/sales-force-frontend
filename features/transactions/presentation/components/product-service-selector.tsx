@@ -6,6 +6,7 @@ import { FieldArray, useFormikContext } from 'formik'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 const ProductServiceSelector = () => {
   const { values, setFieldValue } = useFormikContext()
@@ -30,10 +31,10 @@ const ProductServiceSelector = () => {
       <h3 className="text-lg font-bold">Items</h3>
       <FieldArray name="items">
         {() => (
-          <div>
+          <ScrollArea className="h-96 w-full rounded-md border">
             {(values as any).items.map((item: any, index: number) => {
               return (
-                <div key={index} className="mb-4 flex items-center gap-4">
+                <div key={index} className="mb-4 flex items-center gap-4 border-b p-4">
                   <FMKSelect
                     name={`items[${index}].${item.productId != null ? 'productId' : 'serviceId'}`}
                     value={item.productId !== null || item.serviceId || ''}
@@ -68,7 +69,7 @@ const ProductServiceSelector = () => {
                 </div>
               )
             })}
-            <div className="flex gap-2">
+            <div className="flex gap-2 p-4">
               <Button type="button" onClick={() => addItem('product')}>
                 + Producto
               </Button>
@@ -76,7 +77,7 @@ const ProductServiceSelector = () => {
                 + Servicio
               </Button>
             </div>
-          </div>
+          </ScrollArea>
         )}
       </FieldArray>
     </Card>
