@@ -1,3 +1,5 @@
+import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { EmployeeRole } from '@/features/auth/models/IUser'
 import { IBrand } from '@/features/brands/models/IBrands'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
@@ -57,6 +59,7 @@ export const createColumns = (
     enableHiding: false,
     cell: ({ row }) => {
       const brand = row.original
+      const { user } = UseAccountStore()
 
       return (
         <DropdownMenu>
@@ -71,26 +74,30 @@ export const createColumns = (
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(brand.id.toString())}>
               Copiar el ID de la marca
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleEdit(brand.id)}>Editar</DropdownMenuItem>
-            <ConfirmDialog
-              onConfirm={() => handleDelete(brand.id)}
-              title="¿Estás seguro?"
-              description={
-                brand.isActive
-                  ? '¿Estás seguro que deseas desactivar esta marca?'
-                  : '¿Estás seguro que deseas activar esta marca?'
-              }
-              isDestructive={brand.isActive}
-            >
-              <div
-                className={`w-full text-start text-sm ${
-                  brand.isActive ? 'text-red-500' : 'text-green-600'
-                } rounded-sm px-2 py-1 hover:bg-accent`}
-              >
-                {brand.isActive ? 'Desactivar' : 'Activar'}
-              </div>
-            </ConfirmDialog>
+            {user?.role === EmployeeRole.ADMIN && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleEdit(brand.id)}>Editar</DropdownMenuItem>
+                <ConfirmDialog
+                  onConfirm={() => handleDelete(brand.id)}
+                  title="¿Estás seguro?"
+                  description={
+                    brand.isActive
+                      ? '¿Estás seguro que deseas desactivar esta marca?'
+                      : '¿Estás seguro que deseas activar esta marca?'
+                  }
+                  isDestructive={brand.isActive}
+                >
+                  <div
+                    className={`w-full text-start text-sm ${
+                      brand.isActive ? 'text-red-500' : 'text-green-600'
+                    } rounded-sm px-2 py-1 hover:bg-accent`}
+                  >
+                    {brand.isActive ? 'Desactivar' : 'Activar'}
+                  </div>
+                </ConfirmDialog>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )
