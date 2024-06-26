@@ -1,13 +1,14 @@
 import {
   BarChart,
+  Store,
   CircleDollarSign,
-  FileText,
   Handshake,
   MapPin,
   Package,
   ShoppingCart,
   Tag,
   Users,
+  SquareUserRound,
 } from 'lucide-react'
 
 import { IModule } from '../interfaces/IModule'
@@ -87,25 +88,25 @@ export const MODULES = {
     submodules: [
       {
         title: 'Ventas',
-        icon: FileText,
+        icon: Store,
         variant: 'ghost' as variants,
         alias: 'sales_reports',
       },
       {
         title: 'Productos',
-        icon: FileText,
+        icon: Package,
         variant: 'ghost' as variants,
         alias: 'products_reports',
       },
       {
         title: 'Consumidores',
-        icon: FileText,
+        icon: Users,
         variant: 'ghost' as variants,
         alias: 'consumers_reports',
       },
       {
         title: 'Empleados',
-        icon: FileText,
+        icon: SquareUserRound,
         variant: 'ghost' as variants,
         alias: 'employees_reports',
       },

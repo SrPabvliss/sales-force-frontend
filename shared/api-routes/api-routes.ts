@@ -93,4 +93,9 @@ export const API_ROUTES = {
   PAY_METHODS: {
     GET: '/pay-methods',
   },
+  REPORTS: {
+    GET_PRODUCTS: '/reports/products',
+    GET_EMPLOYEES: '/reports/employees',
+    GET_CONSUMERS: '/reports/consumers',
+  },
 }
