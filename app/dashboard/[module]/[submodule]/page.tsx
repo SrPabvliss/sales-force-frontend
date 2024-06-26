@@ -1,6 +1,7 @@
 'use client'
 import { useParams } from 'next/navigation'
 
+import AccessControl from '@/core/layout/route-protector'
 import { BrandsListView } from '@/features/brands/presentation/view/brands-list-view'
 import { CategoriesListView } from '@/features/categories/presentation/view/categories-list-view'
 import { ChancesListView } from '@/features/chances/presentation/view/chances-list-view'
@@ -14,6 +15,7 @@ import { ConsumersReportsView } from '@/features/reports/presentation/view/consu
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
 import { TasksListView } from '@/features/tasks/presentation/view/tasks-list-view'
 import { TransactionListView } from '@/features/transactions/presentation/view/transactions-list-view'
+import NotFoundPage from '@/shared/components/not-found'
 import { FC } from 'react'
 
 const Page: FC = () => {
@@ -38,10 +40,14 @@ const Page: FC = () => {
   const ListView = AvaliableListViews[submodule]
 
   if (!ListView) {
-    return <div>Not Found</div>
+    return <NotFoundPage />
   }
 
-  return <ListView />
+  return (
+    <AccessControl>
+      <ListView />
+    </AccessControl>
+  )
 }
 
 export default Page

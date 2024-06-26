@@ -1,5 +1,6 @@
 'use client'
 
+import { EmployeeRole } from '@/features/auth/models/IUser'
 import { IQuota } from '@/features/quotas/models/IQuota'
 import {
   ColumnFiltersState,
@@ -24,6 +25,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Table } from '@/components/ui/table'
 
+import { UseAccountStore } from '../../../../auth/context/useUserStore'
 import { createColumns } from './Columns'
 import DataTableBody from './table-body'
 import DataTableFooter from './table-footer'
@@ -45,6 +47,8 @@ export const QuotasTable = ({
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
   const [pageIndex, setPageIndex] = React.useState(0)
   const columns = React.useMemo(() => createColumns(handleEdit, handleDelete), [handleEdit, handleDelete])
+
+  const { user } = UseAccountStore()
 
   const table = useReactTable({
     data,
@@ -81,6 +85,15 @@ export const QuotasTable = ({
     table.getColumn('dni')?.setFilterValue(value)
   }
 
+  React.useEffect(() => {
+    if (user?.role === EmployeeRole.SELLER) {
+      table.getColumn('dni')?.setFilterValue(user?.person?.dni || '')
+      table
+        .getColumn('personFullName')
+        ?.setFilterValue(`${user?.person?.name || ''} ${user?.person?.lastName || ''}`.trim() || '')
+    }
+  }, [user, table])
+
   return (
     <div className="w-full">
       <div className="flex items-center gap-4 py-4">
@@ -89,12 +102,14 @@ export const QuotasTable = ({
           value={(table.getColumn('dni')?.getFilterValue() as string) ?? ''}
           onChange={handleDniFilterChange}
           className="max-w-sm"
+          disabled={user?.role === EmployeeRole.SELLER}
         />
         <Input
           placeholder="Filtra por nombre..."
           value={(table.getColumn('personFullName')?.getFilterValue() as string) ?? ''}
           onChange={handleNameFilterChange}
           className="max-w-sm"
+          disabled={user?.role === EmployeeRole.SELLER}
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

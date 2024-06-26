@@ -1,3 +1,6 @@
+import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { EmployeeRole } from '@/features/auth/models/IUser'
+
 import { Button } from '@/components/ui/button'
 
 import { useProductsView } from '../../hooks/use-products-view'
@@ -6,13 +9,14 @@ import { TableBreadCrumb } from '../components/table-breadcrumb'
 
 export const ProductsListView = () => {
   const { products, handleDelete, handleEdit, handleAdd } = useProductsView()
+  const { user } = UseAccountStore()
   return (
     <>
       <div className="flex h-screen w-full flex-col items-center justify-center">
         <div className="h-3/5 w-3/4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Productos</h1>
-            <Button onClick={() => handleAdd()}>Nuevo producto</Button>
+            {user?.role === EmployeeRole.ADMIN && <Button onClick={() => handleAdd()}>Nuevo producto</Button>}
           </div>
           <TableBreadCrumb />
           <div className="mt-4">

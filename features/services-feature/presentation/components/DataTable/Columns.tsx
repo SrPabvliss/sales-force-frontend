@@ -1,3 +1,5 @@
+import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { EmployeeRole } from '@/features/auth/models/IUser'
 import { IService } from '@/features/services-feature/models/IService'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
@@ -64,7 +66,8 @@ export const createColumns = (
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const category = row.original
+      const service = row.original
+      const { user } = UseAccountStore()
 
       return (
         <DropdownMenu>
@@ -76,29 +79,33 @@ export const createColumns = (
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
-              Copiar el ID de la categoría
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(service.id.toString())}>
+              Copiar el ID del servicio
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>
-            <ConfirmDialog
-              onConfirm={() => handleDelete(category.id)}
-              title="¿Estás seguro?"
-              description={
-                category.isActive
-                  ? '¿Estás seguro que deseas desactivar esta categoría?'
-                  : '¿Estás seguro que deseas activar esta categoría?'
-              }
-              isDestructive={category.isActive}
-            >
-              <div
-                className={`w-full text-start text-sm ${
-                  category.isActive ? 'text-red-500' : 'text-green-600'
-                } rounded-sm px-2 py-1 hover:bg-accent`}
-              >
-                {category.isActive ? 'Desactivar' : 'Activar'}
-              </div>
-            </ConfirmDialog>
+            {user?.role !== EmployeeRole.SELLER && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleEdit(service.id)}>Editar</DropdownMenuItem>
+                <ConfirmDialog
+                  onConfirm={() => handleDelete(service.id)}
+                  title="¿Estás seguro?"
+                  description={
+                    service.isActive
+                      ? '¿Estás seguro que deseas desactivar este servicio?'
+                      : '¿Estás seguro que deseas activar este servicio?'
+                  }
+                  isDestructive={service.isActive}
+                >
+                  <div
+                    className={`w-full text-start text-sm ${
+                      service.isActive ? 'text-red-500' : 'text-green-600'
+                    } rounded-sm px-2 py-1 hover:bg-accent`}
+                  >
+                    {service.isActive ? 'Desactivar' : 'Activar'}
+                  </div>
+                </ConfirmDialog>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )

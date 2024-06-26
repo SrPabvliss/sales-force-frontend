@@ -2,6 +2,7 @@
 import { useParams } from 'next/navigation'
 
 import TransactionDetailsView from '@/features/transactions/presentation/view/transaction-details-view'
+import NotFoundPage from '@/shared/components/not-found'
 import { FC } from 'react'
 
 interface DetailsViewProps {
@@ -18,7 +19,7 @@ const DetailsPage: FC = () => {
   const EditView = AvaliableEditViews[submodule]
 
   if (!EditView) {
-    return <div>Not Found</div>
+    return <NotFoundPage />
   }
 
   return <EditView id={Number(id)} />

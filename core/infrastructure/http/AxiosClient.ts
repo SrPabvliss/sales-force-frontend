@@ -1,6 +1,7 @@
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
-// import { getCookie } from '@/core/utils/CookiesUtil'
-// import { HTTP_STATUS_CODES } from '@/core/utils/HttpStatusCodes'
+import { getCookie } from '@/core/utils/CookiesUtil'
+import { HTTP_STATUS_CODES } from '@/core/utils/HttpStatusCodes'
+import { ACCESS_TOKEN_COOKIE_NAME } from '@/shared/api-routes/api-routes'
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 import toast from 'react-hot-toast'
 
@@ -15,52 +16,21 @@ export class AxiosClient implements HttpHandler {
       baseURL: AxiosClient.baseUrl,
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${AxiosClient.accessToken}`,
       },
     })
 
-    // this.axiosInstance.interceptors.request.use(
-    //   async (config) => {
-    //     if (!AxiosClient.accessToken) {
-    //       AxiosClient.accessToken = await getCookie('accessToken')
-    //     }
-
-    //     if (!AxiosClient.accessToken) {
-    //       //TODO: logout
-    //     }
-
-    //     //TODO: verificar que sea token valida
-
-    //     if (AxiosClient.accessToken && config.headers) {
-    //       config.headers.Authorization = `Bearer ${AxiosClient.accessToken.replaceAll('"', '')}`
-    //     }
-
-    //     return config
-    //   },
-    //   (error) => Promise.reject(error),
-    // )
-
-    // this.axiosInstance.interceptors.response.use(
-    //   (response) => response,
-    //   (error) => {
-    //     if (error.response?.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-    //       //TODO: logout
-    //     }
-
-    //     return Promise.reject(error)
-    //   },
-    // )
-
     this.axiosInstance.interceptors.request.use(
-      (config) => {
-        if (AxiosClient.accessToken) {
-          config.headers.Authorization = `Bearer ${AxiosClient.accessToken.replaceAll('"', '')}`
+      async (config) => {
+        const token = await getCookie(ACCESS_TOKEN_COOKIE_NAME)
+        if (token) {
+          config.headers.Authorization = `Bearer ${token.replaceAll('"', '')}`
+        } else {
+          document.dispatchEvent(new CustomEvent('unauthorized'))
         }
         return config
       },
       (error) => {
-        toast.error(`Request error: ${error.message}`)
-        return Promise.reject(error)
+        Promise.reject(error)
       },
     )
 
@@ -74,6 +44,11 @@ export class AxiosClient implements HttpHandler {
           toast.error(`Error: ${error.response.status} ${error.response.data?.message || error.message}`)
         } else {
           toast.error(`Error: ${error.message}`)
+        }
+        if (error.response?.status === HTTP_STATUS_CODES.FORBIDDEN) {
+          if (typeof window !== 'undefined') {
+            window.location.href = '/dashboard'
+          }
         }
         return Promise.reject(error)
       },
