@@ -1,3 +1,5 @@
+import { usePathname, useRouter } from 'next/navigation'
+
 import { IItem } from '@/features/transactions/models/IItem'
 import { ITransaction, TransactionStatus } from '@/features/transactions/models/ITransaction'
 import { ColumnDef } from '@tanstack/react-table'
@@ -118,6 +120,8 @@ export const createColumns = (
     enableHiding: false,
     cell: ({ row }) => {
       const transaction = row.original
+      const router = useRouter()
+      const pathname = usePathname()
 
       const statuses = [
         { label: 'Pendiente', value: TransactionStatus.PENDING },
@@ -140,9 +144,18 @@ export const createColumns = (
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(transaction.id.toString())}>
               Copiar el ID de la tarea
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() =>
+                router.push(`
+                  ${pathname}/details/${transaction.id}
+                  `)
+              }
+            >
+              Detalles
+            </DropdownMenuItem>
             {handleEdit && transaction.status !== TransactionStatus.PAID && (
               <>
-                <DropdownMenuSeparator />
                 {handleStatusChange && (
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>Estado</DropdownMenuSubTrigger>
@@ -164,7 +177,6 @@ export const createColumns = (
             )}
             {handleDelete && transaction.status !== TransactionStatus.PAID && (
               <>
-                <DropdownMenuSeparator />
                 <ConfirmDialog
                   onConfirm={() => handleDelete(transaction.id)}
                   title="¿Estás seguro?"

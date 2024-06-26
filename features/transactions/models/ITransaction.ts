@@ -10,6 +10,12 @@ export enum TransactionStatus {
   CANCELED = 'CANCELED',
 }
 
+export const TransactionStatusTranslations: Record<TransactionStatus, string> = {
+  [TransactionStatus.PAID]: 'Completada',
+  [TransactionStatus.PENDING]: 'Pendiente',
+  [TransactionStatus.CANCELED]: 'Cancelada',
+}
+
 export enum TransactionType {
   LOCAL = 'LOCAL',
   ONLINE = 'ONLINE',
