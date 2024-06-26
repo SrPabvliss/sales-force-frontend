@@ -1,6 +1,8 @@
+import { useReportsView } from '../../hooks/use-reports-view'
 import { ConsumersBreadCrumb } from '../components/consumers-breadcrumb'
 
 export const ConsumersReportsView = () => {
+  const {} = useReportsView()
   return (
     <>
       <div className="flex h-screen w-full flex-col items-center justify-center ">

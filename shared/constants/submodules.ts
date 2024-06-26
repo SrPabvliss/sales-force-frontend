@@ -1,15 +1,4 @@
-import {
-  BarChart,
-  Store,
-  CircleDollarSign,
-  Handshake,
-  MapPin,
-  Package,
-  ShoppingCart,
-  Tag,
-  Users,
-  SquareUserRound,
-} from 'lucide-react'
+import { BarChart, Store, CircleDollarSign, Handshake, MapPin, Package, ShoppingCart, Tag, Users } from 'lucide-react'
 
 import { IModule } from '../interfaces/IModule'
 
@@ -87,28 +76,10 @@ export const MODULES = {
     alias: 'superv',
     submodules: [
       {
-        title: 'Ventas',
+        title: 'Reportes',
         icon: Store,
         variant: 'ghost' as variants,
-        alias: 'sales_reports',
-      },
-      {
-        title: 'Productos',
-        icon: Package,
-        variant: 'ghost' as variants,
-        alias: 'products_reports',
-      },
-      {
-        title: 'Consumidores',
-        icon: Users,
-        variant: 'ghost' as variants,
-        alias: 'consumers_reports',
-      },
-      {
-        title: 'Empleados',
-        icon: SquareUserRound,
-        variant: 'ghost' as variants,
-        alias: 'employees_reports',
+        alias: 'reports',
       },
     ],
   } as IModule,

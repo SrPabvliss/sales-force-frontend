@@ -94,8 +94,9 @@ export const API_ROUTES = {
     GET: '/pay-methods',
   },
   REPORTS: {
-    GET_PRODUCTS: '/reports/products',
-    GET_EMPLOYEES: '/reports/employees',
-    GET_CONSUMERS: '/reports/consumers',
+    TRANSACTION_REPORT_BY_YEAR: (year: number) => `/transactions/reports/total/year/${year}`,
+    TRANSACTION_REPORT_BY_EMPLOYEE: (employeeId: number) => `/transactions/reports/total/employee/${employeeId}`,
+    MOST_SOLD_PRODUCTS: '/products/reports/most-sold',
+    MOST_SOLD_SERVICES: '/services/reports/most-sold',
   },
 }

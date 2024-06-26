@@ -11,14 +11,10 @@ import { LocationsListView } from '@/features/locations/presentation/view/locati
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
 import { QuotasListView } from '@/features/quotas/presentation/view/quotas-list-view'
 import { ConsumersReportsView } from '@/features/reports/presentation/view/consumers-reports-view'
-import { ProductsReportsView } from '@/features/reports/presentation/view/products-reports-view'
-import { SalesReportsView } from '@/features/reports/presentation/view/sales-reports-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
 import { TasksListView } from '@/features/tasks/presentation/view/tasks-list-view'
 import { TransactionListView } from '@/features/transactions/presentation/view/transactions-list-view'
 import { FC } from 'react'
-
-import { EmployeesReportsView } from '../../../../features/reports/presentation/view/employess-reports-view'
 
 const Page: FC = () => {
   const { submodule } = useParams() as { submodule: string }
@@ -36,10 +32,7 @@ const Page: FC = () => {
     chances: ChancesListView,
     tasks: TasksListView,
     transactions: TransactionListView,
-    sales_reports: SalesReportsView,
-    consumers_reports: ConsumersReportsView,
-    employees_reports: EmployeesReportsView,
-    products_reports: ProductsReportsView,
+    reports: ConsumersReportsView,
   }
 
   const ListView = AvaliableListViews[submodule]
