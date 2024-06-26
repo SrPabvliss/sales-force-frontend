@@ -13,6 +13,7 @@ import { QuotasCreateView } from '@/features/quotas/presentation/view/quotas-cre
 import { ServicesCreateView } from '@/features/services-feature/presentation/view/services-create-view'
 import { TasksCreateView } from '@/features/tasks/presentation/view/tasks-create-view'
 import { TransactionsCreateView } from '@/features/transactions/presentation/view/transactions-create-view'
+import NotFoundPage from '@/shared/components/not-found'
 import { FC } from 'react'
 
 const CreatePage: FC = () => {
@@ -36,7 +37,7 @@ const CreatePage: FC = () => {
   const CreateView = AvaliableCreateViews[submodule]
 
   if (!CreateView) {
-    return <div>Not Found</div>
+    return <NotFoundPage />
   }
 
   return (

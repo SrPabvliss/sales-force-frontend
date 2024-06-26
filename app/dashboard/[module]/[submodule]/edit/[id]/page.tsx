@@ -13,6 +13,7 @@ import { QuotasEditView } from '@/features/quotas/presentation/view/quotas-edit-
 import { ServicesEditView } from '@/features/services-feature/presentation/view/services-edit-view'
 import { TasksEditView } from '@/features/tasks/presentation/view/tasks-edit-view'
 import { TransactionsEditView } from '@/features/transactions/presentation/view/transactions-edit-view'
+import NotFoundPage from '@/shared/components/not-found'
 import { FC } from 'react'
 
 interface EditViewProps {
@@ -40,7 +41,7 @@ const EditPage: FC = () => {
   const EditView = AvaliableEditViews[submodule]
 
   if (!EditView) {
-    return <div>Not Found</div>
+    return <NotFoundPage />
   }
 
   return <EditView id={Number(id)} />

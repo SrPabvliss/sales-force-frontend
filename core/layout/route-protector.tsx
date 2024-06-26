@@ -1,21 +1,43 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
-import { createContext, useContext, ReactNode } from 'react'
+import { UseAccountStore } from '@/features/auth/context/useUserStore'
+import { MODULES } from '@/shared/constants/submodules'
+import React, { FC, useEffect } from 'react'
 
-type AppRouterInstance = ReturnType<typeof useRouter>
-
-const RouterContext = createContext<AppRouterInstance | null>(null)
-
-interface RouterProviderProps {
-  children: ReactNode
+interface AccessControlProps {
+  children: React.ReactNode
 }
 
-export const RouterProvider = ({ children }: RouterProviderProps) => {
+const AccessControl: FC<AccessControlProps> = ({ children }) => {
+  const { module, submodule } = useParams() as { module: string; submodule: string }
   const router = useRouter()
-  return <RouterContext.Provider value={router}>{children}</RouterContext.Provider>
+  const { accessModules } = UseAccountStore()
+
+  useEffect(() => {
+    const moduleEntry = Object.entries(MODULES).find(([, mod]) => mod.alias === module)
+
+    if (!moduleEntry) {
+      router.push('/not-found')
+      return
+    }
+
+    const [moduleId, mod] = moduleEntry
+
+    if (!accessModules.includes(Number(moduleId))) {
+      router.push('/unauthorized')
+      return
+    }
+
+    // Comprueba si el submódulo existe dentro del módulo
+    const submoduleEntry = mod.submodules.find((sub) => sub.alias === submodule)
+    if (!submoduleEntry) {
+      router.push('/not-found')
+      return
+    }
+  }, [module, submodule, accessModules, router])
+
+  return <>{children}</>
 }
 
-export const useAppRouter = () => {
-  return useContext(RouterContext)
-}
+export default AccessControl
