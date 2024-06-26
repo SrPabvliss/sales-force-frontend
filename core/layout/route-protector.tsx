@@ -1,4 +1,5 @@
 'use client'
+
 import { useParams, useRouter } from 'next/navigation'
 
 import { UseAccountStore } from '@/features/auth/context/useUserStore'
@@ -12,9 +13,11 @@ interface AccessControlProps {
 const AccessControl: FC<AccessControlProps> = ({ children }) => {
   const { module, submodule } = useParams() as { module: string; submodule: string }
   const router = useRouter()
-  const { accessModules } = UseAccountStore()
+  const { accessModules, loading } = UseAccountStore()
 
   useEffect(() => {
+    if (loading) return
+
     const moduleEntry = Object.entries(MODULES).find(([, mod]) => mod.alias === module)
 
     if (!moduleEntry) {
@@ -29,13 +32,16 @@ const AccessControl: FC<AccessControlProps> = ({ children }) => {
       return
     }
 
-    // Comprueba si el submódulo existe dentro del módulo
     const submoduleEntry = mod.submodules.find((sub) => sub.alias === submodule)
     if (!submoduleEntry) {
       router.push('/not-found')
       return
     }
-  }, [module, submodule, accessModules, router])
+  }, [module, submodule, accessModules, router, loading])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return <>{children}</>
 }

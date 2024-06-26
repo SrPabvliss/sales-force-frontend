@@ -1,14 +1,4 @@
-import {
-  BarChart,
-  CircleDollarSign,
-  FileText,
-  Handshake,
-  MapPin,
-  Package,
-  ShoppingCart,
-  Tag,
-  Users,
-} from 'lucide-react'
+import { BarChart, Store, CircleDollarSign, Handshake, MapPin, Package, ShoppingCart, Tag, Users } from 'lucide-react'
 
 import { IModule } from '../interfaces/IModule'
 
@@ -26,11 +16,12 @@ export const MODULES = {
         alias: 'consumers',
       },
       {
-        title: 'Ubicaciones',
-        icon: MapPin,
+        title: 'Cuotas',
+        icon: CircleDollarSign,
         variant: 'ghost' as variants,
-        alias: 'locations',
+        alias: 'quotas',
       },
+
       {
         title: 'Productos',
         icon: Package,
@@ -62,10 +53,10 @@ export const MODULES = {
         alias: 'employees',
       },
       {
-        title: 'Cuotas',
-        icon: CircleDollarSign,
+        title: 'Ubicaciones',
+        icon: MapPin,
         variant: 'ghost' as variants,
-        alias: 'quotas',
+        alias: 'locations',
       },
       {
         title: 'Marcas',
@@ -86,28 +77,10 @@ export const MODULES = {
     alias: 'superv',
     submodules: [
       {
-        title: 'Ventas',
-        icon: FileText,
+        title: 'Reportes',
+        icon: Store,
         variant: 'ghost' as variants,
-        alias: 'sales_reports',
-      },
-      {
-        title: 'Productos',
-        icon: FileText,
-        variant: 'ghost' as variants,
-        alias: 'products_reports',
-      },
-      {
-        title: 'Consumidores',
-        icon: FileText,
-        variant: 'ghost' as variants,
-        alias: 'consumers_reports',
-      },
-      {
-        title: 'Empleados',
-        icon: FileText,
-        variant: 'ghost' as variants,
-        alias: 'employees_reports',
+        alias: 'reports',
       },
     ],
   } as IModule,

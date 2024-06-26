@@ -11,6 +11,7 @@ import { EmployeesListView } from '@/features/employees/presentation/view/employ
 import { LocationsListView } from '@/features/locations/presentation/view/locations-list-view'
 import { ProductsListView } from '@/features/products/presentation/view/products-list-view'
 import { QuotasListView } from '@/features/quotas/presentation/view/quotas-list-view'
+import { ReportsView } from '@/features/reports/presentation/view/reports-view'
 import { ServicesListView } from '@/features/services-feature/presentation/view/services-list-view'
 import { TasksListView } from '@/features/tasks/presentation/view/tasks-list-view'
 import { TransactionListView } from '@/features/transactions/presentation/view/transactions-list-view'
@@ -33,6 +34,7 @@ const Page: FC = () => {
     chances: ChancesListView,
     tasks: TasksListView,
     transactions: TransactionListView,
+    reports: ReportsView,
   }
 
   const ListView = AvaliableListViews[submodule]
