@@ -1,6 +1,8 @@
+import { useTasksStore } from '@/features/tasks/context/tasks-store'
 import { ITask, TaskStatus } from '@/features/tasks/models/ITask'
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
+import { useState } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -18,6 +20,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import ConfirmDialog from '../../../../../shared/components/confirm-dialog'
+import CommentsModal from '../comment-modal'
 
 export const createColumns = (
   handleEdit?: (id: number) => void,
@@ -122,50 +125,67 @@ export const createColumns = (
       ]
 
       const filteredStatuses = statuses.filter((status) => status.value !== task.status)
+      const [commentModalOpen, setCommentModalOpen] = useState(false)
+      const { addComment } = useTasksStore()
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menú</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(task.id.toString())}>
-              Copiar el ID de la tarea
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {handleStatusChange && (
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>Estado</DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  {filteredStatuses.map((status) => (
-                    <DropdownMenuItem key={status.value} onClick={() => handleStatusChange(task.id, status.value)}>
-                      Marcar como {status.label.toLowerCase()}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-            )}
-            <DropdownMenuSeparator />
-            {handleEdit && <DropdownMenuItem onClick={() => handleEdit(task.id)}>Editar</DropdownMenuItem>}
-            <DropdownMenuSeparator />
-            {handleDelete && (
-              <ConfirmDialog
-                onConfirm={() => handleDelete(task.id)}
-                title="¿Estás seguro?"
-                description={'¿Estás seguro que deseas eliminar esta tarea?'}
-                isDestructive={true}
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Abrir menú</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(task.id.toString())}>
+                Copiar el ID de la tarea
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  setCommentModalOpen(true)
+                }}
               >
-                <div className={`w-full rounded-sm px-2 py-1 text-start text-sm text-red-500 hover:bg-accent`}>
-                  Eliminar
-                </div>
-              </ConfirmDialog>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                Comentarios
+              </DropdownMenuItem>
+              {handleStatusChange && (
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Estado</DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    {filteredStatuses.map((status) => (
+                      <DropdownMenuItem key={status.value} onClick={() => handleStatusChange(task.id, status.value)}>
+                        Marcar como {status.label.toLowerCase()}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              )}
+              <DropdownMenuSeparator />
+              {handleEdit && <DropdownMenuItem onClick={() => handleEdit(task.id)}>Editar</DropdownMenuItem>}
+              {handleDelete && (
+                <ConfirmDialog
+                  onConfirm={() => handleDelete(task.id)}
+                  title="¿Estás seguro?"
+                  description={'¿Estás seguro que deseas eliminar esta tarea?'}
+                  isDestructive={true}
+                >
+                  <div className={`w-full rounded-sm px-2 py-1 text-start text-sm text-red-500 hover:bg-accent`}>
+                    Eliminar
+                  </div>
+                </ConfirmDialog>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <CommentsModal
+            isOpen={commentModalOpen}
+            onClose={() => setCommentModalOpen(false)}
+            comments={task.comments}
+            onAddComment={addComment}
+            taskId={task.id}
+          />
+        </>
       )
     },
   },

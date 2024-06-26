@@ -62,6 +62,6 @@ export class TasksDataSourceImpl implements TasksDataSource {
   }
 
   async addComment(taskId: number, comment: string): Promise<IComment> {
-    return await this.httpClient.post<IComment>(API_ROUTES.TASKS.ADD_COMMENT(taskId), { content: comment })
+    return await this.httpClient.post<IComment>(API_ROUTES.TASKS.ADD_COMMENT(taskId), { comment })
   }
 }
