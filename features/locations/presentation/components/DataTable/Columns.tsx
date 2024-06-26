@@ -73,7 +73,7 @@ export const createColumns = (
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(category.id.toString())}>
               Copiar el ID de la ubicación
             </DropdownMenuItem>
-            {user?.role !== EmployeeRole.SELLER && (
+            {user?.role === EmployeeRole.ADMIN && (
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => handleEdit(category.id)}>Editar</DropdownMenuItem>

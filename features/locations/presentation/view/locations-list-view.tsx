@@ -16,7 +16,7 @@ export const LocationsListView = () => {
         <div className="h-3/5 w-3/4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Ubicaciones</h1>
-            {user?.role !== EmployeeRole.SELLER && <Button onClick={() => handleAdd()}>Nueva ubicación</Button>}
+            {user?.role === EmployeeRole.ADMIN && <Button onClick={() => handleAdd()}>Nueva ubicación</Button>}
           </div>
           <TableBreadCrumb />
           <div className="mt-4">

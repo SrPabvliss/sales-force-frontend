@@ -16,7 +16,7 @@ export const ProductsListView = () => {
         <div className="h-3/5 w-3/4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Productos</h1>
-            {user?.role !== EmployeeRole.SELLER && <Button onClick={() => handleAdd()}>Nuevo producto</Button>}
+            {user?.role === EmployeeRole.ADMIN && <Button onClick={() => handleAdd()}>Nuevo producto</Button>}
           </div>
           <TableBreadCrumb />
           <div className="mt-4">
