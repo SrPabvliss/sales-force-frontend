@@ -2,7 +2,7 @@ import { usePathname, useRouter } from 'next/navigation'
 
 import { useEffect } from 'react'
 
-import { useBrandsStore } from '../context/brands-store'
+import { useBrandsStore } from '../context/reports-store'
 
 export function useBrandsView() {
   const router = useRouter()

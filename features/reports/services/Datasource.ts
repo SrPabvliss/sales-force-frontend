@@ -2,39 +2,36 @@ import { AxiosClient } from '@/core/infrastructure/http/AxiosClient'
 import { HttpHandler } from '@/core/interfaces/HttpHandler'
 import { API_ROUTES } from '@/shared/api-routes/api-routes'
 
-import { IBrand, ICreateBrand, IUpdateBrand } from '../models/IBrands'
+import { IEmployeeReports, IProductsReports, ISalesReports, IServicesReports } from '../models/IReports'
 
-export interface BrandsDatasource {
-  getAll(): Promise<IBrand[]>
-  create(brand: ICreateBrand): Promise<IBrand>
-  update(id: number, brand: IUpdateBrand): Promise<IBrand>
-  delete(id: number): Promise<boolean>
+export interface ReportsDatasource {
+  getServicesReports(): Promise<IServicesReports[]>
+  getProductsReports(): Promise<IProductsReports[]>
+  getEmployeesReports(id: number): Promise<IEmployeeReports[]>
+  getSalesReports(year: number): Promise<ISalesReports[]>
 }
 
-export class BrandsDatasourceImpl implements BrandsDatasource {
+export class ReportsDatasourceImpl implements ReportsDatasource {
   private httpClient: HttpHandler
 
   constructor() {
     this.httpClient = AxiosClient.getInstance()
   }
 
-  static getInstance(): BrandsDatasourceImpl {
-    return new BrandsDatasourceImpl()
+  static getInstance(): ReportsDatasourceImpl {
+    return new ReportsDatasourceImpl()
   }
 
-  async getAll(): Promise<IBrand[]> {
-    return await this.httpClient.get<IBrand[]>(API_ROUTES.BRANDS.GET)
+  async getServicesReports(): Promise<IServicesReports[]> {
+    return await this.httpClient.get<IServicesReports[]>(API_ROUTES.REPORTS.GET_SERVICES)
   }
-
-  async create(brand: ICreateBrand): Promise<IBrand> {
-    return await this.httpClient.post<IBrand>(API_ROUTES.BRANDS.CREATE, brand)
+  async getProductsReports(): Promise<IProductsReports[]> {
+    return await this.httpClient.get<IProductsReports[]>(API_ROUTES.REPORTS.GET_PRODUCTS)
   }
-
-  async update(id: number, brand: IUpdateBrand): Promise<IBrand> {
-    return await this.httpClient.patch<IBrand>(API_ROUTES.BRANDS.UPDATE(id), brand)
+  async getEmployeesReports(id: number): Promise<IEmployeeReports[]> {
+    return await this.httpClient.get<IEmployeeReports[]>(API_ROUTES.REPORTS.GET_EMPLOYEES(id))
   }
-
-  async delete(id: number): Promise<boolean> {
-    return await this.httpClient.patch<boolean>(`${API_ROUTES.BRANDS.TOGGLE_ACTIVE(id)}`)
+  async getSalesReports(year: number): Promise<ISalesReports[]> {
+    return await this.httpClient.get<ISalesReports[]>(API_ROUTES.REPORTS.GET_SALES(year))
   }
 }
