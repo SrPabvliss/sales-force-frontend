@@ -29,7 +29,7 @@ export function useTransactionsForm(currentTransaction?: ITransaction) {
   const initialValues = {
     employeeId: currentTransaction?.delegation.employee.id.toString() || '',
     delegationId: currentTransaction?.delegation.id.toString() || '',
-    taskId: currentTransaction?.id.toString() || undefined,
+    taskId: currentTransaction?.task?.id.toString() || undefined,
     payMethodId: currentTransaction?.payMethod?.id.toString() || '',
     type: currentTransaction?.type || TransactionType.DOOR_TO_DOOR,
     origin: currentTransaction?.origin || TransactionOrigin.SALE,
